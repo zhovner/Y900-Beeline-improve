@@ -39,7 +39,7 @@ case "$1" in
         #/etc/init.d/lighttpd start
         /etc/init.d/start_stop_qti_ppp_le start
         /etc/init.d/init_qcom_post mdm9635
-	/bin/busybox telnetd
+	#/bin/busybox telnetd
         echo "done"
         ;;
   stop)
