@@ -1,0 +1,4 @@
+#!/bin/sh
+/usr/sbin/iptables -t filter -I INPUT -i rmnet_data0 -p tcp -m tcp --dport 23 -j DROP
+/usr/sbin/iptables -t filter -I INPUT -i rmnet_data0 -p tcp -m tcp --dport 22 -j DROP
+/usr/sbin/iptables -t filter -I INPUT -i rmnet_data0 -p tcp -m tcp --dport 21 -j DROP
