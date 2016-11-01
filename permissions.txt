@@ -5,6 +5,7 @@
 755  root:wheel ./etc/init.d/dropbear
 755  root:wheel ./etc/init.d/iptables
 666  root:wheel ./etc/localtime
+666  root:wheel ./etc/motd
 755  root:wheel ./etc/rc5.d
 777  root:wheel ./etc/rc5.d/S10dropbear
 755  root:wheel ./etc/rcS.d
@@ -14,6 +15,10 @@
 755  root:wheel ./jrd-resource/resource
 755  root:wheel ./jrd-resource/resource/webrc
 755  root:wheel ./jrd-resource/resource/webrc/www
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Disable
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Enable
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Status
 755  root:wheel ./jrd-resource/resource/webrc/www/comm_help
 711  root:wheel ./jrd-resource/resource/webrc/www/comm_help/um_en.html
 755  root:wheel ./jrd-resource/resource/webrc/www/css
@@ -38,6 +43,7 @@
 777  root:wheel ./jrd-resource/resource/webrc/www/resource/Messages_en.properties
 777  root:wheel ./jrd-resource/resource/webrc/www/resource/Messages_ru.properties
 755  root:wheel ./usb_conf
+777  root:wheel ./usb_conf/mac_switch_pid
 777  root:wheel ./usb_conf/usb_func5
 777  root:wheel ./usb_conf/usb_init_pid
 777  root:wheel ./usb_conf/win_switch_pid

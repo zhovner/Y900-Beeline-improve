@@ -48,6 +48,12 @@ done
 echo ""
 echo "Archiving files to patch.tgz"
 # COPYFILE_DISABLE=1 need to ignore extended files attributes
-COPYFILE_DISABLE=1 tar -cvzpf patch.tgz ${workingdirs[*]}
+COPYFILE_DISABLE=1 tar -cvzpf release/Y900_Beeline_improve.tgz ${workingdirs[*]}
 
+echo ""
+echo "Archiving release distro"
+zip -r -X Y900_Beeline_improve.zip release
+
+echo ""
+echo "Done"
 

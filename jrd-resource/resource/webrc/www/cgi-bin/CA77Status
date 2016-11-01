@@ -1,0 +1,26 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+
+if [ ! -f /usr/bin/diagcmd ]; then
+    echo '{"error": "diagcmd not found"}'
+    exit 0
+fi
+
+
+CA77=$(/usr/bin/diagcmd 4B 13 27 00 08 00 00 00 1D 00 00 00 01 36 2F 6E 76 2F 69 74 65 6D 5F 66 69 6C 65 73 2F 72 66 6E 76 2F 30 30 30 32 35 32 31 34 00  | awk '{print $15}')
+
+
+if [ "$CA77" = "44" ]; then
+    echo '{"CA77": "enabled"}'
+    exit 0
+fi
+
+if [ "$CA77" = "04" ]; then
+    echo '{"CA77": "disabled"}'
+    exit 0
+fi
+
+
+echo '{"error": "something wrong"}'
+exit 0
