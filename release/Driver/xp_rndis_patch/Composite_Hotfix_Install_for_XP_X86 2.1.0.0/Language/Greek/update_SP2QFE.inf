@@ -1,0 +1,346 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 512
+    MaxNtServicePackVersion   = 512
+    ThisServicePackVersion    = 512
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP2QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.222724
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x08
+    WSEDIR                  = "1032"
+    TSCLIENTDIR             = "Πρόγραμμα-πελάτης Υπηρεσιών τερματικού"
+    PORTUGAL                = "Πορτογαλία"
+    FALKLANDS               = "Νησιά Φόκλαντ"
+    LCID                    = "0408"
+    W32ID                   = "0408"
+    ACCESSDIR               = "βοηθήματα"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Προστατευμένο EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Ασφαλισμένος κωδικός πρόσβασης(EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Ασύρματο"
+    ServicePackSourceFiles  = "Αρχεία προέλευσης του Windows XP Hotfix"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Επείγουσα επιδιόρθωση για Windows XP (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - Ενημερώσεις Λογισμικού"
+    LOC_UPDATE="Ενημέρωση"
+    LOC_CRITICALUPDATE="Κρίσιμη ενημέρωση"
+    LOC_HOTFIX="Επείγουσα επιδιόρθωση"
+    LOC_SECURITY_UPDATE="Ενημέρωση ασφαλείας"
+    WUCUN_TS_JOBFILE        = "ειδοποίηση κρίσιμης ενημέρωσης των windows.job"
+    BITS_DISPLAY_NAME       = "Υπηρεσία έξυπνης μεταφοράς στο παρασκήνιο"
+    BITS_DESCRIPTION        = \
+"Μεταφέρει αρχεία στο παρασκήνιο χρησιμοποιώντας αδρανές εύρος ζώνης του δικτύου. Αν η υπηρεσία διακοπεί, δυνατότητες όπως Windows Update και MSN Explorer δεν θα είναι δυνατό να κατεβάζουν αυτόματα προγράμματα και άλλες πληροφορίες. Αν η υπηρεσία αυτή απενεργοποιηθεί, οι υπηρεσίες που εξαρτώνται ρητά από αυτήν ίσως αποτύχουν να μεταφέρουν αρχεία αν δεν έχουν μηχανισμό προστασίας αποτυχίας για μεταφορά αρχείων κατευθείαν μέσω του ΙΕ στην περίπτωση που το BITS έχει απενεργοποιηθεί."
+    BITS_CLASS_NAME         = "Στοιχείο ελέγχου έξυπνης μεταφοράς στο παρασκήνιο, κλάση 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Προγενέστερο στοιχείο ελέγχου έξυπνης μεταφοράς στο παρασκήνιο"
+    AU_DESCRIPTION          = \
+"Ενεργοποιεί την λήψη και εγκατάσταση ενημερώσεων των Windows. Εάν αυτή η υπηρεσία είναι απενεργοποιημένη, ο υπολογιστής δεν θα μπορεί να χρησιμοποιήσει το χαρακτηριστικό Αυτόματων Ενημερώσεων ή την τοποθεσία Web Windows Update."
+    AU_DISPLAY_NAME         = "Αυτόματες ενημερώσεις"
+    DispStrCum_MP9          = \
+"Αυτή η ενημέρωση λογισμικού μπορεί να εφαρμοστεί μόνο στον Windows Media Player 9. Αν έχετε εγκατεστημένο τον Windows Media Player 9 και βλέπετε αυτό το μήνυμα, τότε η έκδοση που έχετε συμπεριλαμβάνει ήδη αυτήν την ενημέρωση λογισμικού."
+    DispStrPreReq_MP9       = \
+"Αυτή η ενημέρωση λογισμικού μπορεί να εφαρμοστεί μόνο στον Windows Media Player 9. Αν βλέπετε αυτό το μήνυμα, τότε δεν έχετε εγκατεστημένο τον Windows Media Player 9 και δεν μπορείτε να εγκαταστήσετε αυτήν την ενημέρωση λογισμικού."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "Προσθέτει, τροποποιεί και καταργεί εφαρμογές που παρέχονται ως πακέτο του Windows Installer (*.msi). Εάν απενεργοποιηθεί αυτή η υπηρεσία, θα αποτύχει η εκκίνηση όλων των υπηρεσιών που βασίζονται άμεσα σε αυτή."
+    CancelEventType         = "Ακύρωση Αναφοράς"
+    MainCancelIntroString   = "Σας ευχαριστούμε για την αναφορά. Όταν κάνετε κλικ στο κουμπί ""Αποστολή Αναφοράς"", τα δεδομένα που αφορούν την αποτυχία της εγκατάστασης θα αποσταλούν στην Microsoft"
+    MainCancelDetailsLink   = "Δείτε τα περιεχόμενα της αναφοράς εγκατάστασης."
+    MainCancelReportBtn     = "&Αποστολή Αναφοράς"
+    DetailsCancelHeader     = "Πληροφορίες Αναφοράς"
+    DetailsCancelBody       = \
+"Η αποστολή αυτής της αναφοράς θα μας βοηθήσει να βελτιώσουμε την εμπειρία του χρήστη. Θα επεξεργαστούμε τα συλλεγμένα δεδομένα στατιστικά για να καταλάβουμε τι οδήγησε στην αποτυχία της εγκατάστασης. Η πληροφορίες αυτές θα μας βοηθήσουν να μειώσουμε τον αριθμό των σφαλμάτων εγκατάστασης που προκαλούνται από την εφαρμογή νέων ενημερώσεων."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Αθήνα, Βηρυτός, Κωνσταντινούπολη, Μινσκ"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="Αυτή η υπηρεσία υλοποιεί το πρωτόκολλο hypertext transfer (HTTP). Εάν η υπηρεσία αυτή απενεργοποιηθεί, οι υπηρεσίες που εξαρτώνται ρητά από αυτήν δεν θα μπορούν να ξεκινήσουν."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION=\
+"Η υπηρεσία αυτή υλοποιεί το ασφαλές πρωτόκολλο hypertext transfer (HTTPS) για την υπηρεσία HTTP,  χρησιμοποιώντας το Secure Socket Layer (SSL).  Εάν η υπηρεσία αυτή απενεργοποιηθεί, οι υπηρεσίες που εξαρτώνται ρητά από αυτήν δεν θα μπορούν να ξεκινήσουν."
+    WEBOC_SCRIPT="Δυνατότητα δημιουργίας δέσμης ενεργειών του στοιχείου ελέγχου προγράμματος περιήγησης του Internet Explorer"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1033"
+    ODBC_DATA_SOURCE_NAME = "Προέλευση δεδομένων ODBC"
+    SHAREDACCESS_SERVICE_NAME = "Τείχος προστασίας των Windows / Κοινόχρηστη σύνδεση στο Internet (ICS)"
+    Svc-ALG-Description       = "Παρέχει υποστήριξη για πρόσθετα πρωτοκόλλων άλλων κατασκευαστών για Κοινόχρηστη σύνδεση στο Internet και για το τείχος προστασίας των Windows."
+    Svc-Ip6Fw-DispName          = "Πρόγραμμα οδήγησης τείχους προστασίας IPv6 των Windows"
+    Svc-Ip6Fw-Description       = "Παρέχει μια υπηρεσία πρόληψης παρείσφρησης για ένα οικιακό δίκτυο ή ένα δίκτυο μικρού γραφείου."
+    NotOnACPowerMsg= "To Service Pack απαιτεί ο υπολογιστής να χρησιμοποιεί ρεύμα από το δίκτυο πριν την εκκίνηση της εγκατάστασης."
+    A6Blocked= "Η έκδοση των Windows που χρησιμοποιείτε δεν ταιριάζει με την ενημέρωση που προσπαθείτε να εγκαταστήσετε."
+    PreReq_MSI_3 = "Αυτή η ενημέρωση λογισμικού εγκαθίσταται μόνο με MSI 3.0"
+    PreReq_MSI_31 = "Αυτή η ενημέρωση λογισμικού εγκαθίσταται μόνο με MSI 3.1"
+    NOTATABLET = "Αυτή η επείγουσα επιδιόρθωση δεν μπορεί να εγκατασταθεί σε Tablet PC."
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Το πρόγραμμα Εγκατάστασης εντόπισε ότι τα περιεχόμενα αυτής της ενημέρωσης είναι ήδη διαθέσιμα σε αυτό το σύστημα."
+    ELK_LOCALE_INUSE_201a = \
+"Τα Βοσνιακά (Κυριλλικά, Βοσνίας Ερζεγοβίνης) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_201a    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Βοσνιακά (Κυριλλικά, Βοσνίας Ερζεγοβίνης) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_0464 = \
+"Τα Φιλιππινέζικα (Φιλιππίνων) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_0464    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Φιλιππινέζικα (Φιλιππίνων) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_046e = \
+"Τα Λουξεμβουργιανά (Λουξεμβούργου) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_046e    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Λουξεμβουργιανά (Λουξεμβούργου) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_0463 = \
+"Τα Πάστο (Αφγανιστάν) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_0463    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Πάστο (Αφγανιστάν) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_0462 = \
+"Τα Φριζιακά (Ολλανδίας) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_0462    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Φριζιακά (Ολλανδίας) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_047a = \
+"Τα Μαπουντουγκούν (Χιλής) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_047a    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Μαπουντουγκούν (Χιλής) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_0461 = \
+"Τα Νεπαλικά (Νεπάλ) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_0461    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Νεπαλικά (Νεπάλ) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_085d = \
+"Τα Ινούκτιτουτ (Λατινικά, Καναδά) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_085d    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Ινούκτιτουτ (Λατινικά, Καναδά) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_083c = \
+"Τα Ιρλανδικά (Ιρλανδίας) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_083c    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Ιρλανδικά (Ιρλανδίας) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_047c = \
+"Τα Μοχόκ (Μοχόκ) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_047c    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Μοχόκ (Μοχόκ) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    ELK_LOCALE_INUSE_0417 = \
+"Τα Ρομανικά (Ελβετίας) είναι επιλεγμένα ως γλώσσα τοπικών ρυθμίσεων και μορφοποίησης ή ως γλώσσα για τα μη-Unicode προγράμματα. Αυτή η γλώσσα δεν υποστηρίζεται πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για να επιλέξετε μια διαφορετική γλώσσα."
+
+    ELK_MUI_INUSE_0417    = \
+"Η υποστήριξη για μενού και διαλόγους για τα Ρομανικά (Ελβετίας) έχει εγκατασταθεί στο σύστημα σας. Αυτή η γλώσσα δεν υποστηρίζετε πριν από το Επείγουσα επιδιόρθωση για Windows XP (KB945436).  Παρακαλώ διαβάστε το readmesp.htm για περισσότερες πληροφορίες για την απεγκατάσταση της υποστήριξης αυτής της γλώσσας."
+
+    KLT_148               = "Βοσνιακά Κυριλλικά"
+    KLT_149               = "Ινούκτιτουτ Λατινικά"
+    KLT_150               = "Λουξεμβουργιανά"
+    KLT_151               = "Νεπαλικά"
+    KLT_152               = "Πάστο"
+    BEETHOVEN_NINTH_NAME            = "Συμφωνία αρ. 9 του Μπετόβεν (σκέρτσο).wma"
+    MYMUSIC_SAMPLES_DIR             = "Δείγματα μουσικής"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="Η έκδοση του Internet Explorer που έχετε εγκατεστημένη δεν ταιριάζει με την ενημέρωση που προσπαθείτε να εγκαταστήσετε."
+    TSC_PACKAGE_EXPIRED=\
+"Η προ-έκδοση της σύνδεσης απομακρυσμένης επιφάνειας εργασίας έληξε. Για να κάνετε λήψη της πλήρους έκδοσης της σύνδεσης απομακρυσμένης επιφάνειας εργασίας, μεταβείτε στο Windows Update ή επικοινωνήστε με το διαχειριστή του συστήματός σας."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) Ερεβάν"
+    Azerbaijan_Std="Χειμερινή ώρα Αζερμπαϊτζάν"
+    Azerbaijan_Dlt="Θερινή ώρα Αζερμπαϊτζάν"
+    Azerbaijan_Display="(GMT+04:00) Μπακού"
+    SA_Pacific_Display="(GMT-05:00) Μπογκοτά, Λίμα, Κουίτο, Ρίο Μπράνκο"
+    GTB_Display="(GMT+02:00) Αθήνα, Βουκουρέστι, Κωνσταντινούπολη"
+    E_Europe_Display="(GMT+02:00) Μινσκ"
+    Middle_East_Std="Χειμερινή ώρα Μέσης Ανατολής"
+    Middle_East_Dlt="Θερινή ώρα Μέσης Ανατολής"
+    Middle_East_Display="(GMT+02:00) Βυρηττός"
+    Jordan_Std="Χειμερινή ώρα Ιορδανίας"
+    Jordan_Dlt="Θερινή ώρα Ιορδανίας"
+    Jordan_Display="(GMT+02:00) Αμμάν"
+    Pacific_Display="(GMT-08:00) Ώρα Ειρηνικού (ΗΠΑ & Καναδάς)"
+    Central_M_Std="Κεντρική χειμερινή ώρα (Μεξικό)"
+    Central_M_Dlt="Κεντρική θερινή ώρα (Μεξικό)"
+    Mountain_M_Std="Ορεινή χειμερινή ώρα (Μεξικό)"
+    Mountain_M_Dlt="Ορεινή θερινή ώρα (Μεξικό)"
+    Central_M_Display="(GMT-06:00) Γκουανταλαχάρα, Πόλη του Μεξικού, Μοντερέυ - Νέα"
+    Mexico_Old_Display="(GMT-06:00) Γκουανταλαχάρα, Πόλη του Μεξικού, Μοντερέυ - Παλιά"
+    Pacific_M_Std="Χειμερινή ώρα Ειρηνικού (Μεξικό)"
+    Pacific_M_Dlt="Θερινή ώρα Ειρηνικού (Μεξικό)"
+    Pacific_M_Display="(GMT-08:00) Τιχουάνα, Μπάχα Καλιφόρνια"
+    Mountain_M_Display="(GMT-07:00) Τσιουάουα, Λαπάζ, Μαζατλάν - Νέα"
+    Mexico_2_Old_Display="(GMT-07:00) Τσιουάουα, Λαπάζ, Μαζατλάν - Παλιά"
+    Namibia_Std="Χειμερινή ώρα Ναμίμπια"
+    Namibia_Dlt="Θερινή ώρα Ναμίμπια"
+    Namibia_Display="(GMT+02:00) Γουίντχουκ"
+    Myanmar_Display="(GMT+06:30) Γιανγκόν (Ρανγκούν)"
+    Georgian_Std="Χειμερινή ώρα Γεωργίας"
+    Georgian_Dlt="Θερινή ώρα Γεωργίας"
+    Georgian_Display="(GMT+03:00) Τιφλίδα"
+    Greenwich_Display="(GMT) Μονροβία, Καζαμπλάνκα, Ρέκιαβικ"
+    Central_Brazilian_Std="Χειμερ. ώρα κεντρικής Βραζιλίας"
+    Central_Brazilian_Dlt="Θερινή ώρα κεντρικής Βραζιλίας"
+    Central_Brazilian_Display="(GMT-04:00) Μανάους"
+    Montevideo_Std="Χειμερινή ώρα Μοντεβιδέο"
+    Montevideo_Dlt="Θερινή ώρα Μοντεβιδέο"
+    Montevideo_Display="(GMT-03:00) Μοντεβιδέο"
+    Caucasus_Common_Display="(GMT+04:00) Χειμερινή ώρα Καυκάσου"
+    Armenian_Std="Χειμερινή ώρα Αρμενίας"
+    Armenian_Dlt="Θερινή ώρα Αρμενίας"
+    Venezuela_Std="Χειμερινή ώρα Βενεζουέλας"
+    Venezuela_Dlt="Θερινή ώρα Βενεζουέλας"
+    Venezuela_Display="(GMT-04:30) Καράκας"
+    SA_Western_Display="(GMT-04:00) Λα Παζ"
+    SA_Eastern_Display="(GMT-03:00) Τζόρτζταουν"
+    Argentina_Std="Χειμερινή ώρα Αργεντινής"
+    Argentina_Dlt="Θερινή ώρα Αργεντινής"
+    Argentina_Display="(GMT-03:00) Μπουένος ’ιρες"
+    WSMAN_ServiceDisplay="Windows Remote Management (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Allows access to management information from local and remote machines."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="Εγκαταστήστε τις υπηρεσίες Microsoft Core XML (MSXML) 6.0 πριν να εγκαταστήσετε αυτό το πακέτο. Για να λάβετε τις υπηρεσίες MSXML6, επισκεφθείτε την τοποθεσία http://download.microsoft.com και κάντε αναζήτηση για MSXML6."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

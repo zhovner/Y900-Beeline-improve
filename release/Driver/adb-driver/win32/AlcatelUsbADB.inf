@@ -1,0 +1,97 @@
+;
+; Alcatel Android WinUsb driver installation.
+;
+[Version]
+Signature           = "$Windows NT$"
+Class               = AndroidUsbDeviceClass
+ClassGuid           = {3F966BD9-FA04-4ec5-991C-D326973B5128}
+Provider            = %JRDCOMM%
+DriverVer           = 05/24/2012,6.0.0000.00000
+CatalogFile.NTx86   = androidwinusb86.cat
+CatalogFile.NTamd64 = androidwinusba64.cat
+
+;
+; This section seems to be required for WinUsb driver installation.
+; If this section is removed the installer will report an error
+; "Required section not found in INF file".
+;
+[ClassInstall32]
+Addreg = AndroidWinUsbClassReg
+
+[AndroidWinUsbClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-1
+
+[Manufacturer]
+%JRDCOMM% = Google, NTx86, NTamd64
+
+[Google.NTx86]
+;Alcatel
+%ALCATEL_DEVICE_01963%     = USB_Install, USB\VID_1bbb&PID_0196&MI_03
+%ALCATEL_DEVICE_01971%     = USB_Install, USB\VID_1bbb&PID_0197&MI_01
+
+[Google.NTamd64]
+;Alcatel
+%ALCATEL_DEVICE_01963%     = USB_Install, USB\VID_1bbb&PID_0196&MI_03
+%ALCATEL_DEVICE_01971%     = USB_Install, USB\VID_1bbb&PID_0197&MI_01
+
+[USB_Install]
+Include = winusb.inf
+Needs   = WINUSB.NT
+
+[USB_Install.Services]
+Include     = winusb.inf
+AddService  = WinUSB,0x00000002,WinUSB_ServiceInstall
+
+[WinUSB_ServiceInstall]
+DisplayName     = %WinUSB_SvcDesc%
+ServiceType     = 1
+StartType       = 3
+ErrorControl    = 1
+ServiceBinary   = %12%\WinUSB.sys
+
+[USB_Install.Wdf]
+KmdfService = WINUSB, WinUSB_Install
+
+[WinUSB_Install]
+KmdfLibraryVersion  = 1.9
+
+[USB_Install.HW]
+AddReg  = Dev_AddReg
+
+[Dev_AddReg]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{F72FE0D4-CBCB-407d-8814-9ED673D0DD6B}"
+
+[USB_Install.CoInstallers]
+AddReg    = CoInstallers_AddReg
+CopyFiles = CoInstallers_CopyFiles
+
+[CoInstallers_AddReg]
+HKR,,CoInstallers32,0x00010000,"WdfCoInstaller01009.dll,WdfCoInstaller","WinUSBCoInstaller2.dll"
+
+[CoInstallers_CopyFiles]
+WinUSBCoInstaller2.dll
+WdfCoInstaller01009.dll
+
+[DestinationDirs]
+CoInstallers_CopyFiles=11
+
+[SourceDisksNames]
+1 = %DISK_NAME%,"",,
+2 = %DISK_NAME%,"",,
+
+[SourceDisksFiles.x86]
+WinUSBCoInstaller2.dll  = 1
+WdfCoInstaller01009.dll = 1
+
+[SourceDisksFiles.amd64]
+WinUSBCoInstaller2.dll  = 2
+WdfCoInstaller01009.dll = 2
+
+[Strings]
+JRDCOMM                     = "Alcatel Mobile broadband"
+WinUSB_SvcDesc              = "Alcatel Android USB Driver"
+DISK_NAME                   = "Alcatel Android WinUsb installation disk"
+ClassName                   = "Alcatel Android Phone"
+ALCATEL_DEVICE_01963        = "Alcatel Android ADB interface"
+ALCATEL_DEVICE_01971        = "Alcatel Android ADB interface"

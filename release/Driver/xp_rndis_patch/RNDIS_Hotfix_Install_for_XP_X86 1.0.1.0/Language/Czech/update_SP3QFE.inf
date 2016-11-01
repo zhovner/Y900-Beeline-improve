@@ -1,0 +1,374 @@
+[Version]
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+
+[CopyAlways.Cache.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+    rndismp.sys,SP3QFE\rndismp.sys
+
+[Drivers.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+    rndismp.sys,SP3QFE\rndismp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\rndismpx.sys=1
+    SP3QFE\rndismp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=959765"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20090125.002655
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x05
+    WSEDIR                  = "1029"
+    TSCLIENTDIR             = "Klient sluby Terminal Services"
+    PORTUGAL                = "Portugalsko"
+    FALKLANDS               = "Falklandské ostrovy"
+    LCID                    = "0405"
+    W32ID                   = "0005"
+    ACCESSDIR               = "pøíslušenství"
+    ACCESSDIRNAME           = "pøíslušenství" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Protokol PEAP (Protected EAP)"
+    EAPMSCHAP-DispName    = "Zabezpeèené heslo (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Bezdrátové"
+    ServicePackSourceFiles  = "Zdrojové soubory aktualizace systému Windows XP"
+    SP_SHORT_TITLE          = "KB959765"
+    SP_TITLE                = "Oprava Hotfix systému Windows XP (KB959765)"
+    PARENT_DISPLAY_NAME     ="Softwarové aktualizace systému Windows XP"
+    LOC_UPDATE="Aktualizace"
+    LOC_CRITICALUPDATE="Kritická aktualizace"
+    LOC_HOTFIX="Oprava Hotfix"
+    LOC_SECURITY_UPDATE="Aktualizace zabezpeèení"
+    WUCUN_TS_JOBFILE        = "Oznámení o kritické aktualizaci systému Windows.job"
+    BITS_DISPLAY_NAME       = "Sluba inteligentního pøenosu na pozadí (BITS)"
+    BITS_DESCRIPTION        = \
+"Pøenáší soubory na pozadí s pouitím nevyuité kapacity linky. Pokud je sluba zastavena, funkce jako Windows Update nebo MSN Explorer nebudou moci automaticky stahovat programy a další informace. Pokud je tato sluba zakázána, sluby které na ní explicitnì závisí moná nebudou moci pøenášet soubory (v pøípadì e nemají zabudovanou funkci pro pøenos pøímo pomocí IE pøi zakázané slubì BITS)."
+    BITS_CLASS_NAME         = "Tøída ovládacího prvku sluby inteligentního pøenosu na pozadí 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Starší tøída ovládacího prvku sluby inteligentního pøenosu na pozadí"
+    AU_DESCRIPTION          = "Povoluje stahování a instalaci aktualizací systému Windows. Pokud je tato sluba zakázána, nebude moné pouít funkci Automatické aktualizace ani webovı server Windows Update."
+    AU_DISPLAY_NAME         = "Automatické aktualizace"
+    DispStrCum_MP9          = \
+"Tuto aktualizaci softwaru lze pouít pouze pro program Windows Media Player 9. Pokud je program Windows Media Player 9 nainstalován, ale tato zpráva se pøesto zobrazuje, nainstalovaná verze ji tuto aktualizaci softwaru zahrnuje."
+    DispStrPreReq_MP9       = "Tuto aktualizaci softwaru lze pouít pouze pro program Windows Media Player 9. Pokud se zobrazí tato zpráva, není program Windows Media Player 9 nainstalován a tuto aktualizaci softwaru nelze nainstalovat."
+    MSI_DISPLAY_NAME        = "Sluba Windows Installer"
+    MSI_DESCRIPTION         = "Umoòuje pøidat, upravit a odebrat aplikace poskytované jaké balíèek Instalaèní sluby systému Windows (*.msi). Je-li sluba zakázána, nebudou spuštìny ádné sluby, které jsou na ní explicitnì závislé."
+    CancelEventType         = "Neodesílat zprávu"
+    MainCancelIntroString   = "Dìkujeme za odeslání zprávy o poadavku. Po klepnutí na tlaèítko Odeslat zprávu budou data o selhání instalace odeslána spoleènosti Microsoft."
+    MainCancelDetailsLink   = "Zobrazí obsah zprávy o instalaci."
+    MainCancelReportBtn     = "Ode&slat zprávu"
+    DetailsCancelHeader     = "Informace o zprávì"
+    DetailsCancelBody       = \
+"Odeslání zprávy umoòuje zlepšit kvalitu produktu. Spoleènost Microsoft statisticky zpracovává sebraná data za úèelem zjištìní pøíèin selhání instalace. Tato informace pomùe sníit poèet selhání instalací z dùvodu instalace aktualizací."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Atény, Bejrút, Istanbul, Minsk"
+    HTTP="Sluba HTTP"
+    HTTP_DESCRIPTION="Tato sluba implementuje protokol HTTP (hypertext transfer protocol). Pokud je zakázána, nepodaøí se spustit ádnou slubu, která na ní explicitnì závisí."
+    HTTPFILTER="Sluba HTTP SSL"
+    HTTPFILTER_DESCRIPTION="Tato sluba implementuje zabezpeèenı protokol HTTP (HTTPS) pro slubu HTTP, a to pomocí protokolu SSL (Secure Socket Layer). Pokud je tato sluba zakázána, nepodaøí se spustit ádnou slubu, která na ní explicitnì závisí."
+    WEBOC_SCRIPT="Povolit skriptování ovládacího prvku prohlíeèe Internet Explorer"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1029"
+    ODBC_DATA_SOURCE_NAME = "Datové zdroje (ODBC)"
+    SHAREDACCESS_SERVICE_NAME = "Brána Firewall / Sdílení pøipojení k Internetu (ICS)"
+    Svc-ALG-Description       = "Zajišuje podporu modulù plug-in pro protokoly tøetích stran, které budou souèástí sdílení pøipojení k Internetu a brány firewall systému Windows."
+    Svc-Ip6Fw-DispName          = "Ovladaè IPv6 brány firewall systému Windows"
+    Svc-Ip6Fw-Description       = "Poskytuje slubu proti vniknutí do domácí sítì nebo sítì malé kanceláøe."
+    NotOnACPowerMsg= "Instalace aktualizace Service Pack vyaduje pøed spuštìním zapojení poèítaèe do elektrické zásuvky."
+    A6Blocked= "Nainstalovaná verze systému Windows je jiné jazykové verze ne instalovaná aktualizace."
+    SharedComputerToolMsg= \
+"Instalace aktualizace Service Pack 3 byla zrušena, protoe sada Microsoft Shared Computer Toolkit for Windows XP není kompatibilní s touto verzí systému Windows. Pokraèovat budete moci a po provedení následujících akcí: 1) odinstalace sady Microsoft Shared Computer Toolkit, 2) (volitelné) instalace nástroje Windows SteadyState, co je novìjší verze sady Microsoft Shared Computer Toolkit. Podrobnìjší informace získáte na stránce Pøístup více uivatelù k jednomu poèítaèi na webu spoleènosti Microsoft."
+    RDPMUIBlockedMsg= \
+"Instalace aktualizace Service Pack 3 byla zrušena, protoe aktualizaci XP SP3 nelze nainstalovat, pokud je v poèítaèi nainstalována sada RDP 6.0 MUI PACK (Aktualizace pro systém Windows XP (KB925877)).  Ne budete moci pokraèovat, je tøeba odinstalovat aktualizaci KB925877."
+    WinflpBlockedMsg= \
+"Aktualizaci Microsoft Windows XP Professional Service Pack 3 nelze pouít pro operaèní systém Windows Fundamentals for Legacy PCs (WinFLP).   Samostatná aktualizace SP3 pro operaèní systém WinFLP bude k dispozici na webu download.microsoft.com."
+    WEPOSBlockedMsg= "Aktualizaci Microsoft Windows XP Professional Service Pack 3 nelze pouít pro systém WEPOS (Windows Embedded for Point of Service).   Samostatná aktualizace SP3 pro systém WEPOS bude k dispozici na webu download.microsoft.com."
+    PreReq_MSI_3 = "Tuto opravu lze nainstalovat pouze do verze MSI 3.0"
+    PreReq_MSI_31 = "Tuto aktualizaci lze nainstalovat pouze pomocí instalaèního programu MS 3.1."
+    NOTATABLET = "Tuto opravu lze nainstalovat pouze do poèítaèe Tablet PC"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Instalaèní program zjistil, e obsah této aktualizace je ji v systému k dispozici."
+    ELK_LOCALE_INUSE_201a = \
+"Jazyk Bosenština (Cyrilice, Bosna a Hercegovina) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_201a    = \
+"V systému je nainstalována podpora jazyka Bosenština (Cyrilice, Bosna a Hercegovina) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_0464 = \
+"Jazyk Filipínština (Filipíny) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_0464    = \
+"V systému je nainstalována podpora jazyka Filipínština (Filipíny) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_046e = \
+"Jazyk Lucemburština (Lucembursko) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_046e    = \
+"V systému je nainstalována podpora jazyka Lucemburština (Lucembursko) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_0463 = \
+"Jazyk Paštština (Afghánistán) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_0463    = \
+"V systému je nainstalována podpora jazyka Paštština (Afghánistán) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_0462 = \
+"Jazyk Fríština (Nizozemsko) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_0462    = \
+"V systému je nainstalována podpora jazyka Fríština (Nizozemsko) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_047a = \
+"Jazyk Mapudungunština (Chile) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_047a    = \
+"V systému je nainstalována podpora jazyka Mapudungunština (Chile) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_0461 = \
+"Jazyk Nepálština (Nepál) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_0461    = \
+"V systému je nainstalována podpora jazyka Nepálština (Nepál) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_085d = \
+"Jazyk Inuktitutština (latinka, Kanada) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_085d    = \
+"V systému je nainstalována podpora jazyka Inuktitutština (latinka, Kanada) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_083c = \
+"Jazyk Irština (Irsko) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_083c    = \
+"V systému je nainstalována podpora jazyka Irština (Irsko) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_047c = \
+"Jazyk Mohavština (Mohava) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_047c    = \
+"V systému je nainstalována podpora jazyka Mohavština (Mohava) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    ELK_LOCALE_INUSE_0417 = \
+"Jazyk Románština (Švıcarsko) je vybrán jako jazyk pro standardy a formáty pro programy nepodporující Unicode.  Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Pøeètìte si soubor readmesp.htm a vyberte jinı jazyk."
+
+    ELK_MUI_INUSE_0417    = \
+"V systému je nainstalována podpora jazyka Románština (Švıcarsko) pro nabídky a dialogy. Pøed instalací aktualizace Oprava Hotfix systému Windows XP (KB959765) není tento jazyk podporován.  Další informace o odinstalování podpory pro tento jazyk naleznete v souboru readmesp.htm."
+
+    KLT_148               = "Bosenština (cyrilice)"
+    KLT_149               = "Inuktitutština (latinka)"
+    KLT_150               = "Lucemburština"
+    KLT_151               = "Nepálština"
+    KLT_152               = "Paštština"
+    BEETHOVEN_NINTH_NAME            = "Beethovenova symfonie è. 9 (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Ukázky hudby"
+    NEW_STORIES_NAME                = "Nové pøíbìhy (Highway Blues).wma"
+    InvalidIEVersion="Nainstalovaná verze aplikace Internet Explorer neodpovídá této aktualizaci."
+    TSC_PACKAGE_EXPIRED="Tuto pøedbìnou verzi Pøipojení ke vzdálené ploše ji není moné pouívat. Chcete-li si stáhnout plnou verzi Pøipojení ke vzdálené ploše, pøejdìte na web Windows Update nebo se obrate na správce systému."
+    KWL_MEDIAPLAYER_LNK_TITLE="Centrum programu Media Player"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Centrum programu Media Player"
+    KWL_MESSENGER_LNK_TITLE="Centrum programu Messenger"
+    KWL_MESSENGER_LNK_TOOLTIP="Centrum programu Messenger"
+    Caucasus_Display="(GMT+04:00) Jerevan"
+    Azerbaijan_Std="Ázerbájdán (bìnı èas)"
+    Azerbaijan_Dlt="Ázerbájdán (letní èas)"
+    Azerbaijan_Display="(GMT+04:00) Baku"
+    SA_Pacific_Display="(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+    GTB_Display="(GMT+02:00) Atény, Bukureš, Istanbul"
+    E_Europe_Display="(GMT+02:00) Minsk"
+    Middle_East_Std="Støední vıchod (bìnı èas)"
+    Middle_East_Dlt="Støední vıchod (letní èas)"
+    Middle_East_Display="(GMT+02:00) Bejrút"
+    Jordan_Std="Jordánsko (bìnı èas)"
+    Jordan_Dlt="Jordánsko (letní èas)"
+    Jordan_Display="(GMT+02:00) Omán"
+    Pacific_Display="(GMT-08:00) Tichomoøí (USA a Kanada)"
+    Central_M_Std="Støední obl., bìnı èas (Mexiko)"
+    Central_M_Dlt="Støední obl., letní èas (Mexiko)"
+    Mountain_M_Std="Horská obl., bìnı èas (Mexiko)"
+    Mountain_M_Dlt="Horská obl., letní èas (Mexiko)"
+    Central_M_Display="(GMT-06:00) Guadalajara, Mexiko, Monterrey – Nové"
+    Mexico_Old_Display="(GMT-06:00) Guadalajara, Mexiko, Monterrey – Staré"
+    Pacific_M_Std="Tichomoøí (bìnı èas) (Mexiko)"
+    Pacific_M_Dlt="Tichomoøí (letní èas) (Mexiko)"
+    Pacific_M_Display="(GMT-08:00) Tijuana, Baja California"
+    Mountain_M_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan – Nové"
+    Mexico_2_Old_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan – Staré"
+    Namibia_Std="Namibie (bìnı èas)"
+    Namibia_Dlt="Namibie (letní èas)"
+    Namibia_Display="(GMT+02:00) Windhoek"
+    Myanmar_Display="(GMT+06:30) Rangún"
+    Georgian_Std="Gruzie (bìnı èas)"
+    Georgian_Dlt="Gruzie (letní èas)"
+    Georgian_Display="(GMT+03:00) Tbilisi"
+    Greenwich_Display="(GMT) Monrovia, Reykjavík"
+    Central_Brazilian_Std="Støed Brazílie (bìnı èas)"
+    Central_Brazilian_Dlt="Støed Brazílie (letní èas)"
+    Central_Brazilian_Display="(GMT-04:00) Manaus"
+    Montevideo_Std="Montevideo (bìnı èas)"
+    Montevideo_Dlt="Montevideo (letní èas)"
+    Montevideo_Display="(GMT-03:00) Montevideo"
+    Caucasus_Common_Display="(GMT+04:00) Kavkaz (bìnı èas)"
+    Armenian_Std="Arménie (bìnı èas)"
+    Armenian_Dlt="Arménie (letní èas)"
+    Venezuela_Std="Venezuela (bìnı èas)"
+    Venezuela_Dlt="Venezuela (letní èas)"
+    Venezuela_Display="(GMT-04:30) Caracas"
+    SA_Western_Display="(GMT-04:00) La Paz"
+    SA_Eastern_Display="(GMT-03:00) Georgetown"
+    Argentina_Std="Argentina (bìnı èas)"
+    Argentina_Dlt="Argentina (letní èas)"
+    Argentina_Display="(GMT-03:00) Buenos Aires"
+    Morocco_Std="Maroko (bìnı èas)"
+    Morocco_Dlt="Maroko (letní èas)"
+    Morocco_Display="(GMT) Casablanca"
+    Pakistan_Std="Pákistán (bìnı èas)"
+    Pakistan_Dlt="Pákistán (letní èas)"
+    Pakistan_Display="(GMT+05:00) Islámábád, Karáèí"
+    West_Asia_Display="(GMT+05:00) Taškent"
+    Mauritius_Std="Mauricius (bìnı èas)"
+    Mauritius_Dlt="Mauricius (letní èas)"
+    Mauritius_Display="(GMT+04:00) Port Louis"
+    WSMAN_ServiceDisplay="Vzdálená správa systému Windows (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Umoòuje pøístup k informacím o správì z místních a vzdálenıch poèítaèù."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="Pøed instalací tohoto balíèku nainstalujte prosím slubu Microsoft Core XML Services (MSXML) 6.0. Chcete-li získat slubu MSXML6, navštivte web <http://download.microsoft.com> a vyhledejte termín MSXML6."
+    napagent_displayname="Agent architektury NAP (Network Access Protection)"
+    napagent_description="Umoòuje klientùm systému Windows úèastnit se architektury NAP (Network Access Protection)."
+    hkmsvc_displayname= "Sluba Správa klíèù a certifikátù stavu"
+    hkmsvc_description="Slouí ke správì certifikátù a klíèù stavu (pouívanıch architekturou NAP)."
+    eaphost_displayname="Sluba EAP (Extensible Authentication Protocol)"
+    eaphost_description="Poskytuje klientùm systému Windows slubu EAP (Extensible Authentication Protocol)."
+    eapqec_displayname="Souèást EAP Quarantine Enforcement Client"
+    eapqec_description="Poskytuje vynucení na základì protokolu EAP pro architekturu NAP."
+    dot3svc_displayname="Automatická konfigurace pevné sítì"
+    dot3svc_description="Tato sluba provádí ovìøení IEEE 802.1X u rozhraní sítì Ethernet."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    noPNPfiles=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

@@ -1,0 +1,317 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.221850
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x804
+    WSEDIR                  = "2052"
+    TSCLIENTDIR             = "Terminal Services Client"
+    PORTUGAL                = "葡萄牙"
+    FALKLANDS               = "福克兰群岛"
+    LCID                    = "0804"
+    W32ID                   = "0804"
+    ACCESSDIR               = "accessories"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "受保护的 EAP (PEAP)"
+    EAPMSCHAP-DispName    = "安全的密码 (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Wireless"
+    ServicePackSourceFiles  = "Windows XP Hotfix 源文件"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Windows XP 修补程序 (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - 软件更新"
+    LOC_UPDATE="更新"
+    LOC_CRITICALUPDATE="关键更新"
+    LOC_HOTFIX="修补程序"
+    LOC_SECURITY_UPDATE="安全更新"
+    WUCUN_TS_JOBFILE        = "windows 重要更新通知.job"
+    BITS_DISPLAY_NAME       = "Background Intelligent Transfer Service"
+    BITS_DESCRIPTION        = \
+"利用空闲的网络带宽在后台传输文件。如果服务被停用，例如 Windows Update 和 MSN Explorer 的功能将无法自动下载程序和其他信息。如果此服务被禁用，任何依赖它的服务如果没有容错技术以直接通过 IE 传输文件，一旦 BITS 被禁用，就可能无法传输文件。"
+    BITS_CLASS_NAME         = "后台智能传输控件类 1.0"
+    LEGACY_BITS_CLASS_NAME  = "继承的后台智能传输控件类"
+    AU_DESCRIPTION          = "启用 Windows 更新的下载和安装。如果服务被禁用，此计算机将无法使用自动更新功能或 Windows 更新网站。"
+    AU_DISPLAY_NAME         = "Automatic Updates"
+    DispStrCum_MP9          = "本软件更新仅适用于 Windows Media Player 9。如果您安装了 Windows Media Player 9，但仍然看到此消息，则说明您的版本已经包括本软件更新。"
+    DispStrPreReq_MP9       = "本软件更新仅适用于 Windows Media Player 9。如果您看到此消息，则说明您尚未安装 Windows Media Player 9，因此无法安装本软件更新。"
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "添加、修改和删除以 Windows 安装程序(*.msi)的软件包提供的应用程序。如果禁用了此服务，任何完全依赖它的服务不会被启动。"
+    CancelEventType         = "取消报告"
+    MainCancelIntroString   = "感谢您报告此请求。您单击""发送报告""按钮时会将与安装失败原因相关的数据发送到 Microsoft"
+    MainCancelDetailsLink   = "查看安装程序报告的内容。"
+    MainCancelReportBtn     = "发送报告(&S)"
+    DetailsCancelHeader     = "报告信息"
+    DetailsCancelBody       = "发送此报告有助于我们改进用户体验。我们将在统计上处理收集的数据以了解导致安装失败的原因。此信息将帮助我们减少由应用更新导致的安装失败的次数。"
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) 雅典，贝鲁特，伊斯坦布尔，明斯克"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="此服务实现超文本传送协议(HTTP)。如果此服务被禁用，任何依赖它的服务将无法启动。"
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION="此服务通过安全套接字层(SSL)实现 HTTP 服务的安全超文本传送协议(HTTPS)。如果此服务被禁用，任何依赖它的服务将无法启动。"
+    WEBOC_SCRIPT="允许 Internet Explorer Webbrowser 控件的脚本"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1033"
+    ODBC_DATA_SOURCE_NAME = "ODBC 数据源"
+    SHAREDACCESS_SERVICE_NAME = "Windows Firewall/Internet Connection Sharing (ICS)"
+    Svc-ALG-Description       = "为 Internet 连接共享和 Windows 防火墙提供第三方协议插件的支持。"
+    Svc-Ip6Fw-DispName          = "IPv6 Windows Firewall Driver"
+    Svc-Ip6Fw-Description       = "为家庭或小型办公网络提供入侵保护服务。"
+    NotOnACPowerMsg= "此 Service Pack 要求计算机使用交流电源才能开始安装程序。"
+    A6Blocked= "您已经安装的 Windows 版本与正在安装的更新不匹配。"
+    SharedComputerToolMsg= \
+"Service Pack 3 安装已被取消，因为 Microsoft Shared Computer Toolkit for Windows XP 与此版本的 Windows 不兼容。可以继续之前，必须: 1) 卸载 Microsoft Shared Computer Toolkit 2) (可选)安装 Windows SteadyState，它是 Microsoft Shared Computer Toolkit 的较新版本。有关详细信息，请转到 Microsoft 网站上的“共享访问”页。"
+    RDPMUIBlockedMsg= "已取消 Service Pack 3 安装，因为不能在 RDP 6.0 MUI PACK(Windows XP 更新 KB925877)上安装 XP SP3。必须先卸载 KB925877，然后才能继续安装。"
+    WinflpBlockedMsg= "不能将 Microsoft Windows XP Professional Service Pack 3 应用于 Windows Fundamentals for Legacy PCs (WinFLP)。可以在 download.microsoft.com 下载 WinFLP 的独特 SP3 更新程序包。"
+    WEPOSBlockedMsg= "不能将 Microsoft Windows XP Professional Service Pack 3 应用于 Windows Embedded for Point of Service (WEPOS)。可以在 download.microsoft.com 下载 WEPOS 的独特 SP3 更新程序包。"
+    PreReq_MSI_3 = "此修补程序仅在 MSI 3.0 上安装"
+    PreReq_MSI_31 = "这个修补程序只能在 MSI 3.1 上安装"
+    NOTATABLET = "此修补程序只能在 Tablet PC 上安装"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="安装程序已经确定这个系统上已经存在此更新的内容。"
+    ELK_LOCALE_INUSE_201a = "波斯尼亚语(西里尔文，波斯尼亚和黑塞哥维那)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_201a    = "在您的系统上为菜单和对话框安装了波斯尼亚语(西里尔文，波斯尼亚和黑塞哥维那)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_0464 = "菲律宾语(菲律宾)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_0464    = "在您的系统上为菜单和对话框安装了菲律宾语(菲律宾)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_046e = "卢森堡语(卢森堡)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_046e    = "在您的系统上为菜单和对话框安装了卢森堡语(卢森堡)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_0463 = "普什图语(阿富汗)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_0463    = "在您的系统上为菜单和对话框安装了普什图语(阿富汗)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_0462 = "弗里西亚语(荷兰)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_0462    = "在您的系统上为菜单和对话框安装了弗里西亚语(荷兰)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_047a = "马普丹冈语(智利)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_047a    = "在您的系统上为菜单和对话框安装了马普丹冈语(智利)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_0461 = "尼泊尔语(尼泊尔)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_0461    = "在您的系统上为菜单和对话框安装了尼泊尔语(尼泊尔)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_085d = "因纽特语(拉丁文，加拿大)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_085d    = "在您的系统上为菜单和对话框安装了因纽特语(拉丁文，加拿大)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_083c = "爱尔兰语(爱尔兰)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_083c    = "在您的系统上为菜单和对话框安装了爱尔兰语(爱尔兰)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_047c = "莫霍克语(莫霍克)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_047c    = "在您的系统上为菜单和对话框安装了莫霍克语(莫霍克)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    ELK_LOCALE_INUSE_0417 = "罗曼什语(瑞士)被选定为标准和格式或非-Unicode 程序的语言。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 以选择其他语言。"
+    ELK_MUI_INUSE_0417    = "在您的系统上为菜单和对话框安装了罗曼什语(瑞士)语言支持。没有 Windows XP 修补程序 (KB945436) 支持时，此语言不被支持。请参阅 readmesp.htm 获得更多信息以卸载此语言支持。"
+    KLT_148               = "波斯尼亚语西里尔文"
+    KLT_149               = "因纽特语拉丁文"
+    KLT_150               = "卢森堡语"
+    KLT_151               = "尼泊尔语"
+    KLT_152               = "普什图语"
+    BEETHOVEN_NINTH_NAME            = "Beethoven's Symphony No. 9 (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "示例音乐"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="您已经安装的 Internet Explorer 版本与试图安装的更新不匹配。"
+    TSC_PACKAGE_EXPIRED="远程桌面连接的预发行版本已经过期。要下载远程桌面连接的完全版本，请转到 Windows Update 或与系统管理员联系。"
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) 埃里温"
+    Azerbaijan_Std="阿塞拜疆标准时间"
+    Azerbaijan_Dlt="阿塞拜疆夏令时"
+    Azerbaijan_Display="(GMT+04:00) 巴库"
+    SA_Pacific_Display="(GMT-05:00) 波哥大，利马，里奥布朗库"
+    GTB_Display="(GMT+02:00) 雅典，布加勒斯特，伊斯坦布尔"
+    E_Europe_Display="(GMT+02:00) 明斯克"
+    Middle_East_Std="中东标准时间"
+    Middle_East_Dlt="中东夏令时"
+    Middle_East_Display="(GMT+02:00) 贝鲁特"
+    Jordan_Std="约旦标准时间"
+    Jordan_Dlt="约旦夏令时"
+    Jordan_Display="(GMT+02:00) 安曼"
+    Pacific_Display="(GMT-08:00) 太平洋时间(美国和加拿大)"
+    Central_M_Std="中部标准时间(墨西哥)"
+    Central_M_Dlt="中部夏令时(墨西哥)"
+    Mountain_M_Std="山地标准时间(墨西哥)"
+    Mountain_M_Dlt="山地夏令时(墨西哥)"
+    Central_M_Display="(GMT-06:00) 瓜达拉哈拉，墨西哥城，蒙特雷(新)"
+    Mexico_Old_Display="(GMT-06:00) 瓜达拉哈拉，墨西哥城，蒙特雷(旧)"
+    Pacific_M_Std="太平洋标准时间(墨西哥)"
+    Pacific_M_Dlt="太平洋夏令时(墨西哥)"
+    Pacific_M_Display="(GMT-08:00) 蒂华纳，下加利福尼亚州"
+    Mountain_M_Display="(GMT-07:00) 奇瓦瓦，拉巴斯，马扎特兰(新)"
+    Mexico_2_Old_Display="(GMT-07:00) 奇瓦瓦，拉巴斯，马萨特兰(旧)"
+    Namibia_Std="纳米比亚标准时间"
+    Namibia_Dlt="纳米比亚夏令时"
+    Namibia_Display="(GMT+02:00) 温得和克"
+    Myanmar_Display="(GMT+06:30) 仰光"
+    Georgian_Std="格鲁吉亚标准时间"
+    Georgian_Dlt="格鲁吉亚夏令时"
+    Georgian_Display="(GMT+03:00) 第比利斯"
+    Greenwich_Display="(GMT) 卡萨布兰卡，蒙罗维亚，雷克雅未克"
+    Central_Brazilian_Std="巴西中部标准时间"
+    Central_Brazilian_Dlt="巴西中部夏令时"
+    Central_Brazilian_Display="(GMT-04:00) 马瑙斯"
+    Montevideo_Std="蒙得维的亚标准时间"
+    Montevideo_Dlt="蒙得维的亚夏令时"
+    Montevideo_Display="(GMT-03:00) 蒙得维的亚"
+    Caucasus_Common_Display="(GMT+04:00) 高加索标准时间"
+    Armenian_Std="美国标准时间"
+    Armenian_Dlt="美国夏令时"
+    Venezuela_Std="委内瑞拉标准时间"
+    Venezuela_Dlt="委内瑞拉夏令时"
+    Venezuela_Display="(GMT-04:30) 加拉加斯"
+    SA_Western_Display="(GMT-04:00) 拉巴斯"
+    SA_Eastern_Display="(GMT-03:00) 乔治敦"
+    Argentina_Std="阿根廷标准时间"
+    Argentina_Dlt="阿根廷夏令时"
+    Argentina_Display="(GMT-03:00) 布宜诺斯艾利斯"
+    WSMAN_ServiceDisplay="Windows Remote Management (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="允许从本地计算机或远程计算机访问管理信息。"
+    PowerShell_CurrentlyInstalled=\
+"无法安装此版本的产品。必须首先删除 Windows PowerShell(TM) 1.0 的所有早期版本，才能安装此版本。请单击“确定”关闭安装向导。接下来打开“添加/删除程序”控制面板，卸载 Windows PowerShell(TM) 1.0 的所有版本，然后再次运行 Windows PowerShell(TM) 1.0 安装程序。"
+    PowerShell_CLR_NOT_INSTALLED=\
+"无法安装/卸载 Windows PowerShell(TM) 1.0，因为该产品需要 .NET Framework 2.0 的更新版本。请从 http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x804 安装 .NET Framework 2.0 RTM，然后重新运行 Windows PowerShell(TM) 1.0 安装程序"
+    PowerShell_SCFN="Simsun"
+    PowerShell_SCFS="14"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="发行说明"
+    PowerShell_ShortCutGettingStarted="入门"
+    PowerShell_ShortCutUserGuide="用户指南"
+    PowerShell_ShortCutQRef="快速参考"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=zh-CHS
+    PowerShell_InstallLangPackId=2052
+    PowerShell_ReleaseNotesDir=zh-CHS
+    InstallMSXML6="安装此软件包之前，请先安装 Microsoft Core XML Services (MSXML) 6.0。若要获取 MSXML6，请访问 http://download.microsoft.com 并搜索 MSXML6。"
+    napagent_displayname="Network Access Protection Agent"
+    napagent_description="允许 Windows 客户端参与网络访问保护"
+    hkmsvc_displayname= "Health Key and Certificate Management Service"
+    hkmsvc_description="管理健康证书和密钥(由 NAP 使用)"
+    eaphost_displayname="Extensible Authentication Protocol Service"
+    eaphost_description="提供 Windows 客户端可扩展的身份验证协议"
+    eapqec_displayname="EAP Quarantine Enforcement Client"
+    eapqec_description="为 NAP 提供基于 EAP 的强制"
+    dot3svc_displayname="Wired AutoConfig"
+    dot3svc_description="此服务在以太网接口上执行 IEEE 802.1X 身份验证"
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

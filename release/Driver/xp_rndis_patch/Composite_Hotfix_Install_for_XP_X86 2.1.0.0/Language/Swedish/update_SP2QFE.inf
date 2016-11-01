@@ -1,0 +1,303 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 512
+    MaxNtServicePackVersion   = 512
+    ThisServicePackVersion    = 512
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP2QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.222724
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x1D
+    WSEDIR                  = "1053"
+    TSCLIENTDIR             = "Terminal Services-klienten"
+    PORTUGAL                = "Portugal"
+    FALKLANDS               = "Falklandsöarna"
+    LCID                    = "041D"
+    W32ID                   = "001D"
+    ACCESSDIR               = "tillbehör"
+    ACCESSDIRNAME           = "tillbehör" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Protected EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Skyddat lösenord (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Wireless"
+    ServicePackSourceFiles  = "Källfiler för Windows XP Hotfix"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Snabbkorrigering för Windows XP (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - Programvaruuppdateringar"
+    LOC_UPDATE="Uppdatering"
+    LOC_CRITICALUPDATE="Kritisk uppdatering"
+    LOC_HOTFIX="Snabbkorrigering"
+    LOC_SECURITY_UPDATE="Säkerhetsuppdatering"
+    WUCUN_TS_JOBFILE        = "Meddelande om viktig Windows-uppdatering.job"
+    BITS_DISPLAY_NAME       = "Background Intelligent Transfer Service"
+    BITS_DESCRIPTION        = \
+"Överför filer i bakgrunden genom att använda ledig nätverksbandbredd. Om tjänsten stoppas kommer funktioner såsom Windows Update och MSN Explorer inte att automatiskt hämta program eller annan information. Om den här tjänsten inaktiveras kommer inga tjänster som uttryckligen beror på denna att kunna överföra filer om de inte har någon annan funktionalitet för att överföra filer direkt genom Internet Explorer om BITS har inaktiverats."
+    BITS_CLASS_NAME         = "Klass för kontrollen Background Intelligent Transfer 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Bakåtkompatibel klass för kontroll av smart hämtning i bakgrunden"
+    AU_DESCRIPTION          = "Aktiverar hämtning och installation av Windows-uppdateringar. Om denna tjänst inaktiveras kan datorn inte använda funktionen Automatiska uppdateringar eller webbplatsen Windows Update."
+    AU_DISPLAY_NAME         = "Automatic Updates"
+    DispStrCum_MP9          = "Den här uppdateringen kan bara installeras på datorer med Windows Media Player 9. Om du ser detta meddelande innehåller den version som är installerad på datorn redan den här uppdateringen."
+    DispStrPreReq_MP9       = "Den här uppdateringen kan bara installeras på datorer med Windows Media Player 9. Om du ser detta meddelande är Windows Media Player 9 inte installerat på datorn och du kan därför inte installera den här uppdateringen."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "Lägger till, ändrar och tar bort Windows Installer-program (*.msi). Om denna tjänst inaktiveras kommer tjänster som uttryckligen är beroende av den inte längre att fungera."
+    CancelEventType         = "Avbryt rapportering"
+    MainCancelIntroString   = "Tack för att du rapporterar detta. När du klickar på knappen Skicka rapport kommer information om varför installationen misslyckades att skickas till Microsoft"
+    MainCancelDetailsLink   = "Se vad installationsrapporten innehåller."
+    MainCancelReportBtn     = "&Skicka rapport"
+    DetailsCancelHeader     = "Rapportinformation"
+    DetailsCancelBody       = \
+"Genom att du skickar den här rapporten hjälper du oss förbättra produktkvaliteten. Vi behandlar insamlade data statistiskt för att förstå varför installationen misslyckades. Den här informationen hjälper oss minska risken för installationsfel när uppdateringar installeras."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Aten, Beirut, Istanbul, Minsk"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="Den här tjänsten implementerar HTTP (HyperText Transfer Protocol). Om tjänsten inaktiveras kommer ingen tjänst som är uttryckligen beroende av den att kunna startas."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION=\
+"Den här tjänsten implementerar SHTTP (Secure HyperText Transfer Protocol) för tjänsten HTTP genom att använda SSL (Secure Sockets Layer). Om tjänsten inaktiveras kommer ingen tjänst som är uttryckligen beroende av den att kunna startas."
+    WEBOC_SCRIPT="Tillåt att webbläsarkontrollen i Internet Explorer aktiveras genom skript"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1053"
+    ODBC_DATA_SOURCE_NAME = "ODBC-datakälla"
+    SHAREDACCESS_SERVICE_NAME = "Windows Firewall/Internet Connection Sharing (ICS)"
+    Svc-ALG-Description       = "Ger stöd för plugin för Internet-anslutningsdelning och Windows-brandväggen från andra leverantörer."
+    Svc-Ip6Fw-DispName          = "IPv6 Windows Firewall Driver"
+    Svc-Ip6Fw-Description       = "Ger en tjänst som kan upptäcka intrångsförsök på ett hemnätverk eller mindre kontorsnätverk."
+    NotOnACPowerMsg= "Datorn måste köras på nätström för att detta Service Pack ska kunna installeras."
+    A6Blocked= "Den Windows-version som är installerad matchar inte den uppdatering du försöker installera."
+    PreReq_MSI_3 = "Den här snabbkorrigeringen kräver MSI 3.0"
+    PreReq_MSI_31 = "Denna snabbkorrigering kräver MSI 3.1"
+    NOTATABLET = "Den här snabbkorrigeringen kan bara installeras på en Tablet PC"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Innehållet i den här uppdateringen finns redan på datorn."
+    ELK_LOCALE_INUSE_201a = \
+"Bosniska (kyrillisk, Bosnien och Hercegovina) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+
+    ELK_MUI_INUSE_201a    = \
+"Språkstöd för menyer och dialogrutor på Bosniska (kyrillisk, Bosnien och Hercegovina) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+
+    ELK_LOCALE_INUSE_0464 = "Filipino (Filippinerna) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_0464    = "Språkstöd för menyer och dialogrutor på Filipino (Filippinerna) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_046e = "Luxemburgska (Luxemburg) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_046e    = "Språkstöd för menyer och dialogrutor på Luxemburgska (Luxemburg) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_0463 = "Pashto (Afghanistan) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_0463    = "Språkstöd för menyer och dialogrutor på Pashto (Afghanistan) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_0462 = "Frisiska (Nederländerna) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_0462    = "Språkstöd för menyer och dialogrutor på Frisiska (Nederländerna) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_047a = "Mapudungun (Chile) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_047a    = "Språkstöd för menyer och dialogrutor på Mapudungun (Chile) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_0461 = "Nepali (Nepal) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_0461    = "Språkstöd för menyer och dialogrutor på Nepali (Nepal) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_085d = "Inuktitut (latinsk, Canada) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_085d    = "Språkstöd för menyer och dialogrutor på Inuktitut (latinsk, Canada) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_083c = "Irländska (Irland) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_083c    = "Språkstöd för menyer och dialogrutor på Irländska (Irland) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_047c = "Mohawk (Mohawk) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_047c    = "Språkstöd för menyer och dialogrutor på Mohawk (Mohawk) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    ELK_LOCALE_INUSE_0417 = "Rätoromanska (Schweiz) har valts som språk för standarder och format eller för icke-Unicode-program. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan välja ett annat språk finns i readmesp.htm."
+    ELK_MUI_INUSE_0417    = "Språkstöd för menyer och dialogrutor på Rätoromanska (Schweiz) har installerats på datorn. Det här språket stöds inte före Snabbkorrigering för Windows XP (KB945436). Information om hur du kan avinstallera det här språkstödet finns i readmesp.htm."
+    KLT_148               = "Bosniska, kyrillisk"
+    KLT_149               = "Inuktitut, latinsk"
+    KLT_150               = "Luxemburgska"
+    KLT_151               = "Nepali"
+    KLT_152               = "Pashto"
+    BEETHOVEN_NINTH_NAME            = "Beethovens nionde symfoni (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Exempelmusik"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="Den Internet Explorer-version som är installerad matchar inte den uppdatering du försöker installera."
+    TSC_PACKAGE_EXPIRED=\
+"Den här förhandsversionen av Anslutning till fjärrskrivbord har upphört att gälla. Om du vill hämta den fullständiga versionen av Anslutning till fjärrskrivbord kan du besöka Windows Update eller kontakta systemadministratören."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) Yerevan"
+    Azerbaijan_Std="Azerbajdzjan, normaltid"
+    Azerbaijan_Dlt="Azerbajdzjan, sommartid"
+    Azerbaijan_Display="(GMT+04:00) Baku"
+    SA_Pacific_Display="(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+    GTB_Display="(GMT+02:00) Aten, Bukarest, Istanbul"
+    E_Europe_Display="(GMT+02:00) Minsk"
+    Middle_East_Std="Mellanöstern, normaltid"
+    Middle_East_Dlt="Mellanöstern, sommartid"
+    Middle_East_Display="(GMT+02:00) Beirut"
+    Jordan_Std="Jordanien, normaltid"
+    Jordan_Dlt="Jordanien, sommartid"
+    Jordan_Display="(GMT+02:00) Amman"
+    Pacific_Display="(GMT-08:00) Stillahavstid (USA och Canada)"
+    Central_M_Std="Central normaltid (Mexiko)"
+    Central_M_Dlt="Central sommartid (Mexiko)"
+    Mountain_M_Std="Mountain, normaltid (Mexiko)"
+    Mountain_M_Dlt="Mountain, sommartid (Mexiko)"
+    Central_M_Display="(GMT-06:00) Guadalajara, Mexiko City, Monterrey - ny"
+    Mexico_Old_Display="(GMT-06:00) Guadalajara, Mexiko City, Monterrey - gammal"
+    Pacific_M_Std="Pacific, normaltid (Mexiko)"
+    Pacific_M_Dlt="Pacific, sommartid (Mexiko)"
+    Pacific_M_Display="(GMT-08:00) Tijuana, Baja Kalifornien"
+    Mountain_M_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - ny"
+    Mexico_2_Old_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - gammal"
+    Namibia_Std="Namibia, normaltid"
+    Namibia_Dlt="Namibia, sommartid"
+    Namibia_Display="(GMT+02:00) Windhoek"
+    Myanmar_Display="(GMT+06:30) Rangoon"
+    Georgian_Std="Georgien, normaltid"
+    Georgian_Dlt="Georgien, sommartid"
+    Georgian_Display="(GMT+03:00) Tbilisi"
+    Greenwich_Display="(GMT) Casablanca, Monrovia, Reykavik"
+    Central_Brazilian_Std="Centrala Brasilien, normaltid"
+    Central_Brazilian_Dlt="Centrala Brasilien, sommartid"
+    Central_Brazilian_Display="(GMT-04:00) Manaus"
+    Montevideo_Std="Montevideo, normaltid"
+    Montevideo_Dlt="Montevideo, sommartid"
+    Montevideo_Display="(GMT-03:00) Montevideo"
+    Caucasus_Common_Display="(GMT+04:00) Kaukasus, normaltid"
+    Armenian_Std="Armenisk standardtid"
+    Armenian_Dlt="Armenisk sommartid"
+    Venezuela_Std="Venezuela, normaltid"
+    Venezuela_Dlt="Venezuela, sommartid"
+    Venezuela_Display="(GMT-04:30) Caracas"
+    SA_Western_Display="(GMT-04:00) La Paz"
+    SA_Eastern_Display="(GMT-03:00) Georgetown"
+    Argentina_Std="Argentina, normaltid"
+    Argentina_Dlt="Argentina, sommartid"
+    Argentina_Display="(GMT-03:00) Buenos Aires"
+    WSMAN_ServiceDisplay="Windows Remote Management (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Ger tillgång till hanteringsinformation från den lokala datorn och från fjärrdatorer."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="Microsoft Core XML Services (MSXML) 6.0 måste installeras innan det här paketet kan installeras. Du kan hämta MSXML6 genom att besöka http://download.microsoft.com och söka efter MSXML6."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

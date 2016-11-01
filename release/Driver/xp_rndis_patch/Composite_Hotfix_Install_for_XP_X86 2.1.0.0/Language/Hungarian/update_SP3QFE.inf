@@ -1,0 +1,365 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.221850
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x0e
+    WSEDIR                  = "1038"
+    TSCLIENTDIR             = "Terminálszolgáltatások ügyfele"
+    PORTUGAL                = "Portugália"
+    FALKLANDS               = "Falkland- (Malvin-) szigetek"
+    LCID                    = "040e"
+    W32ID                   = "040e"
+    ACCESSDIR               = "kellékek"
+    ACCESSDIRNAME           = "kellékek" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Védett EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Titkosított jelszó (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Vezeték nélküli"
+    ServicePackSourceFiles  = "Windows XP gyorsjavítás forrásfájljai"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Windows XP gyorsjavítás - KB945436"
+    PARENT_DISPLAY_NAME     ="Windows XP - szoftverfrissítések"
+    LOC_UPDATE="frissítés"
+    LOC_CRITICALUPDATE="kritikus frissítés"
+    LOC_HOTFIX="gyorsjavítás"
+    LOC_SECURITY_UPDATE="biztonsági frissítés"
+    WUCUN_TS_JOBFILE        = "Értesítõ kritikus Windows-frissítésekrõl.job"
+    BITS_DISPLAY_NAME       = "Háttérben futó intelligens átviteli szolgáltatás"
+    BITS_DESCRIPTION        = \
+"Fájlok átvitele a kihasználatlan hálózati sávszélesség felhasználásával. Ha leállítja a szolgáltatást, akkor nem fognak mûködni az olyan szolgáltatások, mint például a Windows Update, valamint az MSN Explorer nem fog tudni automatikusan programokat és más adatokat letölteni. Ha a szolgáltatást letiltja, a tõle függõ szolgáltatások nem fognak tudni fájlokat átvinni, csak abban az esetben, hogyha olyan hibatûrõ mechanizmussal rendelkeznek, amelyek képesek a fájlok közvetlen, az IE-n keresztüli átvitelére a BITS letiltása esetén."
+    BITS_CLASS_NAME         = "Háttérben futó intelligens átvitel 1.0 verziójú vezérlõosztálya"
+    LEGACY_BITS_CLASS_NAME  = "Háttérben futó intelligens átvitel vezérlõosztálya (örökölt)"
+    AU_DESCRIPTION          = "A Windows-frissítések letöltését és telepítését teszi lehetõvé. Ha a szolgáltatás le van tiltva, a számítógép nem veheti igénybe a Windows Update webhely automatikus frissítési szolgáltatását."
+    AU_DISPLAY_NAME         = "Automatikus frissítések"
+    DispStrCum_MP9          = "A szoftverfrissítés csak Windows Media Player 9 lejátszóra alkalmazható. Ha a Windows Media Player 9 telepítve van, de mégis megjelenik ez az üzenet, akkor a lejátszó már tartalmazza ezt a szoftverfrissítést."
+    DispStrPreReq_MP9       = "A szoftverfrissítés csak Windows Media Player 9 lejátszóra alkalmazható. Ha megjelenik ez az üzenet, akkor a Windows Media Player 9 nincs telepítve és a szoftverfrissítés nem telepíthetõ."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "Windows telepítõ csomagként (*.msi) rendelkezésre álló alkalmazások hozzáadása, módosítása és eltávolítása. Ha letiltja ezt a szolgáltatást, a tõle függõ szolgáltatások nem fognak elindulni."
+    CancelEventType         = "Megszakítási jelentés"
+    MainCancelIntroString   = "Köszönjük, hogy eljuttatta hozzánk kérését. Ha a ""Jelentés küldése"" gombra kattint, a rendszer elküldi a Microsoftnak a telepítés meghiúsulásával kapcsolatos adatokat"
+    MainCancelDetailsLink   = "Tekintse meg, mit tartalmaz a telepítési jelentés."
+    MainCancelReportBtn     = "&Jelentés küldése"
+    DetailsCancelHeader     = "A jelentés adatai"
+    DetailsCancelBody       = \
+"A jelentés elküldésével javítani tudjuk termékeink használhatóságát. A begyûjtött adatok statisztikai feldolgozásával megállapítjuk, mi okozta a telepítés meghiúsulását. Ezek az információk segítenek nekünk abban, hogy a jövõben csökkenteni tudjuk a frissítések által okozott telepítési hibák számát."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Athén, Bejrút, Isztambul, Minszk"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="Ez a szolgáltatás valósítja meg a HTTP protokollt. Ha letiltja a szolgáltatást, az attól közvetlenül függõ szolgáltatások nem fognak indulni."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION=\
+"Ez a szolgáltatás biztosítja a biztonságos HTTP protokollt (HTTPS) a HTTP szolgáltatás részére az SSL (Secure Socket Layer) használatával. Ha letiltja a szolgáltatást, az attól közvetlenül függõ szolgáltatások nem fognak indulni."
+    WEBOC_SCRIPT="Parancsfájlok engedélyezése az Internet Explorer WebBrowser vezérlõjéhez"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1038"
+    ODBC_DATA_SOURCE_NAME = "ODBC-adatforrásnév"
+    SHAREDACCESS_SERVICE_NAME = "Windows tûzfal/internetkapcsolat megosztása (ICS)"
+    Svc-ALG-Description       = "Külsõ beépülõ protokollmodulok támogatása az internetkapcsolat megosztásához és a Windows tûzfalhoz."
+    Svc-Ip6Fw-DispName          = "IPv6 Windows tûzfal illesztõprogramja"
+    Svc-Ip6Fw-Description       = "Behatolásvédelmi szolgáltatást nyújt otthoni és kisebb munkahelyi hálózatoknak."
+    NotOnACPowerMsg= "A szervizcsomag telepítésének megkezdéséhez a számítógépnek váltóáramról kell mûködnie."
+    A6Blocked= "A telepített Windows-verzió nem egyezik meg a telepíteni próbált frissítés verziójával."
+    SharedComputerToolMsg= \
+"A Service Pack 3 telepítése megszakadt, mert a Microsoft Shared Computer Toolkit for Windows XP nem kompatibilis a Windows ezen verziójával. A továbblépés elõtt a következõket kell tennie: 1) Távolítsa el a Microsoft Shared Computer Toolkit csomagot. 2) (Nem kötelezõ) Telepítse a Windows SteadyState programot, a Microsoft Shared Computer Toolkit újabb változatát. Részletesebb tájékoztatás a Microsoft webhelyének megosztott eléréssel kapcsolatos weblapján található."
+    RDPMUIBlockedMsg= "A Service Pack 3 telepítése megszakadt, mert az XP SP3 nem telepíthetõ az RDP 6.0 MUI PACK (A Windows XP frissítése (KB925877)) csomagra. A folytatáshoz távolítsa el a KB925877 jelû frissítést."
+    WinflpBlockedMsg= \
+"A Microsoft Windows XP Professional SP3 szervizcsomag nem használható a Windows Fundamentals for Legacy PCs (WinFLP) rendszerrel. A WinFLP rendszerhez készített speciális SP3 frissítõcsomagot a download.microsoft.com webhelyrõl lehet majd letölteni."
+    WEPOSBlockedMsg= \
+"A Microsoft Windows XP Professional SP3 szervizcsomag nem használható a Windows Embedded for Point of Service (WEPOS) rendszerrel. A WEPOS rendszerhez készített speciális SP3 frissítõcsomagot a download.microsoft.com webhelyrõl lehet majd letölteni."
+    PreReq_MSI_3 = "A javítás csak az MSI 3.0-s verziójára telepíthetõ."
+    PreReq_MSI_31 = "A javítás csak az MSI 3.1-es verziójára telepíthetõ."
+    NOTATABLET = "A gyorsjavítás csak táblaszámítógépre telepíthetõ."
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="A telepítõ megállapította, hogy a frissítés tartalma már elérhetõ a rendszeren."
+    ELK_LOCALE_INUSE_201a = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Bosnyák (Cirill, Bosznia-Hercegovina) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_201a    = \
+"A menük és párbeszédpanelek megjelenítéséhez Bosnyák (Cirill, Bosznia-Hercegovina) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_0464 = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Fülöp-szigeteki (Fülöp-szigetek) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_0464    = \
+"A menük és párbeszédpanelek megjelenítéséhez Fülöp-szigeteki (Fülöp-szigetek) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_046e = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Luxemburgi (Luxemburg) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_046e    = \
+"A menük és párbeszédpanelek megjelenítéséhez Luxemburgi (Luxemburg) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_0463 = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Pasto (Afganisztán) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_0463    = \
+"A menük és párbeszédpanelek megjelenítéséhez Pasto (Afganisztán) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_0462 = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Fríz (Hollandia) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_0462    = \
+"A menük és párbeszédpanelek megjelenítéséhez Fríz (Hollandia) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_047a = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Mapudungun (Chile) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_047a    = \
+"A menük és párbeszédpanelek megjelenítéséhez Mapudungun (Chile) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_0461 = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Nepáli (Nepál) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_0461    = \
+"A menük és párbeszédpanelek megjelenítéséhez Nepáli (Nepál) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_085d = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - az Inuktitut (latin betûs, Kanada) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_085d    = \
+"A menük és párbeszédpanelek megjelenítéséhez Inuktitut (latin betûs, Kanada) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_083c = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - az Ír (Írország) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_083c    = \
+"A menük és párbeszédpanelek megjelenítéséhez Ír (Írország) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_047c = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Mohawk (Mohawk) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_047c    = \
+"A menük és párbeszédpanelek megjelenítéséhez Mohawk (Mohawk) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    ELK_LOCALE_INUSE_0417 = \
+"A szabványok és formátumok megjelenítéséhez - vagy Unicode-karakterek kezelésére nem alkalmas programokhoz - a Rétoromán (Svájc) nyelvi beállítást választotta.  Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Másik nyelvi beállítás megadásához olvassa el a readmesp.htm fájlt."
+
+    ELK_MUI_INUSE_0417    = \
+"A menük és párbeszédpanelek megjelenítéséhez Rétoromán (Svájc) nyelvi támogatás van a rendszerre telepítve. Ez a nyelv csak a Windows XP gyorsjavítás - KB945436 verziójú szervizcsomag megjelenése óta támogatott.  Ha többet szeretne tudni arról, hogy miként távolíthatja el ezt a nyelvi támogatást, tanulmányozza a readmesp.htm fájlt."
+
+    KLT_148               = "bosnyák (cirill betûs)"
+    KLT_149               = "inuktitut (latin betûs)"
+    KLT_150               = "luxemburgi"
+    KLT_151               = "nepáli"
+    KLT_152               = "pasto"
+    BEETHOVEN_NINTH_NAME            = "Beethoven IX. szimfóniája (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Mintazene"
+    NEW_STORIES_NAME                = "Új történetek (Highway Blues).wma"
+    InvalidIEVersion="A telepített Internet Explorer verziója nem egyezik meg a telepíteni próbált frissítés verziójával."
+    TSC_PACKAGE_EXPIRED="A Távoli asztali kapcsolat alkalmazás nem végleges változata lejárt. A Távoli asztali kapcsolat végleges verziójának letöltéséhez látogasson el a Windows Update webhelyre vagy lépjen kapcsolatba a rendszergazdával."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player központ"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player központ"
+    KWL_MESSENGER_LNK_TITLE="Messenger központ"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger központ"
+    Caucasus_Display="(GMT+04:00) Jereván"
+    Azerbaijan_Std="Azerbajdzsáni téli idõszámítás"
+    Azerbaijan_Dlt="Azerbajdzsáni nyári idõszámítás"
+    Azerbaijan_Display="(GMT+04:00) Baku"
+    SA_Pacific_Display="(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+    GTB_Display="(GMT+02:00) Athén, Bukarest, Isztambul"
+    E_Europe_Display="(GMT+02:00) Minszk"
+    Middle_East_Std="Közel-Keleti téli idõszámítás"
+    Middle_East_Dlt="Közel-Keleti nyári idõszámítás"
+    Middle_East_Display="(GMT+02:00) Bejrút"
+    Jordan_Std="Jordániai téli idõszámítás"
+    Jordan_Dlt="Jordániai nyári idõszámítás"
+    Jordan_Display="(GMT+02:00) Amman"
+    Pacific_Display="(GMT-08:00) Csendes-óceáni idõ (Egyesült Államok és Kanada)"
+    Central_M_Std="Amerikai téli középidõ (Mexikó)"
+    Central_M_Dlt="Amerikai nyári középidõ (Mexikó)"
+    Mountain_M_Std="Hegyi téli idõ (Mexikó)"
+    Mountain_M_Dlt="Hegyi nyári idõ (Mexikó)"
+    Central_M_Display="(GMT-06:00) Guadalajara, Mexikóváros, Monterrey - új"
+    Mexico_Old_Display="(GMT-06:00) Guadalajara, Mexikóváros, Monterrey - régi"
+    Pacific_M_Std="Csendes-óceáni téli idõ (Mexikó)"
+    Pacific_M_Dlt="Csendes-óceáni nyári idõ(Mexikó)"
+    Pacific_M_Display="(GMT-08:00) Tijuana, Baja California"
+    Mountain_M_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - új"
+    Mexico_2_Old_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - régi"
+    Namibia_Std="Namíbiai téli idõ"
+    Namibia_Dlt="Namíbiai nyári idõ"
+    Namibia_Display="(GMT+02:00) Windhoek"
+    Myanmar_Display="(GMT+06:30) Yangon (Rangoon)"
+    Georgian_Std="Grúz téli idõ"
+    Georgian_Dlt="Grúz nyári idõ"
+    Georgian_Display="(GMT+03:00) Tbiliszi"
+    Greenwich_Display="(GMT) Casablanca, Monrovia, Reykjavik"
+    Central_Brazilian_Std="Brazil téli középidõ"
+    Central_Brazilian_Dlt="Brazil nyári középidõ"
+    Central_Brazilian_Display="(GMT-04:00) Manaus"
+    Montevideo_Std="Montevideoi téli idõ"
+    Montevideo_Dlt="Montevideoi nyári idõ"
+    Montevideo_Display="(GMT-03:00) Montevideo"
+    Caucasus_Common_Display="(GMT+04:00) Kaukázusi téli idõ"
+    Armenian_Std="Örményországi téli idõ"
+    Armenian_Dlt="Örményországi nyári idõ"
+    Venezuela_Std="Venezuelai téli idõ"
+    Venezuela_Dlt="Venezuelai nyári idõ"
+    Venezuela_Display="(GMT-04:30) Caracas"
+    SA_Western_Display="(GMT-04:00) La Paz"
+    SA_Eastern_Display="(GMT-03:00) Georgetown"
+    Argentina_Std="Argentínai téli idõ"
+    Argentina_Dlt="Argentínai nyári idõ"
+    Argentina_Display="(GMT-03:00) Buenos Aires"
+    WSMAN_ServiceDisplay="Rendszerfelügyeleti webszolgáltatások"
+    WSMANOOB_WSMAN_ServiceDescription="A kezeléshez szükséges információk elérésének engedélyezése a helyi és távoli számítógépekrõl."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="A csomag telepítése elõtt telepítse a Microsoft Core XML Services (MSXML) 6.0 szolgáltatást. Az MSXML6 beszerzéséhez látogasson el a http://download.microsoft.com webhelyre, majd a letöltések között keressen az MSMXML6 szövegre."
+    napagent_displayname="Hálózati hozzáférés-védelem ügyfele"
+    napagent_description="A hálózati hozzáférés-védelemben való részvétel lehetõvé tétele a Windows-ügyfelek számára"
+    hkmsvc_displayname= "Állapotkulcs és állapottanúsítvány-kezelõ szolgáltatás"
+    hkmsvc_description="Állapottanúsítványok és állapotkulcsok kezelése (a hálózati hozzáférés-védelem használja)"
+    eaphost_displayname="Bõvíthetõ hitelesítési protokollszolgáltatás"
+    eaphost_description="A Bõvíthetõ hitelesítési protokollszolgáltatás biztosítása Windows-ügyfeleknek"
+    eapqec_displayname="EAP-karanténkényszerítési ügyfél"
+    eapqec_description="Hálózatvédelem foganatosítása az EAP protokoll alapján"
+    dot3svc_displayname="Vezetékes hálózat automatikus beállítása"
+    dot3svc_description="Ez a szolgáltatás IEEE 802.1X hitelesítést végez Ethernet csatolófelületeken"
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

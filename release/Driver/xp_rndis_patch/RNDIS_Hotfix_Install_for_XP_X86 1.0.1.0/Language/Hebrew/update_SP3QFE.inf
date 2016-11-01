@@ -1,0 +1,326 @@
+[Version]
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+
+[CopyAlways.Cache.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+    rndismp.sys,SP3QFE\rndismp.sys
+
+[Drivers.files]
+    rndismpx.sys,SP3QFE\rndismpx.sys
+    rndismp.sys,SP3QFE\rndismp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\rndismpx.sys=1
+    SP3QFE\rndismp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=959765"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20090125.002655
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x0d
+    WSEDIR                  = "1033"
+    TSCLIENTDIR             = "Terminal Services Client"
+    PORTUGAL                = "פורטוגל"
+    FALKLANDS               = "איי פוקלנד"
+    LCID                    = "040d"
+    W32ID                   = "040d"
+    ACCESSDIR               = "accessories"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "מוגן EAP (PEAP)‎"
+    EAPMSCHAP-DispName    = "סיסמא מאובטחת (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "אלחוטי"
+    ServicePackSourceFiles  = "קובצי מקור ל- Windows XP Hotfix"
+    SP_SHORT_TITLE          = "KB959765"
+    SP_TITLE                = "תיקון חם עבור Windows XP (KB959765)‎"
+    PARENT_DISPLAY_NAME     ="Windows XP - עדכוני תוכנה"
+    LOC_UPDATE="עדכון"
+    LOC_CRITICALUPDATE="עדכון קריטי"
+    LOC_HOTFIX="תיקון חם"
+    LOC_SECURITY_UPDATE="עדכון אבטחה"
+    WUCUN_TS_JOBFILE        = "דיווח על עדכונים קריטיים עבור Windows.job"
+    BITS_DISPLAY_NAME       = "Background Intelligent Transfer Service"
+    BITS_DESCRIPTION        = \
+"מעביר קבצים ברקע על ידי שימוש ברוחב פס לא פעיל ברשת. אם שירות זה יופסק, תכונות כגון Windows Update ו- MSN Explorer לא יוכלו להוריד תוכניות ומידע אחר באופן אוטומטי. אם שירות זה יהפוך ללא זמין, כל השירותים התלויים בו באופן מפורש עלולים לא להעביר קבצים אם אין מנגנון אל-כשל להעברת קבצים ישירות דרך IE במקרה ו-BITS נעשה לא זמין."
+    BITS_CLASS_NAME         = "Background Intelligent Transfer Control Class 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Legacy Background Intelligent Transfer Control Class"
+    AU_DESCRIPTION          = "‏‏מאפשר הורדה והתקנה של עדכוני Windows. אם השרות הופך ללא זמין, לא ניתן יהיה להשתמש בתכונת עדכונים אוטומטיים או באתר Windows Update במחשב זה."
+    AU_DISPLAY_NAME         = "Automatic Updates"
+    DispStrCum_MP9          = "‏‏עדכון תוכנה זה ישים עבור Windows Media Player 9 בלבד. אם Windows Media Player 9 מותקן במחשב וועדיין קיבלת הודעה זו, הגירסה שלך כבר מכילה את עדכון התוכנה."
+    DispStrPreReq_MP9       = "‏‏עדכון תוכנה זה ישים עבור Windows Media Player 9 בלבד. אם קיבלת הודעה זו תוכנת Windows Media Player 9 אינה מותקנת במחשב ולכן אין אפשרות להתקין את עדכון התוכנה."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "הוספה, שינוי והסרה של יישומים שסופקו כחבילה של Windows Installer ‏‏‏(‎‎*‎.msi). אם שירות זה אינו פעיל, שירותים המסתמכים בצורה מפורשת על שירות זה לא יפעלו."
+    CancelEventType         = "בטל דו""ח"
+    MainCancelIntroString   = "תודה על דיווח הבקשה. לאחר לחיצה על לחצן ""שלח דו""ח"" , נתונים אודות כשל ההתקנה ישלחו אל Microsoft"
+    MainCancelDetailsLink   = "ראה את תוכן דו""ח ההתקנה."
+    MainCancelReportBtn     = "&שלח דו""ח"
+    DetailsCancelHeader     = "מידע דו""ח"
+    DetailsCancelBody       = "שליחת דו""ח זה עוזרת לנו לשפר את חווית המשתמש. אנו נעבד את הנתונים שנאספו באופן סטטיסטי בכדי להבין את הגורם לכשל בהתקנה. מידע זה יעזור לנו להקטין את מספר הכשלים בהתקנה הנגרמים על-ידי החלת עדכוני מערכת."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) אתונה, ביירות, איסטנבול, מינסק"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="‏‏שירות זה מיישם את פרוטוקול העברת היפר-טקסט (HTTP). אם שירות זה אינו פעיל, שירותים התלויים בו במפורש לא יוכלו לפעול."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION="‏‏שירות זה מיישם את פרוטוקול העברת היפר-טקסט מאובטח (HTTPS) עבור שירות HTTP, באמצעות Secure Socket Layer (SSL)‎. אם שירות זה אינו פעיל, שירותים התלויים בו במפורש לא יוכלו לפעול."
+    WEBOC_SCRIPT="מאפשר scripting של פקד Internet Explorer Webbrowser"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1037"
+    ODBC_DATA_SOURCE_NAME = "מקור נתונים של ODBC"
+    SHAREDACCESS_SERVICE_NAME = "Windows Firewall/Internet Connection Sharing (ICS)"
+    Svc-ALG-Description       = "‏‏מתן תמיכה ליישומי Plug-in של פרוטוקולים של ספקים חיצוניים עבור שיתוף ההתקשרויות לאינטרנט ועבור חומת אש של Windows."
+    Svc-Ip6Fw-DispName          = "IPv6 Windows Firewall Driver"
+    Svc-Ip6Fw-Description       = "מניעת פריצה עבור רשת ביתית או רשת של משרד קטן."
+    NotOnACPowerMsg= "‏‏לעדכון Service Pack זה נדרש כי המחשב יהיה מחובר למתח הרשת לפני הפעלת תוכנית ההתקנה."
+    A6Blocked= "גירסת Windows המותקנת אינה תואמת לעדכון אותו אתה מנסה להתקין."
+    SharedComputerToolMsg= \
+"תוכנית ההתקנה של Service Pack 3 בוטלה מאחר ש- Microsoft Shared Computer Toolkit עבור Windows XP אינו תואם לגירסה זו של Windows. לפני שתוכל להמשיך, עליך: 1) להסיר את ההתקנה של Microsoft Shared Computer Toolkit 2) (אופציונלי) להתקין את Windows SteadyState, הגירסה החדשה ביותר של Microsoft Shared Computer Toolkit. לקבלת מידע מפורט יותר, עבור לדף Shared Access באתר האינטרנט של Microsoft."
+    RDPMUIBlockedMsg= "ההתקנה של Service Pack 3 בוטלה, משום שלא ניתן להתקין את XP SP3 על RDP 6.0 MUI PACK (עדכון  עבור Windows XP‏ [KB925877]). כדי להמשיך, עליך להסיר את ההתקנה של KB925877."
+    WinflpBlockedMsg= "לא ניתן להחיל את Microsoft Windows XP Professional Service Pack 3 על Windows Fundamentals for Legacy PCs‏ (WinFLP). חבילת עדכון SP3 ייחודית עבור WinFLP תפורסם ב-download.microsoft.com."
+    WEPOSBlockedMsg= "לא ניתן להחיל את Microsoft Windows XP Professional Service Pack 3 על Windows Embedded for Point of Service (WEPOS). חבילת עדכון SP3 ייחודית עבור WEPOS תפורסם ב-download.microsoft.com."
+    PreReq_MSI_3 = "‏‏תיקון זה מותקן על גבי MSI 3.0 בלבד"
+    PreReq_MSI_31 = "תיקון זה מותקן על גבי MSI 3.1 בלבד"
+    NOTATABLET = "‏‏תיקון זה מתאים להתקנה על גבי מחשב אישי מסוג Tablet PCבלבד"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="תוכנית ההתקנה קבעה כי תכני עדכון זה קיימים כבר במערכת הפעלה זו."
+    ELK_LOCALE_INUSE_201a = "השפה הסרבית (קרילית, בוסניה והרצגובינה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_201a    = "השפה הסרבית (קרילית, בוסניה והרצגובינה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_0464 = "השפה הפיליפינית (פיליפינים) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה.  "
+    ELK_MUI_INUSE_0464    = "השפה הפיליפינית (פיליפינים) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה.  "
+    ELK_LOCALE_INUSE_046e = "השפה הלוקסנבורגית (לוקסנבורג) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_046e    = "השפה הלוקסנבורגית (לוקסנבורג) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_0463 = "השפה פאשטו (אפגניסטן) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_0463    = "השפה פאשטו (אפגניסטן) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_0462 = "השפה הפריזיאנית (הולנד) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_0462    = "השפה הפריזיאנית (הולנד) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_047a = "השפה מפיודונגון (צ'ילה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_047a    = "השפה מפיודונגון (צ'ילה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_0461 = "השפה נפאלית (נפאל) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות  Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_0461    = "השפה נפאלית (נפאל) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_085d = "השפה אינוקטיטוט (לטינית, קנדה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_085d    = "השפה אינוקטיטוט (לטינית, קנדה) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_083c = "השפה האירית (אירלנד) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_083c    = "השפה האירית (אירלנד) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_047c = "השפה מוהוק (מוהוק) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות  Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_047c    = "השפה מוהוק (מוהוק) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_LOCALE_INUSE_0417 = "השפה רומאנש (שוויץ) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    ELK_MUI_INUSE_0417    = "השפה רומאנש (שוויץ) נבחרה כשפה עבור תקנים ותבניות, או עבור תוכניות שאינן תוכניות Unicode. שפה זו אינה נתמכת לפני תיקון חם עבור Windows XP (KB959765)‎. נא ראה readmesp.htm לבחירת שפה שונה."
+    KLT_148               = "בוסנית קירילית"
+    KLT_149               = "אינוקטיטוט לטינית"
+    KLT_150               = "לוקסמבורגית"
+    KLT_151               = "נפאלית"
+    KLT_152               = "פאשטו"
+    BEETHOVEN_NINTH_NAME            = "Beethoven's Symphony No. 9 (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "מוסיקה לדוגמה"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="גרסת Internet Explorer המותקנת אינה תואמת לעדכון אותו אתה מנסה להתקין."
+    TSC_PACKAGE_EXPIRED="הגירסה הקודמת של חיבור לשולחן עבודה מרוחק פגה. כדי להוריד את הגירסה המלאה של חיבור לשולחן עבודה מרוחק, עבור לאתר  Windows Update או פנה אל מנהל המערכת שלך."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) ירוואן"
+    Azerbaijan_Std="שעון רגיל אזרבייג'ן"
+    Azerbaijan_Dlt="שעון קיץ אזרבייג'ן"
+    Azerbaijan_Display="(GMT+04:00) באקו"
+    SA_Pacific_Display="(GMT-05:00) בוגוטה, לימה, קיטו, ריו ברנקו"
+    GTB_Display="(GMT+02:00) אתונה, בוקרשט, איסטנבול"
+    E_Europe_Display="(GMT+02:00) מינסק"
+    Middle_East_Std="שעון רגיל המזרח התיכון"
+    Middle_East_Dlt="שעון קיץ המזרח התיכון"
+    Middle_East_Display="(GMT+02:00) ביירות"
+    Jordan_Std="שעון רגיל ירדן"
+    Jordan_Dlt="שעון קיץ ירדן"
+    Jordan_Display="(GMT+02:00) רבת עמון"
+    Pacific_Display="(GMT-08:00) שעון החוף המערבי (ארה''ב וקנדה)"
+    Central_M_Std="שעון רגיל מרכז (מקסיקו)"
+    Central_M_Dlt="שעון קיץ מרכז (מקסיקו)"
+    Mountain_M_Std="שעון רגיל אזור ההרים (מקסיקו)"
+    Mountain_M_Dlt="שעון קיץ אזור ההרים (מקסיקו)"
+    Central_M_Display="(GMT-06:00) גוואדאלאחארה, מקסיקו סיטי, מונטריי - חדש"
+    Mexico_Old_Display="(GMT-06:00) גוואדאלאחארה, מקסיקו סיטי, מונטריי - ישן"
+    Pacific_M_Std="שעון רגיל - החוף המערבי (מקסיקו)"
+    Pacific_M_Dlt="שעון קיץ - החוף המערבי (מקסיקו)"
+    Pacific_M_Display="(GMT-08:00) טיחואנה, באחה קליפורניה"
+    Mountain_M_Display="(GMT-07:00) צ'יוואווה, לה פאז, מאזאטלאן - חדש"
+    Mexico_2_Old_Display="(GMT-07:00) צ'יוואווה, לה פאז, מאזאטלאן- ישן"
+    Namibia_Std="שעון רגיל נמיביה"
+    Namibia_Dlt="שעון קיץ נמיביה"
+    Namibia_Display="(GMT+02:00) וינדהוק"
+    Myanmar_Display="(GMT+06:30) ינגון (רנגון)"
+    Georgian_Std="שעון רגיל גרוזיה"
+    Georgian_Dlt="שעון קיץ גרוזיה"
+    Georgian_Display="(GMT+03:00) טביליסי"
+    Greenwich_Display="(GMT) מונרוביה, רייקיאוויק"
+    Central_Brazilian_Std="שעון רגיל מרכז ברזיל"
+    Central_Brazilian_Dlt="שעון קיץ מרכז ברזיל"
+    Central_Brazilian_Display="(GMT-04:00) מנאוס"
+    Montevideo_Std="זמן סטנדרטי של מונטווידאו"
+    Montevideo_Dlt="שעון קיץ מונטווידאו"
+    Montevideo_Display="(GMT-03:00) מונטווידאו"
+    Caucasus_Common_Display="(GMT+04:00) שעון רגיל קווקז"
+    Armenian_Std="שעון רגיל ארמניה"
+    Armenian_Dlt="שעון קיץ ארמניה"
+    Venezuela_Std="שעון סטנדרטי ונצואלה"
+    Venezuela_Dlt="שעון קיץ ונצואלה"
+    Venezuela_Display="(GMT-04:30) קראקס"
+    SA_Western_Display="(GMT-04:00) לה פאס"
+    SA_Eastern_Display="(GMT-03:00) ג'ורג'טאון"
+    Argentina_Std="שעון רגיל ארגנטינה"
+    Argentina_Dlt="שעון קיץ ארגנטינה"
+    Argentina_Display="(GMT-03:00) בואנוס איירס"
+    Morocco_Std="שעון רגיל מרוקו"
+    Morocco_Dlt="שעון קיץ מרוקו"
+    Morocco_Display="(GMT) קזבלנקה"
+    Pakistan_Std="שעון רגיל פקיסטן"
+    Pakistan_Dlt="שעון קיץ פקיסטן"
+    Pakistan_Display="(GMT+05:00) איסלאמבאד, קראצ'י"
+    West_Asia_Display="(GMT+05:00) טשקנט"
+    Mauritius_Std="מאוריציוס שעון רגיל"
+    Mauritius_Dlt="מאוריציוס שעון קיץ"
+    Mauritius_Display="(GMT+04:00) פורט לואיס"
+    WSMAN_ServiceDisplay="Windows Remote Management (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Allows access to management information from local and remote machines."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="אנא התקן את Microsoft Core XML Services (MSXML) 6.0 לפני התקנת חבילה זו. כדי להשיג את MSXML6, אנא בקר באתר http://download.microsoft.com ובצע חיפוש אחר MSXML6."
+    napagent_displayname="Network Access Protection Agent"
+    napagent_description="אפשר ללקוחות Windows להשתתף בהגנה על גישה לרשת"
+    hkmsvc_displayname= "Health Key and Certificate Management Service"
+    hkmsvc_description="ניהול אישורי תקינות ומפתחות (נמצא בשימוש על-ידי הגנה על גישה לרשת)"
+    eaphost_displayname="Extensible Authentication Protocol Service"
+    eaphost_description="אספקת שירות Extensible Authentication Protocol ללקוחות Windows"
+    eapqec_displayname="EAP Quarantine Enforcement Client"
+    eapqec_description="אספקה של אכיפה מבוססת EAP עבור NAP"
+    dot3svc_displayname="Wired AutoConfig"
+    dot3svc_description="שירות זה מבצע אימות IEEE 802.1X בממשקי Ethernet"
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    noPNPfiles=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

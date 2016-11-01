@@ -1,0 +1,363 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.221850
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x15
+    WSEDIR                  = "1045"
+    TSCLIENTDIR             = "Klient us≥ug terminalowych"
+    PORTUGAL                = "Portugalia"
+    FALKLANDS               = "Falklandy (Malwiny)"
+    LCID                    = "0415"
+    W32ID                   = "0415"
+    ACCESSDIR               = "akcesoria"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Chroniony protokÛ≥ EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Bezpieczne has≥o (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Bezprzewodowa"
+    ServicePackSourceFiles  = "Pliki ürÛd≥owe poprawki systemu Windows XP"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Poprawka dla systemu Windows XP (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - Aktualizacje oprogramowania"
+    LOC_UPDATE="Aktualizacja"
+    LOC_CRITICALUPDATE="Aktualizacja krytyczna"
+    LOC_HOTFIX="Poprawka"
+    LOC_SECURITY_UPDATE="Aktualizacja zabezpieczeÒ"
+    WUCUN_TS_JOBFILE        = "powiadomienie o krytycznej aktualizacji systemu windows.job"
+    BITS_DISPLAY_NAME       = "Us≥uga inteligentnego transferu w tle"
+    BITS_DESCRIPTION        = \
+"Przesy≥a pliki w tle przy uøyciu niewykorzystanej przepustowoúci sieci. Jeúli ta us≥uga zostanie zatrzymana, funkcje takie jak Windows Update i MSN Explorer nie bÍdπ mog≥y automatycznie pobieraÊ programÛw i innych informacji. Jeúli ta us≥uga zostanie wy≥πczona, wszelkie us≥ugi jawnie od niej zaleøne mogπ przestaÊ przesy≥aÊ pliki, jeúli nie majπ mechanizmu obs≥ugi awarii dla przesy≥ania plikÛw za pomocπ programu IE w przypadku, gdy wy≥πczono BITS."
+    BITS_CLASS_NAME         = "Klasa sterowania inteligentnym transferem w tle w wersji 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Starsza klasa sterowania inteligentnym transferem w tle"
+    AU_DESCRIPTION          = "Umoøliwia pobieranie i instalowanie aktualizacji systemu Windows. Jeúli ta us≥uga jest wy≥πczona, ten komputer nie bÍdzie mÛg≥ uøywaÊ funkcji Aktualizacje automatyczne lub witryny Windows Update w sieci Web."
+    AU_DISPLAY_NAME         = "Aktualizacje automatyczne"
+    DispStrCum_MP9          = \
+"TÍ aktualizacjÍ oprogramowania moøna zastosowaÊ tylko do programu Windows Media Player 9. Jeúli program Windows Media Player 9 jest zainstalowany, a mimo to jest wyúwietlany ten komunikat, wersja zainstalowana zawiera juø tÍ aktualizacjÍ oprogramowania."
+    DispStrPreReq_MP9       = \
+"TÍ aktualizacjÍ oprogramowania moøna zastosowaÊ tylko do programu Windows Media Player 9. Jeúli jest wyúwietlany ten komunikat, uøytkownik nie ma zainstalowanego programu Windows Media Player 9 i nie moøe zainstalowaÊ tej aktualizacji oprogramowania."
+    MSI_DISPLAY_NAME        = "Instalator Windows"
+    MSI_DESCRIPTION         = "Dodaje, modyfikuje i usuwa aplikacje dostarczane jako pakiet Instalatora Windows (*.msi). Jeúli ta us≥uga zostanie wy≥πczona, wszelkie us≥ugi jawnie od niej zaleøne przestanπ siÍ uruchamiaÊ."
+    CancelEventType         = "Anuluj raport"
+    MainCancelIntroString   = "DziÍkujemy za zaraportowanie øπdania. Po klikniÍciu przycisku ÑWyúlij raportî dane zawierajπce informacje na temat przyczyny niepowodzenia instalacji zostanπ wys≥ane do firmy Microsoft."
+    MainCancelDetailsLink   = "Zobacz, co zawiera raport instalatora."
+    MainCancelReportBtn     = "Wyúlij r&aport"
+    DetailsCancelHeader     = "Raportowanie informacji"
+    DetailsCancelBody       = \
+"Wys≥anie tego raportu pomoøe nam w u≥atwieniu czynnoúci uøytkownika. BÍdziemy statystycznie przetwarzaÊ zebrane dane, aby zrozumieÊ co by≥o przyczynπ niepowodzenia instalacji. Informacje te pomogπ nam w ograniczeniu liczby nieudanych instalacji powodowanych przez stosowanie aktualizacji."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Ateny, Bejrut, Stambu≥, MiÒsk"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="Ta us≥uga implementuje protokÛ≥ HTTP. Jeúli ta us≥uga zostanie wy≥πczona, wszelkie us≥ugi jawnie od niej zaleøne przestanπ siÍ uruchamiaÊ."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION="Ta us≥uga implementuje protokÛ≥ HTTPS dla us≥ugi HTTP przy uøyciu protoko≥u SSL. Jeúli ta us≥uga zostanie wy≥πczona, wszelkie us≥ugi jawnie od niej zaleøne przestanπ siÍ uruchamiaÊ."
+    WEBOC_SCRIPT="Zezwalaj na wykonywanie skryptÛw formantu Webbrowser programu Internet Explorer"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1045"
+    ODBC_DATA_SOURCE_NAME = "èrÛd≥o danych ODBC"
+    SHAREDACCESS_SERVICE_NAME = "Zapora systemu Windows/UdostÍpnianie po≥πczenia internetowego"
+    Svc-ALG-Description       = "Zapewnia obs≥ugÍ dodatkÛw protoko≥Ûw innych firm dla UdostÍpniania po≥πczenia internetowego i Zapory systemu Windows."
+    Svc-Ip6Fw-DispName          = "Sterownik Zapory systemu Windows IPv6"
+    Svc-Ip6Fw-Description       = "Zapewnia us≥ugÍ blokowania dostÍpu intruzÛw wszystkim komputerom w sieci domowej lub biurowej."
+    NotOnACPowerMsg= "Ten dodatek Service Pack wymaga, aby komputer by≥ zasilany prπdem przemiennym (AC) przed uruchomieniem instalacji."
+    A6Blocked= "Wersja zainstalowanego systemu Windows nie odpowiada aktualizacji, ktÛrπ chcesz zainstalowaÊ."
+    SharedComputerToolMsg= \
+"Instalacja dodatku Service Pack 3 zosta≥a anulowana, poniewaø program Microsoft Shared Computer Toolkit for Windows XP nie jest zgodny z tπ wersjπ systemu Windows. Aby kontynuowaÊ, naleøy: odinstalowaÊ program Microsoft Shared Computer Toolkit i (opcjonalnie) zainstalowaÊ program Windows SteadyState, ktÛry jest nowszπ wersjπ programu Microsoft Shared Computer Toolkit. Aby uzyskaÊ szczegÛ≥owe informacje, przejdü do strony dotyczπcej dostÍpu wspÛ≥dzielonego w witrynie firmy Microsoft w sieci Web."
+    RDPMUIBlockedMsg= \
+"Instalacja dodatku Service Pack 3 zosta≥a anulowana, poniewaø nie moøna zainstalowaÊ dodatku XP SP3 po zainstalowaniu pakietu RDP 6.0 MUI PACK (aktualizacji dla systemu Windows XP: KB925877). Aby kontynuowaÊ, naleøy odinstalowaÊ aktualizacjÍ KB925877."
+    WinflpBlockedMsg= \
+"Nie moøna zastosowaÊ dodatku Microsoft Windows XP Professional Service Pack 3 w systemie Windows Fundamentals for Legacy PCs (WinFLP). Dla systemu WinFLP zostanie udostÍpniony osobny pakiet aktualizacji SP3 w witrynie download.microsoft.com."
+    WEPOSBlockedMsg= \
+"Nie moøna zastosowaÊ dodatku Microsoft Windows XP Professional Service Pack 3 w systemie Windows Embedded for Point of Service (WEPOS). Dla systemu WEPOS zostanie udostÍpniony osobny pakiet aktualizacji SP3 w witrynie download.microsoft.com."
+    PreReq_MSI_3 = "TÍ poprawkÍ moøna zainstalowaÊ wy≥πcznie za pomocπ programu MSI 3.0"
+    PreReq_MSI_31 = "TÍ poprawkÍ moøna zainstalowaÊ wy≥πcznie za pomocπ programu MSI 3.1"
+    NOTATABLET = "TÍ poprawkÍ moøna zainstalowaÊ wy≥πcznie na komputerze typu Tablet"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Instalator ustali≥, øe zawartoúÊ tej aktualizacji jest juø dostÍpna w systemie."
+    ELK_LOCALE_INUSE_201a = \
+"Boúniacki (cyrylica, Boúnia i Hercegowina) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_201a    = \
+"Obs≥uga jÍzyka boúniackiego (cyrylica, Boúnia i Hercegowina) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_0464 = \
+"Filipino (Filipiny) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_0464    = \
+"Obs≥uga jÍzyka Filipino (Filipiny) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_046e = \
+"Luksemburski (Luksemburg) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_046e    = \
+"Obs≥uga jÍzyka luksemburskiego (Luksemburg) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_0463 = \
+"Paszto (Afganistan) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_0463    = \
+"Obs≥uga jÍzyka paszto (Afganistan) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_0462 = \
+"Fryzyjski (Holandia) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_0462    = \
+"Obs≥uga jÍzyka fryzyjskiego (Holandia) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_047a = \
+"Mapudungun (Chile) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_047a    = \
+"Obs≥uga jÍzyka mapudungun (Chile) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_0461 = "Nepalski (Nepal) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+    ELK_MUI_INUSE_0461    = \
+"Obs≥uga jÍzyka nepalskiego (Nepal) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_085d = \
+"Inuktitut (≥aciÒski, Kanada) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_085d    = \
+"Obs≥uga jÍzyka inuktitut (≥aciÒski, Kanada) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_083c = \
+"Irlandzki (Irlandia) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_083c    = \
+"Obs≥uga jÍzyka irlandzkiego (Irlandia) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_047c = "Mohawk (Mohawk) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+    ELK_MUI_INUSE_047c    = \
+"Obs≥uga jÍzyka mohawk (Mohawk) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    ELK_LOCALE_INUSE_0417 = \
+"RetoromaÒski (Szwajcaria) wybrano jako jÍzyk dla standardÛw i formatÛw lub dla programÛw nie obs≥ugujπcych kodu Unicode. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). Zobacz plik readmesp.htm, aby wybraÊ inny jÍzyk."
+
+    ELK_MUI_INUSE_0417    = \
+"Obs≥uga jÍzyka retoromaÒskiego (Szwajcaria) dla menu i okien dialogowych jest zainstalowana w systemie. Ten jÍzyk nie jest obs≥ugiwany przed dodatkiem Poprawka dla systemu Windows XP (KB945436). WiÍcej informacji na temat dezinstalacji tej obs≥ugi jÍzyka moøna znaleüÊ w pliku readmesp.htm."
+
+    KLT_148               = "Boúniacki (cyrylica)"
+    KLT_149               = "Inuktitut (≥aciÒski)"
+    KLT_150               = "Luksemburski"
+    KLT_151               = "Nepalski"
+    KLT_152               = "Paszto"
+    BEETHOVEN_NINTH_NAME            = "Dziewiπta symfonia Beethovena (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Przyk≥adowa muzyka"
+    NEW_STORIES_NAME                = "Nowe historie (autostradowy blues).wma"
+    InvalidIEVersion="Wersja zainstalowanego programu Internet Explorer nie odpowiada aktualizacji, ktÛrπ chcesz zainstalowaÊ."
+    TSC_PACKAGE_EXPIRED="Ta wstÍpna wersja Pod≥πczania pulpitu zdalnego wygas≥a. Aby pobraÊ pe≥nπ wersjÍ Pod≥πczania pulpitu zdalnego, przejdü do witryny Windows Update lub skontaktuj siÍ z administratorem systemu."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) ErywaÒ"
+    Azerbaijan_Std="Azerbejdøan (czas standardowy)"
+    Azerbaijan_Dlt="Azerbejdøan (czas letni)"
+    Azerbaijan_Display="(GMT+04:00) Baku"
+    SA_Pacific_Display="(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+    GTB_Display="(GMT+02:00) Ateny, Bukareszt, Stambu≥"
+    E_Europe_Display="(GMT+02:00) MiÒsk"
+    Middle_East_Std="Bliski WschÛd (czas standardowy)"
+    Middle_East_Dlt="Bliski WschÛd (czas letni)"
+    Middle_East_Display="(GMT+02:00) Bejrut"
+    Jordan_Std="Jordania (czas standardowy)"
+    Jordan_Dlt="Jordania (czas letni)"
+    Jordan_Display="(GMT+02:00) Amman"
+    Pacific_Display="(GMT-08:00) Czas pacyficzny (Stany Zjednoczone i Kanada)"
+    Central_M_Std="årodkowy czas stand. (Meksyk)"
+    Central_M_Dlt="årodkowy czas letni (Meksyk)"
+    Mountain_M_Std="GÛrski czas standardowy (Meksyk)"
+    Mountain_M_Dlt="GÛrski czas letni (Meksyk)"
+    Central_M_Display="(GMT-06:00) Guadalajara, Mexico City, Monterrey ó nowy"
+    Mexico_Old_Display="(GMT-06:00) Guadalajara, Mexico City, Monterrey ó stary"
+    Pacific_M_Std="Pacyficzny czas stand. (Meksyk)"
+    Pacific_M_Dlt="Pacyficzny czas letni (Meksyk)"
+    Pacific_M_Display="(GMT-08:00) Tijuana, Baja California"
+    Mountain_M_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan ó nowy"
+    Mexico_2_Old_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan ó stary"
+    Namibia_Std="Namibijski czas standardowy"
+    Namibia_Dlt="Namibijski czas letni"
+    Namibia_Display="(GMT+02:00) Windhoek"
+    Myanmar_Display="(GMT+06:30) Rangun"
+    Georgian_Std="GruziÒski czas standardowy"
+    Georgian_Dlt="GruziÒski czas letni"
+    Georgian_Display="(GMT+03:00) Tbilisi"
+    Greenwich_Display="(GMT) Casablanca, Monrowia, Rejkiawik"
+    Central_Brazilian_Std="Brazylijski úrodkowy czas stand."
+    Central_Brazilian_Dlt="Brazylijski úrodkowy czas letni"
+    Central_Brazilian_Display="(GMT-04:00) Manaus"
+    Montevideo_Std="Montevideo (czas standardowy)"
+    Montevideo_Dlt="Montevideo (czas letni)"
+    Montevideo_Display="(GMT-03:00) Montevideo"
+    Caucasus_Common_Display="(GMT+04:00) Kaukaz (czas standardowy)"
+    Armenian_Std="Armenia (czas standardowy)"
+    Armenian_Dlt="Armenia (czas letni)"
+    Venezuela_Std="Wenezuela (czas standardowy)"
+    Venezuela_Dlt="Wenezuela (czas letni)"
+    Venezuela_Display="(GMT-04:30) Caracas"
+    SA_Western_Display="(GMT-04:00) La Paz"
+    SA_Eastern_Display="(GMT-03:00) Georgetown"
+    Argentina_Std="Argentyna (czas standardowy)"
+    Argentina_Dlt="Argentyna (czas letni)"
+    Argentina_Display="(GMT-03:00) Buenos Aires"
+    WSMAN_ServiceDisplay="Zdalne zarzπdzanie systemem Windows (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Umoøliwia dostÍp do informacji o zarzπdzaniu z komputerÛw lokalnych i zdalnych."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="Przed zainstalowaniem tego pakietu naleøy zainstalowaÊ program Microsoft Core XML Services (MSXML) 6.0. Aby uzyskaÊ program MSXML6, naleøy odwiedziÊ witrynÍ http://download.microsoft.com i wyszukaÊ tekst MSXML6."
+    napagent_displayname="Agent ochrony dostÍpu do sieci"
+    napagent_description="Pozwala klientom systemu Windows korzystaÊ z ochrony dostÍpu do sieci."
+    hkmsvc_displayname= "Us≥uga zarzπdzania kluczami i certyfikatami kondycji"
+    hkmsvc_description="Zarzπdza certyfikatami i kluczami kondycji (uøywanymi przez ochronÍ dostÍpu do sieci)."
+    eaphost_displayname="Us≥uga protoko≥u uwierzytelniania rozszerzonego (EAP)"
+    eaphost_description="UdostÍpnia us≥ugÍ protoko≥u uwierzytelniania rozszerzonego klientom systemu Windows."
+    eapqec_displayname="Klient wymuszania kwarantanny EAP"
+    eapqec_description="Dostarcza metodÍ opartego na protokole EAP wymuszania ochrony dostÍpu do sieci."
+    dot3svc_displayname="Automatyczna konfiguracja sieci przewodowej"
+    dot3svc_description="Ta us≥uga wykonuje uwierzytelnianie metodπ IEEE 802.1X w interfejsach Ethernet."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

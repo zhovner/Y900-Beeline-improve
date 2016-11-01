@@ -1,0 +1,312 @@
+[Version]
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 512
+    MaxNtServicePackVersion   = 512
+    ThisServicePackVersion    = 512
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usb8023x.sys,SP2QFE\usb8023x.sys,,8
+    rndismpx.sys,SP2QFE\rndismpx.sys,,8
+
+[CopyAlways.Cache.files]
+    usb8023x.sys,SP2QFE\usb8023x.sys,,8
+    usb8023.sys,SP2QFE\usb8023.sys,,8
+    rndismpx.sys,SP2QFE\rndismpx.sys,,8
+    rndismp.sys,SP2QFE\rndismp.sys,,8
+
+[Drivers.files]
+    usb8023x.sys,SP2QFE\usb8023x.sys,,8
+    usb8023.sys,SP2QFE\usb8023.sys,,8
+    rndismpx.sys,SP2QFE\rndismpx.sys,,8
+    rndismp.sys,SP2QFE\rndismp.sys,,8
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP2QFE\rndismpx.sys=1
+    SP2QFE\rndismp.sys=1
+    SP2QFE\usb8023x.sys=1
+    SP2QFE\usb8023.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=959765"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20090124.113854
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x01
+    WSEDIR                  = "1033"
+    TSCLIENTDIR             = "Terminal Services Client"
+    PORTUGAL                = "ÇáÈÑÊÛÇá"
+    FALKLANDS               = "ÌÒÑ İæßáÇäÏ"
+    LCID                    = "0401"
+    W32ID                   = "0401"
+    ACCESSDIR               = "accessories"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "EAP ÇáãÍãíøÉ (PEAP)"
+    EAPMSCHAP-DispName    = "ßáãÉ ãÑæÑ ãÄãäÉ (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "áÇÓáßí"
+    ServicePackSourceFiles  = "ãáİÇÊ ÇáãÕÏÑ áÜ Windows XP Hotfix"
+    SP_SHORT_TITLE          = "KB959765"
+    SP_TITLE                = "ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı"
+    PARENT_DISPLAY_NAME     ="Windows XP - ÊÍÏíËÇÊ ÇáÈÑÇãÌ"
+    LOC_UPDATE="ÊÍÏíË"
+    LOC_CRITICALUPDATE="ÊÍÏíË åÇã"
+    LOC_HOTFIX="ÈÑäÇãÌ ÅÕáÇÍ (Hotfix)"
+    LOC_SECURITY_UPDATE="ÊÍÏíË ÃãÇä"
+    WUCUN_TS_JOBFILE        = "ÅÚáÇã ÇáÊÍÏíËÇÊ ÇáåÇãÉ İí windows.job"
+    BITS_DISPLAY_NAME       = "Background Intelligent Transfer Service"
+    BITS_DESCRIPTION        = \
+"íÓÊÎÏã ÚÑÖ ãÌÇá ÔÈßÉ ÇáÇÊÕÇá ÇáÎÇãá áäŞá ÇáãáİÇÊ İí ÇáÎáİíÉ. ÅĞÇ Êã ÅíŞÇİ åĞå ÇáÎÏãÉ¡ áä ÊÊãßä ÇáãíÒÇÊ ãËá Windows Update æ MSN Explorer ãä ÊÍãíá ÇáÈÑÇãÌ æÇáãÚáæãÇÊ ÇáÃÎÑì ÊáŞÇÆíÇğ. ÅĞÇ Êã ÊÚØíá åĞå ÇáÎÏãÉ¡ ŞÏ ÊİÔá ÇáÎÏãÇÊ¡ ÇáãÚÊãÏÉ ÚáíåÇ ÕÑÍÇğ¡ İí äŞá ÇáãáİÇÊ ÅĞÇ áã íßä áÏíåÇ äÙÇã áÖãÇä ÚÏã İÔá äŞá ÇáãáİÇÊ ãÈÇÔÑÉğ ÚÈÑ IE İí ÍÇá ÊÚØíá BITS."
+    BITS_CLASS_NAME         = "Background Intelligent Transfer Control Class 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Legacy Background Intelligent Transfer Control Class"
+    AU_DESCRIPTION          = "Êãßíä ÊÍãíá æÊËÈíÊ ÊÍÏíËÇÊ Windows. ÅĞÇ Êã ÊÚØíá åĞå ÇáÎÏãÉ, İáä íÊãßä åĞÇ ÇáßãÈíæÊÑ ãä ÇÓÊÎÏÇã ãíÒÉ ÇáÊÍÏíËÇÊ ÇáÊáŞÇÆíÉ Ãæ ãæŞÚ Windows Update Úáì æíÈ."
+    AU_DISPLAY_NAME         = "Automatic Updates"
+    DispStrCum_MP9          = "şşíãßä ÊØÈíŞ ÊÍÏíË ÇáÈÑäÇãÌ åĞÇ İŞØ Úáì Windows Media Player 9. ÅĞÇ ßÇä Windows Media Player 9 ãËÈÊÇğ áÏíß æáßä áÇ ÊÒÇá ÊÙåÑ åĞå ÇáÑÓÇáÉ, İÅä ÇáÅÕÏÇÑ áÏíß íÊÖãä ÊÍÏíË ÇáÈÑäÇãÌ åĞÇ ãÓÈŞÇğ."
+    DispStrPreReq_MP9       = "şşíãßä ÊØÈíŞ ÊÍÏíË ÇáÈÑäÇãÌ åĞÇ İŞØ Úáì Windows Media Player 9. ÅĞÇ ßÇäÊ ÊÙåÑ åĞå ÇáÑÓÇáÉ, İÅäå áã íÊã ÊËÈíÊ Windows Media Player 9 áÏíß æáä ÊÊãßä ãä ÊËÈíÊ ÊÍÏíË ÇáÈÑäÇãÌ åĞÇ."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "ÅÖÇİÉ æÊÚÏíá æÅÒÇáÉ ÇáÊØÈíŞÇÊ ÇáãæİÑÉ ßÍÒãÉ Windows Installer (ı*.msi). ÅĞÇ Êã ÊÚØíá åĞå ÇáÎÏãÉ¡ ÓÊİÔá ÚãáíÉ ÊÔÛíá ÃíÉ ÎÏãÉ ÊÚÊãÏ ÚáíåÇ ÕÑÍÇğ."
+    CancelEventType         = "ÅáÛÇÁ ÇáÊŞÑíÑ"
+    MainCancelIntroString   = "äÔßÑßã Úáì ÅÑÓÇá åĞÇ ÇáØáÈ. ÓíÊã ÅÑÓÇá ÓÈÈ İÔá ÚãáíÉ ÇáÊËÈíÊ Åáì Microsoft ÚäÏ ÇáÖÛØ Úáì ÇáÒÑ ÅÑÓÇá ÇáÊŞÑíÑ"
+    MainCancelDetailsLink   = "ÚÑÖ ãÍÊæì ÊŞÑíÑ ÇáÊËÈíÊ."
+    MainCancelReportBtn     = "ÅÑÓÇá ÇáÊ&ŞÑíÑ"
+    DetailsCancelHeader     = "ãÚáæãÇÊ Íæá ÇáÊŞÑíÑ"
+    DetailsCancelBody       = "ÅÑÓÇá åĞÇ ÇáÊŞÑíÑ íÓÇÚÏäÇ Úáì ÊÍÓíä ÊÌÑÈÉ ÇáãÓÊÎÏã. ÓäŞæã ÈãÚÇáÌÉ ÇáÈíÇäÇÊ ÇáÊí Êã ÌãÚåÇ áãÚÑİÉ ÓÈÈ İÔá ÚãáíÉ ÇáÊËÈíÊ. ÓÊÓÇÚÏäÇ åĞå ÇáãÚáæãÇÊ Úáì ÊŞáíÕ ÍÇáÇÊ İÔá ÚãáíÇÊ ÇáÊËÈíÊ ÈÓÈÈ ÊØÈíŞ ÇáÊÍÏíËÇÊ."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) ÃËíäÇ, ÈíÑæÊ, ÅÓØäÈæá, ãíäÓß"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="ÊŞæã åĞå ÇáÎÏãÉ ÈÊØÈíŞ ÈÑæÊæßæá äŞá ÇáäÕ ÇáÊÔÚÈí (HTTP). ÅĞÇ Êã ÊÚØíá åĞå ÇáÎÏãÉ, İÓíİÔá ÊÔÛíá ÃíÉ ÎÏãÇÊ ÊÚÊãÏ ÕÑÇÍÉ ÚáíåÇ."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION="ÊŞæã åĞå ÇáÎÏãÉ ÈÊØÈíŞ ÈÑæÊæßæá äŞá ÇáäÕ ÇáÊÔÚÈí ÇáÂãä (HTTPS) áÎÏãÉ HTTP,  ÈÇÓÊÎÏÇã ØÈŞÉ ãÃÎĞ ÇáÊæÕíá ÇáÂãä  (SSL). ÅĞÇ Êã ÊÚØíá åĞå ÇáÎÏãÉ, İÓíİÔá ÊÔÛíá ÃíÉ ÎÏãÇÊ ÊÚÊãÏ ÕÑÇÍÉ ÚáíåÇ."
+    WEBOC_SCRIPT="ÇáÓãÇÍ ÈÈÑãÌÉ ÚäÕÑ ÊÍßã ãÓÊÚÑÖ æíÈ Internet Explorer"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1033"
+    ODBC_DATA_SOURCE_NAME = "ãÕÏÑ ÈíÇäÇÊ ODBC"
+    SHAREDACCESS_SERVICE_NAME = "Windows Firewall/Internet Connection Sharing (ICS)"
+    Svc-ALG-Description       = "ÊæİíÑ ÏÚã áÊæÕíáÇÊ ÈÑæÊæßæá ÇáÌåÉ ÇáÎÇÑÌíÉ ãä ÃÌá ãÔÇÑßÉ ÇÊÕÇá ÅäÊÑäÊ æÌÏÇÑ ÍãÇíÉ Windows."
+    Svc-Ip6Fw-DispName          = "IPv6 Windows Firewall Driver"
+    Svc-Ip6Fw-Description       = "ÊæİíÑ ÎÏãÉ ÇáÍãÇíÉ ÖÏ ÇáÊÏÎøá áÔÈßÉ ÇÊÕÇá ãäÒáíÉ Ãæ ãæÌæÏÉ İí ÇáãßÇÊÈ ÇáÕÛíÑÉ."
+    NotOnACPowerMsg= "şşÊÊØáÈ ÍÒãÉ ÇáÎÏãÉ åĞå ÊÔÛíá ÇáÌåÇÒ ÈÇáßåÑÈÇÁ ÇáãÊäÇæÈÉ AC ŞÈá ÈÏÁ ÇáÅÚÏÇÏ."
+    A6Blocked= "şşáÇ íÊØÇÈŞ ÅÕÏÇÑ Windows ÇáĞí ŞãÊ ÈÊËÈíÊå ãÚ ÇáÊÍÏíË ÇáĞí ÊÍÇæá ÊËÈíÊå."
+    PreReq_MSI_3 = "şşíÊã ÊËÈíÊ åĞÇ ÇáÅÕáÇÍ İŞØ İæŞ MSI 3.0"
+    PreReq_MSI_31 = "íÕáÍ ÊËÈíÊ åĞÇ ÇáÊÕÍíÍ İŞØ áÜ MSI 3.1"
+    NOTATABLET = "şşíãßä ÊËÈíÊ ÇáÈÑäÇãÌ ÇáÅÕáÇÍí åĞÇ Úáì ßãÈíæÊÑ áæÍí (Tablet PC) İŞØ"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="ÃÔÇÑ ÇáÅÚÏÇÏ ÈÃä ãÍÊæíÇÊ åĞÇ ÇáÊÍÏíË ŞÏ Êã ÊËÈíÊåÇ ãÓÈŞÇğ Úáì åĞÇ ÇáäÙÇã."
+    ELK_LOCALE_INUSE_201a = "Êã ÊÍÏíÏ ÇáÕÑÈíÉ (ÇáÓíÑíáíÉ¡ ÇáÈæÓäÉ æÇáåÑÓß) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_201a    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáÕÑÈíÉ (ÇáÓíÑíáíÉ¡ ÇáÈæÓäÉ æÇáåÑÓß) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_0464 = "Êã ÊÍÏíÏ ÇáİáÈíäíÉ (ÇáİáÈíä) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_0464    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáİáÈíäíÉ (ÇáİáÈíä) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_046e = "Êã ÊÍÏíÏ ÇááßÓãÈæÑÌíÔ (áßÓãÈæÑÌ) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_046e    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇááßÓãÈæÑÌíÔ (áßÓãÈæÑÌ) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_0463 = "Êã ÊÍÏíÏ ÇáÈæÔÊíÉ (ÃİÛÇäÓÊÇä) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_0463    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáÈæÔÊíÉ (ÃİÛÇäÓÊÇä) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_0462 = "Êã ÊÍÏíÏ ÇáİÑíÒíÉ (åæáäÏÇ) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_0462    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáİÑíÒíÉ (åæáäÏÇ) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_047a = "Êã ÊÍÏíÏ ÇáãÇÈæÏäÌæäíÉ (ÊÔíáí) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_047a    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáãÇÈæÏäÌæäíÉ (ÊÔíáí) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_0461 = "Êã ÊÍÏíÏ ÇáäíÈÇáíÉ (äíÈÇá) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_0461    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáäíÈÇáíÉ (äíÈÇá) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_085d = "Êã ÊÍÏíÏ ÇáÅíäßÊíÊæÊ (ÇááÇÊíäíÉ¡ ßäÏÇ) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_085d    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáÅíäßÊíÊæÊ (ÇááÇÊíäíÉ¡ ßäÏÇ) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_083c = "Êã ÊÍÏíÏ ÇáÅíÑáäÏíÉ (ÃíÑáäÏÇ) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_083c    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáÅíÑáäÏíÉ (ÃíÑáäÏÇ) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_047c = "Êã ÊÍÏíÏ ÇáãæåÇßíÉ (ãÇåæß) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_047c    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇááÛÉ ÇáãæåÇßíÉ (ãÇåæß) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    ELK_LOCALE_INUSE_0417 = "Êã ÊÍÏíÏ ÇáÑæãÇäÔíÉ (ÓæíÓÑÇ) ßáÛÉ ÇáãŞÇííÓ æÇáÊäÓíŞÇÊ¡ Ãæ ÇáÈÑÇãÌ Ïæä Unicode.  áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áÊÍÏíÏ áÛÉ ãÎÊáİÉ."
+    ELK_MUI_INUSE_0417    = "Êã ÊËÈíÊ ÇÚÊãÇÏ ÇáÑæãÇäÔíÉ (ÓæíÓÑÇ) ááŞæÇÆã æãÑÈÚÇÊ ÇáÍæÇÑ Úáì ÇáäÙÇã áÏíß. áã íÊã ÇÚÊãÇÏ åĞå ÇááÛÉ ŞÈá ÈÑäÇãÌ ÅÕáÇÍ (Hotfix) áÜ Windows XP (KB959765)ı.  ÇáÑÌÇÁ ãÑÇÌÚÉ readmesp.htm áãÒíÏ ãä ÇáãÚáæãÇÊ Íæá ÅáÛÇÁ ÊËÈíÊ ÇÚÊãÇÏ åĞå ÇááÛÉ."
+    KLT_148               = "ÇáÕÑÈíÉ ÇáÓíÑíáíÉ"
+    KLT_149               = "ÇáÅíäßÊíÊæÊíÉ ÇááÇÊíäíÉ"
+    KLT_150               = "áßÓãÈæÑÌíÔ"
+    KLT_151               = "ÇáäíÈÇáíÉ"
+    KLT_152               = "ÇáÈæÔÊíÉ"
+    BEETHOVEN_NINTH_NAME            = "Beethoven's Symphony No. 9 (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Sample Music"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="şşáÇ íÊØÇÈŞ ÅÕÏÇÑ Internet Explorer ÇáãËÈÊ áÏíß ãÚ ÇáÊÍÏíË ÇáĞí ÊÍÇæá ÊËÈíÊå."
+    TSC_PACKAGE_EXPIRED="şşÇäÊåÊ ãÏÉ ÕáÇÍíÉ åĞÉ ÇáäÓÎÉ ŞÈá ÇáäåÇÆíÉ ãä ÅÕÏÇÑ 'ÇáÇÊÕÇá ÈÓØÍ ÇáãßÊÈ ÇáÈÚíÏ'. áÊäÒíá ÇáÅÕÏÇÑ ÇáßÇãá ãä 'ÇáÇÊÕÇá ÈÓØÍ ÇáãßÊÈ ÇáÈÚíÏ'¡ ÇäÊŞá Åáì ãæŞÚ Windows Update Ãæ Şã ÈÇáÇÊÕÇá ÈãÓÄæá ÇáäÙÇã."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player ãÑßÒ"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player ãÑßÒ"
+    KWL_MESSENGER_LNK_TITLE="Messenger ãÑßÒ"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger ãÑßÒ"
+    Caucasus_Display="(GMT+04:00) íÑíİÇä"
+    Azerbaijan_Std="ÃĞÑÈíÌÇä - ÇáÊæŞíÊ ÇáÑÓãí"
+    Azerbaijan_Dlt="ÃĞÑÈíÌÇä - ÇáÊæŞíÊ ÇáÕíİí"
+    Azerbaijan_Display="(GMT+04:00) ÈÇßæ"
+    SA_Pacific_Display="(GMT-05:00) ÈæÌæÊÇ¡ áíãÇ¡ ßæíÊæ¡ Ñíæ ÈÑÇäßæ"
+    GTB_Display="(GMT+02:00) ÃËíäÇ¡ ÈæÎÇÑÓÊ¡ ÅÓØäÈæá"
+    E_Europe_Display="(GMT+02:00) ãíäÓß"
+    Middle_East_Std="ÇáÔÑŞ ÇáÃæÓØ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Middle_East_Dlt="ÇáÔÑŞ ÇáÃæÓØ - ÇáÊæŞíÊ ÇáÕíİí"
+    Middle_East_Display="(GMT+02:00) ÈíÑæÊ"
+    Jordan_Std="ÇáÃÑÏä - ÇáÊæŞíÊ ÇáÑÓãí"
+    Jordan_Dlt="ÇáÃÑÏä - ÇáÊæŞíÊ ÇáÕíİí"
+    Jordan_Display="(GMT+02:00) ÚãøÇä"
+    Pacific_Display="(GMT-08:00) ÊæŞíÊ ÇáãÍíØ ÇáåÇÏí (ÇáæáÇíÇÊ ÇáãÊÍÏÉ æßäÏÇ)"
+    Central_M_Std="ÇáÊæŞíÊ ÇáæÓØ ÇáÑÓãí (ÇáãßÓíß)"
+    Central_M_Dlt="ÊæŞíÊ ÇáæÓØ ÇáÕíİí (ÇáãßÓíß)"
+    Mountain_M_Std="ÇáÊæŞíÊ ÇáÌÈáí ÇáÑÓãí (ÇáãßÓíß)"
+    Mountain_M_Dlt="ÇáÊæŞíÊ ÇáÌÈáí ÇáÕíİí (ÇáãßÓíß)"
+    Central_M_Display="(GMT-06:00) ÛæÇÏáÇÌÇÑÇ¡ ãßÓíßæ¡ ãÇäÊÇÑÇ - ÌÏíÏ"
+    Mexico_Old_Display="(GMT-06:00) ÛæÇÏáÇÌÇÑÇ¡ ãßÓíßæ¡ ãÇäÊÇÑÇ - ŞÏíã"
+    Pacific_M_Std="ÇáÊæŞíÊ ÇáÑÓãí ÈÇÓíİíßí (ãßÓíß)"
+    Pacific_M_Dlt="ÇáÊæŞíÊ ÇáÕíİí ÈÇÓíİíßí (ãßÓíß)"
+    Pacific_M_Display="(GMT-08:00) ÊíÌæÇäÇ¡ ÈÇÌÇ ßÇáíİæÑäíÇ"
+    Mountain_M_Display="(GMT-07:00) ÊÔíæÇæÇ¡ áÇÈÇÒ¡ ãÇÒÇÊáÇä - ÌÏíÏ"
+    Mexico_2_Old_Display="(GMT-07:00) ÊÔíæÇæÇ¡ áÇÈÇÒ¡ ãÇÒÇÊáÇä - ŞÏíã"
+    Namibia_Std="äÇãÈíÇ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Namibia_Dlt="äÇãÈíÇ - ÇáÊæŞíÊ ÇáÕíİí"
+    Namibia_Display="(GMT+02:00) æäÏåæß"
+    Myanmar_Display="(GMT+06:30) şşíÇäÌæä (ÑÇäÌæä)"
+    Georgian_Std="ÌæÑÌíÇ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Georgian_Dlt="ÌæÑÌíÇ - ÇáÊæŞíÊ ÇáÕíİí"
+    Georgian_Display="(GMT+03:00) ÊÈíáíÓí"
+    Greenwich_Display="(GMT) ãæäÑæİíÇ¡ ÑíßíÇİíß"
+    Central_Brazilian_Std="ÇáÈÑÇÒíá ÇáæÓØì - ÇáÊæŞíÊ ÇáÑÓãí"
+    Central_Brazilian_Dlt="ÇáÈÑÇÒíá ÇáæÓØì - ÇáÊæŞíÊ ÇáÕíİí"
+    Central_Brazilian_Display="(GMT-04:00) ãÇäÇæÓ"
+    Montevideo_Std="ãæäÊİÏíæ ÇáÊæŞíÊ ÇáÑÓãí"
+    Montevideo_Dlt="ãæäÊİÏíæ ÇáÊæŞíÊ ÇáÕíİí"
+    Montevideo_Display="(GMT-03:00) ãæäÊİÏíæ"
+    Caucasus_Common_Display="(GMT+04:00) ÇáŞæŞÇÒ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Armenian_Std="ÃÑãíäíÇ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Armenian_Dlt="ÃÑãíäíÇ - ÇáÊæŞíÊ ÇáÕíİí"
+    Venezuela_Std="İäÒæíáÇ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Venezuela_Dlt="İäÒæíáÇ - ÇáÊæŞíÊ ÇáÕíİí"
+    Venezuela_Display="(GMT-04:30) ßÇÑÇßÇÓ"
+    SA_Western_Display="(GMT-04:00) áÇÈÇÒ"
+    SA_Eastern_Display="(GMT-03:00) ÌæÑÌÊÇæä"
+    Argentina_Std="ÇáÃÑÌäÊíä- ÇáÊæŞíÊ ÇáÑÓãí"
+    Argentina_Dlt="ÇáÃÑÌäÊíä- ÇáÊæŞíÊ ÇáÕíİí"
+    Argentina_Display="(GMT-03:00) ÈæíäÓ ÃíÑÓ"
+    Morocco_Std="ÇáãÛÑÈ - ÇáÊæŞíÊ ÇáÑÓãí"
+    Morocco_Dlt="ÇáãÛÑÈ - ÇáÊæŞíÊ ÇáÕíİí"
+    Morocco_Display="(GMT) ÇáÏÇÑ ÇáÈíÖÇÁ"
+    Pakistan_Std="ÈÇßÓÊÇä - ÇáÊæŞíÊ ÇáÑÓãí"
+    Pakistan_Dlt="ÈÇßÓÊÇä - ÇáÊæŞíÊ ÇáÕíİí"
+    Pakistan_Display="(GMT+05:00) ÅÓáÇã ÃÈÇÏ¡ ßÑÇÊÔí"
+    West_Asia_Display="(GMT+05:00) ÊÇÔßäÊ"
+    Mauritius_Std="ÊæŞíÊ ãæÑíÔíæÓ ÇáÑÓãí"
+    Mauritius_Dlt="ÊæŞíÊ ãæÑíÔíæÓ ÇáÕíİí"
+    Mauritius_Display="(GMT+04:00) ÈæÑÊ áæíÓ"
+    WSMAN_ServiceDisplay="Windows Remote Management (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Allows access to management information from local and remote machines."
+    PowerShell_CurrentlyInstalled="íÊÚĞÑ ÊËÈíÊ åĞÇ ÇáÅÕÏÇÑ ãä ÇáãäÊÌ. íÌÈ Úáíß ÃæáÇ ÅÒÇáÉ ÃíÉ ÅÕÏÇÑÇÊ ÓÇÈŞÉ ãä Windows PowerShell(TM)ı 1.0 ŞÈá Ãä ÊÊãßä ãä ÊËÈíÊ åĞÇ ÇáÅÕÏÇÑ. ÇáÑÌÇÁ ÇáäŞÑ İæŞ ""ãæÇİŞ"" áÅÛáÇŞ ãÚÇáÌ ÇáÊËÈíÊ Ëã Şã ÈİÊÍ "\
+"ÅÖÇİÉ/ÅÒÇáÉ ÈÑÇãÌ"" ãä ""áæÍÉ ÇáÊÍßã""¡ Şã ÈÅÒÇáÉ ÃíÉ ÅÕÏÇÑÇÊ ÓÇÈŞÉ ãä Windows PowerShell(TM)ı 1.0¡ æÃÚÏ ÊÔÛíá ÈÑäÇãÌ ÅÚÏÇÏ Windows PowerShell(TM)ı 1.0 ãÑÉ ÃÎÑì."
+    PowerShell_CLR_NOT_INSTALLED=\
+"íÊÚĞÑ ÊËÈíÊ/ÅáÛÇÁ ÊËÈíÊ Windows PowerShell(TM)ı 1.0 áÃäå íÊØáÈ ÇáÅÕÏÇÑ ÇáãÍÏøË ãä ı.NET Framework 2.0. ÇáÑÌÇÁ ÊËÈíÊ ÇáÅÕÏÇÑ ÇáäåÇÆí áÜ ı.NET Framework 2.0 ãä http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 æÅÚÇÏÉ ÊÔÛíá ÈÑäÇãÌ ÅÚÏÇÏ Windows PowerShell(TM)ı 1.0"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="ãáÇÍÙÇÊ ÇáÅÕÏÇÑ"
+    PowerShell_ShortCutGettingStarted="ÈÏÁ ÇáÚãá"
+    PowerShell_ShortCutUserGuide="Ïáíá ÇáãÓÊÎÏã"
+    PowerShell_ShortCutQRef="ãÑÌÚ ÓÑíÚ"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=ar
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="íÑÌì ÊËÈíÊ Microsoft Core XML Services (MSXML) 6.0 ŞÈá ÊËÈíÊ åĞå ÇáÍÒãÉ. ááÍÕæá Úáì MSXML6¡ íÑÌì ÒíÇÑÉ  http://download.microsoft.com æÇáÈÍË Úä MSXML6."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    noPNPfiles=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

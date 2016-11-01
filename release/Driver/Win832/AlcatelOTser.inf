@@ -1,0 +1,170 @@
+;$$$MyDIT_GenClassCoInst$$$  ; This tag is needed to trigger the device class ;
+; Windows Virtual Serial Port Setup File
+; Copyright (c) 2006-2011 TCT International Mobile Ltd
+; Manufacturer: TCT International Mobile Ltd
+;
+
+[Version]
+signature  = "$WINDOWS NT$"
+Class      = Ports
+Provider   = %JRDCOMM%
+ClassGuid  = {4D36E978-E325-11CE-BFC1-08002BE10318}
+DriverVer  = 03/14/2011,2.0.6.3
+Catalogfile = jrdusbser.cat
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[SourceDisksNames]
+  1000 = %JRDSrcDisk%,"",,
+
+[SourceDisksFiles]
+  jrdusbser.sys = 1000
+
+[Manufacturer]
+%JRDCOMM% = JRDSerialPort, NTia64, NTamd64
+
+[JRDSerialPort]
+%JrdDeviceDiag0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_00
+%JrdDeviceAGPS0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_01
+%JrdDeviceVOICE0017% = JportInstall00, USB\VID_1BBB&PID_0017&MI_02
+%JrdDeviceAT0017%    = JportInstall00, USB\VID_1BBB&PID_0017&MI_03
+%JrdDeviceDiag0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_00
+%JrdDeviceAGPS0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_01
+%JrdDeviceVOICE0052% = JportInstall00, USB\VID_1BBB&PID_0052&MI_02
+%JrdDeviceAT0052%    = JportInstall00, USB\VID_1BBB&PID_0052&MI_03
+%JrdDeviceDiag0000%  = JportInstall00, USB\VID_1BBB&PID_0000&MI_00
+%JrdDeviceAT0000%    = JportInstall00, USB\VID_1BBB&PID_0000&MI_01
+%JrdDeviceTPST007A%  = JportInstall00, USB\VID_1BBB&PID_007A
+%JrdDeviceDiag00B6%  = JportInstall00, USB\VID_1BBB&PID_00B6&MI_00
+%JrdDeviceAT00B6%    = JportInstall00, USB\VID_1BBB&PID_00B6&MI_01
+%JrdDeviceDiag00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_00
+%JrdDeviceAGPS00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_01
+%JrdDeviceVOICE00B7% = JportInstall00, USB\VID_1BBB&PID_00B7&MI_02
+%JrdDeviceAT00B7%    = JportInstall00, USB\VID_1BBB&PID_00B7&MI_03
+%JrdDeviceDiag011E%  = JportInstall00, USB\VID_1BBB&PID_011E&MI_00
+%JrdDeviceAT011E%    = JportInstall00, USB\VID_1BBB&PID_011E&MI_01
+%JrdDeviceDiag0190%  = JportInstall00, USB\VID_1BBB&PID_0190&MI_00
+%JrdDeviceAT0190%    = JportInstall00, USB\VID_1BBB&PID_0190&MI_01
+%JrdDeviceDiag0196%  = JportInstall00, USB\VID_1BBB&PID_0196&MI_02
+%JrdDeviceDiag0197%  = JportInstall00, USB\VID_1BBB&PID_0197&MI_00
+%JrdDeviceDiag01AA%  = JportInstall00, USB\VID_1BBB&PID_01AA&MI_03
+%JrdDeviceDiag0203%  = JportInstall00, USB\VID_1BBB&PID_0203&MI_00
+%JrdDeviceDiag0204%  = JportInstall00, USB\VID_1BBB&PID_0204&MI_00
+
+[JRDSerialPort.NTia64]
+%JrdDeviceDiag0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_00
+%JrdDeviceAGPS0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_01
+%JrdDeviceVOICE0017% = JportInstall00, USB\VID_1BBB&PID_0017&MI_02
+%JrdDeviceAT0017%    = JportInstall00, USB\VID_1BBB&PID_0017&MI_03
+%JrdDeviceDiag0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_00
+%JrdDeviceAGPS0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_01
+%JrdDeviceVOICE0052% = JportInstall00, USB\VID_1BBB&PID_0052&MI_02
+%JrdDeviceAT0052%    = JportInstall00, USB\VID_1BBB&PID_0052&MI_03
+%JrdDeviceDiag0000%  = JportInstall00, USB\VID_1BBB&PID_0000&MI_00
+%JrdDeviceAT0000%    = JportInstall00, USB\VID_1BBB&PID_0000&MI_01
+%JrdDeviceTPST007A%  = JportInstall00, USB\VID_1BBB&PID_007A
+%JrdDeviceDiag00B6%  = JportInstall00, USB\VID_1BBB&PID_00B6&MI_00
+%JrdDeviceAT00B6%    = JportInstall00, USB\VID_1BBB&PID_00B6&MI_01
+%JrdDeviceDiag00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_00
+%JrdDeviceAGPS00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_01
+%JrdDeviceVOICE00B7% = JportInstall00, USB\VID_1BBB&PID_00B7&MI_02
+%JrdDeviceAT00B7%    = JportInstall00, USB\VID_1BBB&PID_00B7&MI_03
+%JrdDeviceDiag011E%  = JportInstall00, USB\VID_1BBB&PID_011E&MI_00
+%JrdDeviceAT011E%    = JportInstall00, USB\VID_1BBB&PID_011E&MI_01
+%JrdDeviceDiag0190%  = JportInstall00, USB\VID_1BBB&PID_0190&MI_00
+%JrdDeviceAT0190%    = JportInstall00, USB\VID_1BBB&PID_0190&MI_01
+%JrdDeviceDiag0196%  = JportInstall00, USB\VID_1BBB&PID_0196&MI_02
+%JrdDeviceDiag0197%  = JportInstall00, USB\VID_1BBB&PID_0197&MI_00
+%JrdDeviceDiag01AA%  = JportInstall00, USB\VID_1BBB&PID_01AA&MI_03
+%JrdDeviceDiag0203%  = JportInstall00, USB\VID_1BBB&PID_0203&MI_00
+%JrdDeviceDiag0204%  = JportInstall00, USB\VID_1BBB&PID_0204&MI_00
+
+[JRDSerialPort.NTamd64]
+%JrdDeviceDiag0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_00
+%JrdDeviceAGPS0017%  = JportInstall00, USB\VID_1BBB&PID_0017&MI_01
+%JrdDeviceVOICE0017% = JportInstall00, USB\VID_1BBB&PID_0017&MI_02
+%JrdDeviceAT0017%    = JportInstall00, USB\VID_1BBB&PID_0017&MI_03
+%JrdDeviceDiag0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_00
+%JrdDeviceAGPS0052%  = JportInstall00, USB\VID_1BBB&PID_0052&MI_01
+%JrdDeviceVOICE0052% = JportInstall00, USB\VID_1BBB&PID_0052&MI_02
+%JrdDeviceAT0052%    = JportInstall00, USB\VID_1BBB&PID_0052&MI_03
+%JrdDeviceDiag0000%  = JportInstall00, USB\VID_1BBB&PID_0000&MI_00
+%JrdDeviceAT0000%    = JportInstall00, USB\VID_1BBB&PID_0000&MI_01
+%JrdDeviceTPST007A%  = JportInstall00, USB\VID_1BBB&PID_007A
+%JrdDeviceDiag00B6%  = JportInstall00, USB\VID_1BBB&PID_00B6&MI_00
+%JrdDeviceAT00B6%    = JportInstall00, USB\VID_1BBB&PID_00B6&MI_01
+%JrdDeviceDiag00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_00
+%JrdDeviceAGPS00B7%  = JportInstall00, USB\VID_1BBB&PID_00B7&MI_01
+%JrdDeviceVOICE00B7% = JportInstall00, USB\VID_1BBB&PID_00B7&MI_02
+%JrdDeviceAT00B7%    = JportInstall00, USB\VID_1BBB&PID_00B7&MI_03
+%JrdDeviceDiag011E%  = JportInstall00, USB\VID_1BBB&PID_011E&MI_00
+%JrdDeviceAT011E%    = JportInstall00, USB\VID_1BBB&PID_011E&MI_01
+%JrdDeviceDiag0190%  = JportInstall00, USB\VID_1BBB&PID_0190&MI_00
+%JrdDeviceAT0190%    = JportInstall00, USB\VID_1BBB&PID_0190&MI_01
+%JrdDeviceDiag0196%  = JportInstall00, USB\VID_1BBB&PID_0196&MI_02
+%JrdDeviceDiag0197%  = JportInstall00, USB\VID_1BBB&PID_0197&MI_00
+%JrdDeviceDiag01AA%  = JportInstall00, USB\VID_1BBB&PID_01AA&MI_03
+%JrdDeviceDiag0203%  = JportInstall00, USB\VID_1BBB&PID_0203&MI_00
+%JrdDeviceDiag0204%  = JportInstall00, USB\VID_1BBB&PID_0204&MI_00
+
+[JportInstall00.NT]
+CopyFiles=JRDUsbDriverFiles
+AddReg = All00, AddReg
+
+[JRDUsbDriverFiles]
+jrdusbser.sys
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[JportInstall00.NT.Services]
+AddService=jrdusbser,  0x00000002, JRD_USBSerialService
+
+[All00]
+HKR,,NTMPDriver,,jrdusbser.sys
+
+[AddReg]
+HKR,,PortSubClass,1,01
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+HKLM,SYSTEM\CurrentControlSet\Control\UsbFlags,IgnoreHWSerNum1BBB011E,1,1
+HKLM,SYSTEM\CurrentControlSet\Control\UsbFlags,IgnoreHWSerNum1BBB007A,1,1
+HKLM,SYSTEM\CurrentControlSet\Control\UsbFlags,IgnoreHWSerNum1BBB0197,1,1
+
+[JRD_USBSerialService]
+DisplayName   = %JRDUSBSER%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %12%\jrdusbser.sys
+
+[Strings]
+JRDUSBSER = "Mobile Connector Device for Legacy Serial Communication2"
+JRDSrcDisk = "Modem Interface Driver Disk"
+JRDCOMM = "hspa Modem"
+JrdDeviceDiag0017 = "Application1 port"
+JrdDeviceAGPS0017 = "Application2 port"
+JrdDeviceVOICE0017= "Application3 port"
+JrdDeviceAT0017   = "Application4 port"
+JrdDeviceDiag0052 = "Alcatel HSPA 3G DIAG"
+JrdDeviceAGPS0052 = "Alcatel HSPA 3G NMEA"
+JrdDeviceVOICE0052= "Alcatel HSPA 3G Voice"
+JrdDeviceAT0052   = "Alcatel HSPA 3G Mobile"
+JrdDeviceDiag0000 = "Application1 interface"
+JrdDeviceAT0000   = "Application2 interface"
+JrdDeviceTPST007A = "TPST Upgrading Port"
+JrdDeviceDiag00B7 = "Application1 Port"
+JrdDeviceAGPS00B7 = "Application2 Port"
+JrdDeviceVOICE00B7= "Application3 Port"
+JrdDeviceAT00B7   = "Application4 Port"
+JrdDeviceDiag00B6 = "Application1 Interface"
+JrdDeviceAT00B6   = "Application2 Interface"
+JrdDeviceDiag011E = "Application1 interface"
+JrdDeviceAT011E   = "Application2 interface"
+JrdDeviceDiag0190 = "Application1 interface"
+JrdDeviceAT0190   = "Application2 interface"
+JrdDeviceDiag0196 = "Alcatel Diagnostic port"
+JrdDeviceDiag0197 = "Alcatel Diagnostic port"
+JrdDeviceDiag01AA = "Alcatel Diagnostic port"
+JrdDeviceDiag0203 = "Alcatel Diagnostic port"
+JrdDeviceDiag0204 = "Alcatel Diagnostic port"

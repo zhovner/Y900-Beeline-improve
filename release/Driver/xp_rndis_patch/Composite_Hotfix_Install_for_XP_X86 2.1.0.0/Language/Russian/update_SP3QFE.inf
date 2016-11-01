@@ -1,0 +1,367 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 768
+    MaxNtServicePackVersion   = 768
+    ThisServicePackVersion    = 768
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[IE7.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[IE8.AdditionalSettings.Save.Reg.For.Uninstall]
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP3QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP3QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Del.Reg.Uninstall.PRE.SP2]
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.221850
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x19
+    WSEDIR                  = "1049"
+    TSCLIENTDIR             = "Клиент служб терминалов"
+    PORTUGAL                = "Португальский"
+    FALKLANDS               = "Фолклендские о-ва"
+    LCID                    = "0419"
+    W32ID                   = "0419"
+    ACCESSDIR               = "accessories"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Защищенные EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Безопасный пароль (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Беспроводная связь"
+    ServicePackSourceFiles  = "Исходные файлы пакета исправлений Windows XP"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Исправление для Windows XP (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - Обновление программного обеспечения"
+    LOC_UPDATE="Обновление"
+    LOC_CRITICALUPDATE="Критическое обновление"
+    LOC_HOTFIX="Исправление"
+    LOC_SECURITY_UPDATE="Обновление безопасности"
+    WUCUN_TS_JOBFILE        = "Уведомление о критическом обновлении.job"
+    BITS_DISPLAY_NAME       = "Фоновая интеллектуальная служба передачи (BITS)"
+    BITS_DESCRIPTION        = \
+"Выполняет передачу данных в фоновом режиме, используя резервы сети по пропускной способности. Если эта служба остановлена, функции Windows Update и MSN Explorer не могут автоматически загружать программы и другие сведения. Если эта служба отключена, любые службы, которые явно зависят от нее, не могут выполнять передачу файлов, если не имеют механизма их сохранения для передачи непосредственно через IE, если BITS отключен."
+    BITS_CLASS_NAME         = "Класс управления фоновой интеллектуальной передачи версии 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Совместимый класс управления фоновой интеллектуальной передачи"
+    AU_DESCRIPTION          = "Включает загрузку и установку обновлений Windows. Если служба отключена, то на этом компьютере нельзя будет использовать возможности автоматического обновления или веб-узел Windows Update."
+    AU_DISPLAY_NAME         = "Автоматическое обновление"
+    DispStrCum_MP9          = \
+"Это обновление предназначено исключительно для проигрывателя Windows Media Player 9. Если вы установили проигрыватель Windows Media Player 9, но это сообщение по-прежнему отображается, ваша версия уже включена в это обновление."
+    DispStrPreReq_MP9       = "Это обновление предназначено исключительно для проигрывателя Windows Media Player 9. Если отображается это сообщение, значит, проигрыватель Windows Media Player 9 не установлен, и установить это обновление невозможно."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "Позволяет добавлять, изменять и удалять приложения, предоставленные пакетом Windows Installer (*.msi). Если эта служба отключена, любые службы, которые явно зависят от нее, не могут быть запущены."
+    CancelEventType         = "Отменить подготовку отчета"
+    MainCancelIntroString   = "Благодарим вас за подготовку отчета. После нажатия кнопки ""Отправить отчет"" данные о сбое установки будут отосланы в корпорацию Майкрософт"
+    MainCancelDetailsLink   = "Просмотреть содержимое отчета установщика."
+    MainCancelReportBtn     = "О&тправить отчет"
+    DetailsCancelHeader     = "Сведения отчета"
+    DetailsCancelBody       = \
+"Отправка этого отчета поможет улучшить продукт. Собранные данные будут подвергнуты статистической обработке для определения  причины сбоя установки. Эти сведения помогут нам уменьшить количество сбоев при установке обновлений."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Афины, Бейрут, Киев, Минск, Стамбул"
+    HTTP="Протокол HTTP"
+    HTTP_DESCRIPTION="Эта служба обеспечивает протокол передачи данных гипертекста (HTTP). Если эта служба отключена, любые службы, которые явно зависят от нее, не могут быть запущены."
+    HTTPFILTER="Протокол HTTP SSL"
+    HTTPFILTER_DESCRIPTION=\
+"Эта служба обеспечивает безопасный протокол передачи данных гипертекста (HTTPS) для службы HTTP, используя SSL (Secure Socket Layer).  Если эта служба отключена, любые службы, которые явно зависят от нее, не могут быть запущены."
+    WEBOC_SCRIPT="Разрешить сценарии для элемента управления обозревателем Internet Explorer"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1049"
+    ODBC_DATA_SOURCE_NAME = "Источник данных ODBC"
+    SHAREDACCESS_SERVICE_NAME = "Брандмауэр Windows/Общий доступ к Интернету (ICS)"
+    Svc-ALG-Description       = "Поддерживает сторонние подключаемые модули протокола для общего доступа к Интернету и брандмауэра Windows."
+    Svc-Ip6Fw-DispName          = "Драйвер брандмауэра Windows для IPv6"
+    Svc-Ip6Fw-Description       = "Предоставляет службу предотвращения вторжения для домашней сети или сети небольшого офиса."
+    NotOnACPowerMsg= "Чтобы установить этот пакет обновления, компьютер должен быть подключен к питанию от сети."
+    A6Blocked= "Установленная на этом компьютере версия Windows не соответствует данному пакету обновления."
+    SharedComputerToolMsg= \
+"Установка пакета обновления 3 (SP3) отменена, потому что набор средств совместного использования компьютеров для Windows XP несовместим с версией Windows. Перед продолжением необходимо: 1) удалить набор средств совместного использования компьютеров; 2) (необязательно) установить Windows SteadyState — последнюю версию набора средств совместного использования компьютеров. Дополнительные сведения см. на странице, посвященной общему доступу, веб-узла корпорации Майкрософт ."
+    RDPMUIBlockedMsg= \
+"Установка пакета обновления 3 (SP3) для Windows XP была отменена, так как его нельзя установить поверх пакета многоязыкового интерфейса пользователя RDP 6.0 (обновление для Windows XP (KB925877). Чтобы продолжить, удалите обновление KB925877."
+    WinflpBlockedMsg= \
+"Систему Microsoft Windows XP Professional с пакетом обновления 3 (SP3) нельзя установить поверх системы Windows Fundamentals for Legacy PCs (WinFLP). Уникальный пакет обновления 3 (SP3) для WinFLP будет доступен на веб-узле download.microsoft.com."
+    WEPOSBlockedMsg= \
+"Систему Microsoft Windows XP Professional с пакетом обновления 3 (SP3) нельзя установить поверх системы Windows Embedded for Point of Service (WEPOS). Уникальный пакет обновления 3 (SP3) для WEPOS будет доступен на веб-узле download.microsoft.com."
+    PreReq_MSI_3 = "Это исправление устанавливается только с помощью MSI 3.0"
+    PreReq_MSI_31 = "Это исправление устанавливается только с помощью MSI 3.1"
+    NOTATABLET = "Это исправление можно установить только на Tablet PC"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Программа установки обнаружила, что содержимое этого обновления уже доступно в этой системе."
+    ELK_LOCALE_INUSE_201a = \
+"Боснийский (кириллица, Босния и Герцеговина) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_201a    = \
+"Боснийский (кириллица, Босния и Герцеговина) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_0464 = \
+"Филиппинский (Филиппины) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_0464    = \
+"Филиппинский (Филиппины) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_046e = \
+"Люксембургский (Люксембург) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_046e    = \
+"Люксембургский (Люксембург) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_0463 = \
+"Пушту (Афганистан)- этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_0463    = \
+"Пушту (Афганистан) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_0462 = \
+"Фризский (Нидерланды) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_0462    = \
+"Фризский (Нидерланды) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_047a = \
+"Мапудунгун (Чили) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_047a    = \
+"Мапудунгун (Чили) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_0461 = \
+"Непальский (Непал) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_0461    = \
+"Непальский (Непал) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_085d = \
+"Инуктитут (латиница, Канада) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_085d    = \
+"Инуктитут (латиница, Канада) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_083c = \
+"Ирландский (Ирландия) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_083c    = \
+"Ирландский (Ирландия) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_047c = \
+"Могавк (Канада) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_047c    = \
+"Могавк (Канада) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    ELK_LOCALE_INUSE_0417 = \
+"Романш (Швейцария) - этот язык выбран в качестве языка региональных стандартов и форматов, а также языка для программ, не поддерживающих Юникод.  Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Сведения о том, как выбрать другой язык, содержатся в файле READMESP.HTM."
+
+    ELK_MUI_INUSE_0417    = \
+"Романш (Швейцария) - поддержка этого языка для меню и диалоговых окон установлена на этом компьютере. Этот язык не поддерживается версиями, выпущенными ранее, чем Исправление для Windows XP (KB945436).  Дополнительные сведения о том, как отменить поддержку этого языка, содержатся в файле READMESP.HTM."
+
+    KLT_148               = "Боснийская кириллица"
+    KLT_149               = "Инуктитутская латиница"
+    KLT_150               = "Люксембургская"
+    KLT_151               = "Непальская"
+    KLT_152               = "Пуштунская"
+    BEETHOVEN_NINTH_NAME            = "Beethoven's Symphony No. 9 (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Образцы музыки"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="Установленная на этом компьютере версия Internet Explorer не соответствует данному пакету обновления."
+    TSC_PACKAGE_EXPIRED="Срок предварительной версии программы подключения к удаленному рабочему столу истек. Чтобы загрузить полную версию программы, перейдите на веб-узел Windows Update или обратитесь к системному администратору."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) Ереван"
+    Azerbaijan_Std="Азербайджанское время (зима)"
+    Azerbaijan_Dlt="Азербайджанское время (лето)"
+    Azerbaijan_Display="(GMT+04:00) Баку"
+    SA_Pacific_Display="(GMT-05:00) Богота, Лима, Кито, Рио Бранко"
+    GTB_Display="(GMT+02:00) Афины, Бухарест, Стамбул"
+    E_Europe_Display="(GMT+02:00) Минск"
+    Middle_East_Std="Ливанское время (зима)"
+    Middle_East_Dlt="Ливанское время (лето)"
+    Middle_East_Display="(GMT+02:00) Бейрут"
+    Jordan_Std="Иорданское время (зима)"
+    Jordan_Dlt="Иорданское время (лето)"
+    Jordan_Display="(GMT+02:00) Амман"
+    Pacific_Display="GMT-08:00) Тихоокеанское время (США и Канада)"
+    Central_M_Std="Центральное время Мехико (зима)"
+    Central_M_Dlt="Центральное время Мехико (лето)"
+    Mountain_M_Std="Горное время (Мексика) (зима)"
+    Mountain_M_Dlt="Горное время (Мексика) (лето)"
+    Central_M_Display="(GMT-06:00) Гвадалахара, Мехико, Монтеррей (новый)"
+    Mexico_Old_Display="(GMT-06:00) Гвадалахара, Мехико, Монтеррей (старый)"
+    Pacific_M_Std="Тихоокеанская Мексика (зима)"
+    Pacific_M_Dlt="Тихоокеанская Мексика (лето)"
+    Pacific_M_Display="(GMT-08:00) Тихуана, Нижняя Калифорния"
+    Mountain_M_Display="(GMT-07:00) Ла Пас, Мазатлан, Чихуахуа (новый)"
+    Mexico_2_Old_Display="(GMT-07:00) Ла Пас, Мазатлан, Чихуахуа (старый)"
+    Namibia_Std="Намибийское время (зима)"
+    Namibia_Dlt="Намибийское время (лето)"
+    Namibia_Display="(GMT+02:00) Виндхук"
+    Myanmar_Display="(GMT+06:30) Янгун (Рангун)"
+    Georgian_Std="Грузинское время (зима)"
+    Georgian_Dlt="Грузинское время (лето)"
+    Georgian_Display="(GMT+03:00) Тбилиси"
+    Greenwich_Display="(GMT) Касабланка, Монровия, Рейкьявик"
+    Central_Brazilian_Std="Центральная Бразилия (зима)"
+    Central_Brazilian_Dlt="Центральная Бразилия (лето)"
+    Central_Brazilian_Display="(GMT-04:00) Манаос"
+    Montevideo_Std="Монтевидео (зима)"
+    Montevideo_Dlt="Монтевидео (лето)"
+    Montevideo_Display="(GMT-03:00) Монтевидео"
+    Caucasus_Common_Display="(GMT+04:00) Кавказское время (зима)"
+    Armenian_Std="Армянское время (зима)"
+    Armenian_Dlt="Армянское время (лето)"
+    Venezuela_Std="Венесуэла (зима)"
+    Venezuela_Dlt="Венесуэла (лето)"
+    Venezuela_Display="(GMT-04:30) Каракас"
+    SA_Western_Display="(GMT-04:00) Ла-Пас"
+    SA_Eastern_Display="(GMT-03:00) Джорджтаун"
+    Argentina_Std="Аргентинское время (зима)"
+    Argentina_Dlt="Аргентинское время (лето)"
+    Argentina_Display="(GMT-03:00) Буэнос-Айрес"
+    WSMAN_ServiceDisplay="Служба удаленного управления Windows (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Доступ к данным по управлению с локальных и удаленных компьютеров."
+    PowerShell_CurrentlyInstalled="Не удается установить данную версию продукта. Перед установкой данной версии необходимо удалить все более ранние версии Windows PowerShell(TM) 1.0. Нажмите кнопку "ОК\
+", чтобы закрыть мастер установки. После этого откройте раздел "Установка и удаление программ" на панели управления, удалите все версии Windows PowerShell(TM) 1.0, а затем запустите программу установки Windows PowerShell(TM) 1.0 повторно."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Не удается установить или удалить Windows PowerShell(TM) 1.0, так как для ее работы необходима обновленная версия .NET Framework 2.0. Установите .NET Framework 2.0 RTM с адреса http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x0419 (на английском языке) и запустите программу установки Windows PowerShell(TM) 1.0 повторно."
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Заметки о выпуске"
+    PowerShell_ShortCutGettingStarted="Знакомство с Windows Powershell"
+    PowerShell_ShortCutUserGuide="Руководство пользователя"
+    PowerShell_ShortCutQRef="Краткий обзор"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=ru
+    PowerShell_InstallLangPackId=1049
+    PowerShell_ReleaseNotesDir=ru
+    InstallMSXML6="Перед установкой данного пакета установите Microsoft Core XML Services (MSXML) 6.0. Чтобы получить MSXML6, зайдите на веб-узел http://download.microsoft.com и наберите в поиске "MSXML6"."
+    napagent_displayname="Агент защиты доступа к сети"
+    napagent_description="Позволяет клиентам Windows принимать участие в защите доступа к сети"
+    hkmsvc_displayname= "Служба управления сертификатами и ключами работоспособности"
+    hkmsvc_description="Управляет сертификатами и ключами работоспособности (которые используются для защиты доступа к сети)"
+    eaphost_displayname="Служба протокола EAP"
+    eaphost_description="Позволяет клиентам Windows использовать службу протокола EAP"
+    eapqec_displayname="Клиент принудительного помещения на карантин для EAP"
+    eapqec_description="Обеспечивает принудительный карантин на основе протокола EAP для защиты доступа к сети"
+    dot3svc_displayname="Автонастройка проводного доступа"
+    dot3svc_description="Данная служба выполняет проверку подлинности IEEE 802.1X для интерфейсов Ethernet"
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+

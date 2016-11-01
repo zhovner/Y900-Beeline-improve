@@ -1,0 +1,27 @@
+[PATCH1]
+os_version=winxp_sp0/winxp_sp1/winxp_sp2/winxp_sp3
+os_type=x86
+url=\xp_patch\RNDIS_Hotfix_Install_for_XP_X86 1.0.1.0\hotfix_install.exe
+parameter=/passive /norestart
+isInstall=0
+
+[PATCH2]
+os_version=winxp_sp0/winxp_sp1/winxp_sp2
+os_type=x64
+url=\xp_patch\rndis_update_64.exe
+parameter=/passive /norestart
+isInstall=0
+
+[PATCH3]
+os_version=winxp_sp0/winxp_sp1/winxp_sp2/winxp_sp3
+os_type=x86
+url=\xp_patch\Composite_Hotfix_Install_for_XP_X86 2.1.0.0\hotfix_install.exe
+parameter=/passive /norestart
+isInstall=0
+
+[PATCH4]
+os_version=winxp_sp0/winxp_sp1/winxp_sp2/winxp_sp3
+os_type=x86/x64
+url=\xp_patch\TcpipWindowsSizeFix.exe
+parameter=
+isInstall=0

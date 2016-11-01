@@ -1,0 +1,327 @@
+[Version]
+    RebootRequired=1
+    Signature                 = "$Windows NT$"
+    LanguageType              = %LangTypeValue%
+    NtBuildToUpdate           = 2600
+    NtMajorVersionToUpdate    = 5
+    NtMinorVersionToUpdate    = 1
+    MaxNtBuildToUpdate        = 2600
+    MaxNtMajorVersionToUpdate = 5
+    MaxNtMinorVersionToUpdate = 1
+    MinNtServicePackVersion   = 512
+    MaxNtServicePackVersion   = 512
+    ThisServicePackVersion    = 512
+    CatalogFile               = %SP_SHORT_TITLE%.cat
+
+[ProductCatalogsToInstall]
+    %SP_SHORT_TITLE%.cat, update\%SP_SHORT_TITLE%.cat
+
+[ProductInstall.DontDelayUntilReboot]
+    CopyFiles=Drivers.files
+
+[ProductInstall.CopyFilesAlways]
+    CopyFiles=CopyAlways.DriverCab.files
+    CopyFiles=CopyAlways.Cache.files
+
+[ProductInstall.GlobalRegistryChanges.Install]
+    AddReg=Product.Add.Reg
+
+[ProductInstall.GlobalRegistryChanges.ReInstall]
+    AddReg=Product.Add.Reg
+
+[DeviceClassList]
+    usb={36fc9e60-c465-11cf-8056-444553540000}
+
+[Save.Reg.For.Uninstall]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup","LogLevel"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%
+
+[Product.Add.Reg]
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Setup", "LogLevel", 0x10001, 0
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentKeyName",0x00000000,"OperatingSystem"
+    HKLM,"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%","ParentDisplayName",0x00000000,"%PARENT_DISPLAY_NAME%"
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Comments",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Backup Dir",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Fix Description",0,%SP_TITLE%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed By",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Installed On",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Service Pack",0x10001,%SERVICE_PACK_NUMBER%
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%,"Valid",0x10001,1
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Flags",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New File",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"New Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows NT\CurrentVersion\Hotfix\%SP_SHORT_TITLE%\File 1\,"Old Link Date",0,""
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"ReleaseType",0,%HOTFIX%
+    HKLM,SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\%SP_SHORT_TITLE%,"RegistryLocation",0,"HKLM\SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%"
+    HKLM,SOFTWARE\Microsoft\Updates\Windows XP\SP%SERVICE_PACK_NUMBER%\%SP_SHORT_TITLE%,"Description",,%SP_TITLE%
+
+[DestinationDirs]
+    CopyAlways.DriverCab.files=65623 ; Destination determined at runtime
+    Drivers.files=12                ; %windir%\system32\drivers (don't delay until reboot)
+    CopyAlways.Cache.files=65619        ; %windir%\system32\DllCache (copy even if don't exist)
+
+[CopyAlways.DriverCab.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[CopyAlways.Cache.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[Drivers.files]
+    usbccgp.sys,SP2QFE\usbccgp.sys
+
+[ArchiveCatalogFilesOnly]
+    %SP_SHORT_TITLE%.cat
+
+[DirectoriesToCleanUp.Uninstall]
+
+[SourceDisksNames]
+    1=%ServicePackSourceFiles%
+
+[SourceDisksFiles]
+    SP2QFE\usbccgp.sys=1
+
+[UninstallSections]
+    GlobalRegistryChanges, GlobalRegistryChanges.UnInstall
+    Add.Reg, Add.Reg.Uninstall
+    Del.Reg, Del.Reg.Uninstall
+
+[Strings]
+    ProxyRegKey=SYSTEM\CurrentControlSet\Services\WSPSrv\Parameters
+    IeRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\iexplore.exe
+    HyperRegKey=SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\hypertrm.exe
+    EudcRegKey=Software\Microsoft\Windows\CurrentVersion\App Paths\eudcedit.exe
+    AdmtRegKey=SOFTWARE\Mission Critical Software\DomainAdmin
+    TsclientRegKey=SOFTWARE\Classes\conman.exe\DefaultIcon
+    PATH_ZONES="Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones"
+    SERVICE_PACK_NUMBER     = 4
+    HelpLink = "http://support.microsoft.com?kbid=945436"
+    URLInfoAbout = "http://support.microsoft.com"
+    BUILDTIMESTAMP = 1
+    EXPIRETIMESTAMP = 20080621.222724
+    CONN_WIZ           = "Connection Wizard"
+    UPDATE                = "Update"
+    HOTFIX                = "Hotfix"
+    SECURITY_UPDATE       = "Security Update"
+    LangTypeValue           = 0x1F
+    WSEDIR                  = "1055"
+    TSCLIENTDIR             = "Terminal Services Client"
+    PORTUGAL                = "Portekiz"
+    FALKLANDS               = "Falkland Adalarý"
+    LCID                    = "041F"
+    W32ID                   = "00041f"
+    ACCESSDIR               = "accessories"
+    ACCESSDIRNAME           = "accessories" ;; accessories folder name is different from the display name in case of PLK, FIN and ELL
+    PEAP-DispName         = "Korumalý EAP (PEAP)"
+    EAPMSCHAP-DispName    = "Güvenli parola (EAP-MSCHAP v2)"
+    WIRELESS-DispName     = "Kablosuz"
+    ServicePackSourceFiles  = "Windows XP Hotfix Kaynak Dosyalarý"
+    SP_SHORT_TITLE          = "KB945436"
+    SP_TITLE                = "Windows XP için Düzeltme (KB945436)"
+    PARENT_DISPLAY_NAME     ="Windows XP - Yazýlým Güncelleþtirmeleri"
+    LOC_UPDATE="Güncelleþtirme"
+    LOC_CRITICALUPDATE="Kritik Güncelleþtirme"
+    LOC_HOTFIX="Düzeltme"
+    LOC_SECURITY_UPDATE="Güvenlik Güncelleþtirmesi"
+    WUCUN_TS_JOBFILE        = "windows önemli güncelleþtirme bildirimi.job"
+    BITS_DISPLAY_NAME       = "Arka Plan Akýllý Aktarým Hizmeti"
+    BITS_DESCRIPTION        = \
+"Boþtaki að bant geniþliðini kullanarak arka planda dosyalarý aktarýr. Hizmet durdurulmadýysa, Windows Update ve MSN Explorer gibi özellikler otomatik olarak program ya da baþka bilgiyi indiremez. Bu hizmet devredýþý býrakýlýrsa, açýkça baðýmlý olan hizmetlerin, BITS devredýþý býrakýldýðýnda IE yoluyla dosya aktarmak için sorunsuz bir düzeneði yoksa, dosya aktaramayabilir."
+    BITS_CLASS_NAME         = "Arka Plan Akýllý Aktarým Denetim Sýnýfý 1.0"
+    LEGACY_BITS_CLASS_NAME  = "Eski Arka Plan Akýllý Aktarým Hizmeti Denetim Sýnýfý"
+    AU_DESCRIPTION          = "Windows güncelleþtirmelerinin indirilip yüklenmesini saðlar. Bu hizmet devre dýþýysa, bu bilgisayar Otomatik Güncelleþtirmeler özelliðini veya Windows Update Web sitesini kullanamaz."
+    AU_DISPLAY_NAME         = "Otomatik Güncelleþtirme"
+    DispStrCum_MP9          = "Bu yazýlým güncelleþtirmesi sadece Windows Media Player 9'a uygulanabilir. Windows Media Player 9 yüklü ise fakat bu iletiyi hala görüyorsanýz, sürümünüz bu yazýlým güncelleþtirmesini zaten kapsýyordur."
+    DispStrPreReq_MP9       = "Bu yazýlým güncelleþtirmesi sadece Windows Media Player 9'a uygulanabilir. Bu iletiyi görüyorsanýz, Windows Media Player 9 yüklü deðil ve bu yazýlým güncelleþtirmesini yükleyemezsiniz."
+    MSI_DISPLAY_NAME        = "Windows Installer"
+    MSI_DESCRIPTION         = "Windows Installer (*.msi) paketi olarak saðlanan uygulamalarý ekler, deðiþtirir ve kaldýrýr. Bu hizmet devre dýþý býrakýlýrsa, kendisine baðýmlý hizmetlerin hiçbiri baþlayamaz."
+    CancelEventType         = "Raporu Ýptal Et"
+    MainCancelIntroString   = "Ýsteði raporladýðýnýz için teþekkür ederiz. ""Raporu Gönder"" düðmesini týklattýðýnýzda, yüklemenizin neden baþarýsýz olduðunu gösteren veriler Microsoft'a gönderilecektir"
+    MainCancelDetailsLink   = "Yükleyici raporunun içindekilere bakýn."
+    MainCancelReportBtn     = "Raporu &Gönder"
+    DetailsCancelHeader     = "Rapor Bilgisi"
+    DetailsCancelBody       = \
+"Bu raporu bize göndermeniz, kullanýcý deneyimlerini geliþtirmemize yardýmcý olur. Baþarýsýz yüklemelere neden olan durumlarý anlamak üzere, toplanan verileri istatistiksel olarak iþleyeceðiz. Bu bilgiler, güncelleþtirmeler uygulayarak baþarýsýz yüklemelerin sayýsýný azaltmamýza yardýmcý olur."
+    GMT_PLUS_02_D_DESC     = "(GMT+02:00) Atina, Beyrut, Ýstanbul, Minsk"
+    HTTP="HTTP"
+    HTTP_DESCRIPTION="Bu hizmet, köprü metni aktarým protokolünü (HTTP) uygular. Devre dýþý býrakýldýðýnda, bu hizmete açýkça baðýmlý olan hizmetler baþlatýlamaz."
+    HTTPFILTER="HTTP SSL"
+    HTTPFILTER_DESCRIPTION="Bu hizmet, Güvenli Yuva Katmaný (SSL) kullanarak HTTP hizmeti için güvenli köprü metni aktarým protokolünü (HTTPS) uygular. Devre dýþý býrakýldýðýnda, bu hizmete açýkça baðýmlý olan hizmetler baþlatýlamaz."
+    WEBOC_SCRIPT="Internet Explorer Webbrowser denetiminin komut dosyasý kullanýmýna izin ver"
+    MsSHARED = "Microsoft Shared"
+    OLEDB = "Ole DB"
+    ADO = "ado"
+    MSADC = "msadc"
+    DAO = "DAO"
+    MSSOAPBIN = "MSSoap\Binaries"
+    MSSOAPBINRES = "MSSoap\Binaries\Resources\1055"
+    ODBC_DATA_SOURCE_NAME = "ODBC Veri Kaynaðý"
+    SHAREDACCESS_SERVICE_NAME = "Windows Güvenlik Duvarý/Internet Baðlantý Paylaþýmý (ICS)"
+    Svc-ALG-Description       = "Internet Baðlantý Paylaþýmý ve Windows Güvenlik Duvarý için üçüncü kiþilere ait iletiþim kuralý eklentileri desteði saðlar."
+    Svc-Ip6Fw-DispName          = "IPv6 Windows Güvenlik Duvarý Sürücüsü"
+    Svc-Ip6Fw-Description       = "Ev veya küçük ofis aðlarý için yetkisiz giriþ engelleme hizmeti saðlar."
+    NotOnACPowerMsg= "Bu hizmet paketi kurulum baþlamadan önce makinenin AC gücü kullanmasýný gerektirir."
+    A6Blocked= "Yüklediðiniz Windows sürümü, yüklemeye çalýþtýðýnýz güncelleþtirme ile eþleþmiyor."
+    PreReq_MSI_3 = "Bu düzeltme sadece MSI 3.0 üzerinde yüklenir"
+    PreReq_MSI_31 = "Bu düzeltme yalnýzca MSI 3.1 üzerinde yüklenir"
+    NOTATABLET = "Bu düzeltme sadece Tablet PC üzerine yüklenebilir"
+    ELK_VERSION=2
+    ELK_VERSION_NEWER_ERROR="Kurulum, bu güncelleþtirmenin içeriðinin sistemde zaten bulunduðunu belirledi."
+    ELK_LOCALE_INUSE_201a = \
+"Bosna dili (Kiril, Bosna-Hersek) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_201a    = \
+"Menü ve iletiþim kutularý için Bosna dili (Kiril, Bosna-Hersek) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_LOCALE_INUSE_0464 = \
+"Filipin dili (Filipinler) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_0464    = \
+"Menü ve iletiþim kutularý için Filipin dili (Filipinler) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_LOCALE_INUSE_046e = \
+"Lüksemburg dili (Lüksemburg) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_046e    = \
+"Menü ve iletiþim kutularý için Lüksemburg dili (Lüksemburg) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_LOCALE_INUSE_0463 = \
+"Peþtuca (Afganistan) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_0463    = "Menü ve iletiþim kutularý için Peþtuca (Afganistan) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_0462 = \
+"Frizye dili (Hollanda) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_0462    = "Menü ve iletiþim kutularý için Frizye dili (Hollanda) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_047a = \
+"Mapuçe dili (Þili) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_047a    = "Menü ve iletiþim kutularý için Mapuçe dili (Þili) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_0461 = \
+"Nepal dili (Nepal) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_0461    = "Menü ve iletiþim kutularý için Nepal dili (Nepal) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_085d = \
+"Ýnuit dili (Latin, Kanada) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_085d    = \
+"Menü ve iletiþim kutularý için Ýnuit dili (Latin, Kanada) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_LOCALE_INUSE_083c = \
+"Ýrlanda dili (Ýrlanda) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_083c    = "Menü ve iletiþim kutularý için Ýrlanda dili (Ýrlanda) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_047c = \
+"Mohavk dili (Mohavk) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_047c    = "Menü ve iletiþim kutularý için Mohavk dili (Mohavk) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    ELK_LOCALE_INUSE_0417 = \
+"Romanþ dili (Ýsviçre) standartlar ve biçimler veya Unicode biçimini desteklemeyen programlar için kullanýlacak dil olarak seçildi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Farklý bir dil seçmek için lütfen readmesp.htm dosyasýna bakýn."
+
+    ELK_MUI_INUSE_0417    = "Menü ve iletiþim kutularý için Romanþ dili (Ýsviçre) desteði sisteminize yüklendi. Bu dil Windows XP için Düzeltme (KB945436) öncesinde desteklenmez. Bu dil desteðini kaldýrma konusunda daha fazla bilgi için lütfen readmesp.htm dosyasýna bakýn."
+    KLT_148               = "Bosna dili Kiril"
+    KLT_149               = "Ýnuit dili Latin"
+    KLT_150               = "Lüksemburg dili"
+    KLT_151               = "Nepal dili"
+    KLT_152               = "Peþtuca"
+    BEETHOVEN_NINTH_NAME            = "Beethoven 9 Nolu Senfonisi (Scherzo).wma"
+    MYMUSIC_SAMPLES_DIR             = "Örnek Müzik"
+    NEW_STORIES_NAME                = "New Stories (Highway Blues).wma"
+    InvalidIEVersion="Yüklediðiniz Internet Explorer sürümü, yüklemeye çalýþtýðýnýz güncelleþtirme ile eþleþmiyor."
+    TSC_PACKAGE_EXPIRED="Uzak Masaüstü Baðlantýsý'nýn yayýn öncesi sürümünün kullaným süresi sona ermiþtir. Uzak Masaüstü Baðlantýsý'nýn tam sürümünü karþýdan yüklemek için Windows Update sitesine gidin veya sistem yöneticinize baþvurun."
+    KWL_MEDIAPLAYER_LNK_TITLE="Media Player Center"
+    KWL_MEDIAPLAYER_LNK_TOOLTIP="Media Player Center"
+    KWL_MESSENGER_LNK_TITLE="Messenger Center"
+    KWL_MESSENGER_LNK_TOOLTIP="Messenger Center"
+    Caucasus_Display="(GMT+04:00) Erivan"
+    Azerbaijan_Std="Azerbaycan Standart Saati"
+    Azerbaijan_Dlt="Azerbaycan Yaz Saati"
+    Azerbaijan_Display="(GMT+04:00) Bakü"
+    SA_Pacific_Display="(GMT-05:00) Bogota, Lima, Quito, Rio Branco"
+    GTB_Display="(GMT+02:00) Atina, Bükreþ, Ýstanbul"
+    E_Europe_Display="(GMT+02:00) Minsk"
+    Middle_East_Std="Ortadoðu Standart Saati"
+    Middle_East_Dlt="Ortadoðu Yaz Saati"
+    Middle_East_Display="(GMT+02:00) Beyrut"
+    Jordan_Std="Ürdün Standart Saati"
+    Jordan_Dlt="Ürdün Yaz Saati"
+    Jordan_Display="(GMT+02:00) Amman"
+    Pacific_Display="(GMT-08:00) Pasifik Saati (ABD ve Kanada)"
+    Central_M_Std="Merkezi Standart Saat (Meksika)"
+    Central_M_Dlt="Merkezi Yaz Saati (Meksika)"
+    Mountain_M_Std="Sýradaðlar Stan. Saati (Meksika)"
+    Mountain_M_Dlt="Sýradaðlar Yaz Saati (Meksika)"
+    Central_M_Display="(GMT-06:00) Guadalajara, Mexico City, Monterrey - Yeni"
+    Mexico_Old_Display="(GMT-06:00) Guadalajara, Mexico City, Monterrey - Eski"
+    Pacific_M_Std="Pasifik Standart Saati (Meksika)"
+    Pacific_M_Dlt="Pasifik Yaz Saati (Meksika)"
+    Pacific_M_Display="(GMT-08:00) Tijuana, Baja California"
+    Mountain_M_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - Yeni"
+    Mexico_2_Old_Display="(GMT-07:00) Chihuahua, La Paz, Mazatlan - Eski"
+    Namibia_Std="Namibia Standart Saati"
+    Namibia_Dlt="Namibia Yaz Saati"
+    Namibia_Display="(GMT+02:00) Windhoek"
+    Myanmar_Display="(GMT+06:30) Yangon (Rangoon)"
+    Georgian_Std="Gürcistan Standart Saati"
+    Georgian_Dlt="Gürcistan Yaz Saati"
+    Georgian_Display="(GMT+03:00) Tiflis"
+    Greenwich_Display="(GMT) Casablanca, Monrovia, Reykjavik"
+    Central_Brazilian_Std="Orta Brezilya Standart Saati"
+    Central_Brazilian_Dlt="Orta Brezilya Yaz Saati"
+    Central_Brazilian_Display="(GMT-04:00) Manaus"
+    Montevideo_Std="Montevideo Standart Saati"
+    Montevideo_Dlt="Montevideo Yaz Saati"
+    Montevideo_Display="(GMT-03:00) Montevideo"
+    Caucasus_Common_Display="(GMT+04:00) Caucasus Standart Saati"
+    Armenian_Std="Ermenistan Standart Saati"
+    Armenian_Dlt="Ermenistan Yaz Saati"
+    Venezuela_Std="Venezuela Standart Saati"
+    Venezuela_Dlt="Venezuela Yaz Saati"
+    Venezuela_Display="(GMT-04:30) Karakas"
+    SA_Western_Display="(GMT-04:00) La Paz"
+    SA_Eastern_Display="(GMT-03:00) Georgetown"
+    Argentina_Std="Arjantin Standart Saati"
+    Argentina_Dlt="Arjantin Yaz Saati"
+    Argentina_Display="(GMT-03:00) Buenos Aires"
+    WSMAN_ServiceDisplay="Windows Uzaktan Yönetim (WS-Management)"
+    WSMANOOB_WSMAN_ServiceDescription="Yerel ve uzak makinelerden yönetim bilgilerine eriþime izin verir."
+    PowerShell_CurrentlyInstalled=\
+"Cannot install this version of the product. You must first remove any earlier versions of Windows PowerShell(TM) 1.0 before you can install this version.  Please click OK to close the Setup Wizard. Next open the Add/Remove Programs Control Panel, uninstall any versions of the Windows PowerShell(TM) 1.0, and run the Windows PowerShell(TM) 1.0 setup again."
+    PowerShell_CLR_NOT_INSTALLED=\
+"Cannot install/uninstall Windows PowerShell(TM) 1.0 because it requires an updated version of the .NET Framework 2.0. Please install .NET Framework 2.0 RTM from http://go.microsoft.com/fwlink/?linkid=57014&lcid=0x409 and rerun Windows PowerShell(TM) 1.0 Setup"
+    PowerShell_SCFN="Lucida Console"
+    PowerShell_SCFS="12"
+    PowerShell_SCDir="Windows PowerShell 1.0"
+    PowerShell_SCName="Windows PowerShell"
+    PowerShell_ShortCutRelNote="Release Notes"
+    PowerShell_ShortCutGettingStarted="Getting Started"
+    PowerShell_ShortCutUserGuide="User Guide"
+    PowerShell_ShortCutQRef="Quick Reference"
+    PowerShell_Comments="Windows PowerShell(TM) 1.0"
+    PowerShell_Culture=en
+    PowerShell_InstallLangPackId=1033
+    PowerShell_ReleaseNotesDir=
+    InstallMSXML6="Lütfen bu paketi yüklemeden önce Microsoft Core XML Hizmetleri (MSXML) 6.0'ý yükleyin. MSXML6'yý elde etmek için lütfen http://download.microsoft.com sitesini ziyaret edin ve MSXML6'yý arayýn."
+
+[LinkItems.Create.Uninstall]
+
+[GlobalRegistryChanges.UnInstall]
+    AddReg=Add.Reg
+    DelReg=Del.Reg
+
+[Del.Reg.Uninstall]
+
+[Add.Reg.Uninstall]
+
+[Configuration]
+    DeviceClassInfo=1
+    InstallationType        = Hotfix
+    InstallLogFileName      = %SP_SHORT_TITLE%.log
+    UnInstallLogFileName    = %SP_SHORT_TITLE%Uninst.log
+    UnInstallDirName        = $NtUninstall%SP_SHORT_TITLE%$
+    EventLogKeyName         = NtServicePack
+    EventLogDllName         = spmsg.dll
+
+[PreRequisite.Uninstall]
+
