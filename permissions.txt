@@ -52,6 +52,8 @@
 777  root:wheel ./usr/bin/diagcmd
 777  root:wheel ./usr/bin/scp
 777  root:wheel ./usr/bin/ssh
+755  root:wheel ./usr/libexec
+755  root:wheel ./usr/libexec/sftp-server
 755  root:wheel ./usr/sbin
 777  root:wheel ./usr/sbin/dropbear
 777  root:wheel ./usr/sbin/dropbearconvert
