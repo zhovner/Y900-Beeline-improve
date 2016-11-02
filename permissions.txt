@@ -49,6 +49,7 @@
 777  root:wheel ./usb_conf/win_switch_pid
 755  root:wheel ./usr
 755  root:wheel ./usr/bin
+777  root:wheel ./usr/bin/diagcmd
 777  root:wheel ./usr/bin/scp
 777  root:wheel ./usr/bin/ssh
 755  root:wheel ./usr/sbin
