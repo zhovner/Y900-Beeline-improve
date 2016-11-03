@@ -11,7 +11,6 @@
 777  root:wheel ./etc/rc5.d/S10dropbear
 755  root:wheel ./etc/rcS.d
 755  root:wheel ./etc/rcS.d/S99iptables
-755  root:wheel ./etc/rcS.d/S99ttlfix
 400  root:wheel ./etc/securetty
 755  root:wheel ./jrd-resource
 755  root:wheel ./jrd-resource/resource
