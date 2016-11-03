@@ -4,12 +4,14 @@
 755  root:wheel ./etc/init.d
 755  root:wheel ./etc/init.d/dropbear
 755  root:wheel ./etc/init.d/iptables
+755  root:wheel ./etc/init.d/ttlfix
 666  root:wheel ./etc/localtime
 666  root:wheel ./etc/motd
 755  root:wheel ./etc/rc5.d
 777  root:wheel ./etc/rc5.d/S10dropbear
 755  root:wheel ./etc/rcS.d
 755  root:wheel ./etc/rcS.d/S99iptables
+755  root:wheel ./etc/rcS.d/S99ttlfix
 400  root:wheel ./etc/securetty
 755  root:wheel ./jrd-resource
 755  root:wheel ./jrd-resource/resource
@@ -19,6 +21,9 @@
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Disable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Enable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Status
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXDisable
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXEnable
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXStatus
 755  root:wheel ./jrd-resource/resource/webrc/www/comm_help
 711  root:wheel ./jrd-resource/resource/webrc/www/comm_help/um_en.html
 755  root:wheel ./jrd-resource/resource/webrc/www/css

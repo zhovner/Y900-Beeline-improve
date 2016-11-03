@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+if [ -f /etc/rcS.d/S99ttlfix ]; then
+    echo '{"error": "TTL Fix already enabled"}'
+    exit 0
+fi
+
+ln -s /etc/init.d/ttlfix /etc/rcS.d/S99ttlfix
+/etc/init.d/ttlfix
+ 
+echo '{"TTLFIX": "enabled"}'
+exit 0

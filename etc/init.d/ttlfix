@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/sbin/iptables -t mangle -A POSTROUTING -o rmnet_data0 -j TTL --ttl-set 64

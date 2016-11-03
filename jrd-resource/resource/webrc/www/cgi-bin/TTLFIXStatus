@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+if [ ! -f /etc/rcS.d/S99ttlfix ]; then
+    echo '{"TTLFIX": "disabled"}'
+    exit 0
+fi
+
+if [ -f /etc/rcS.d/S99ttlfix ]; then
+    echo '{"TTLFIX": "enabled"}'
+    exit 0
+fi
+

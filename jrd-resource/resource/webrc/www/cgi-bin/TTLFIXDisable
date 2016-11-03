@@ -1,0 +1,13 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+if [ ! -f /etc/rcS.d/S99ttlfix ]; then
+    echo '{"error": "TTL Fix already disabled"}'
+    exit 0
+fi
+
+rm /etc/rcS.d/S99ttlfix
+/usr/sbin/iptables -t mangle -D POSTROUTING -o rmnet_data0 -j TTL --ttl-set 64
+ 
+echo '{"TTLFIX": "disabled"}'
+exit 0
