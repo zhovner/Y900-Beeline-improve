@@ -187,19 +187,29 @@
             </div>
         </div>
     </div>
-    <div>
-        <div>
-            CA77: 
-            <a href="/cgi-bin/CA77Status" onclick="return simpleAjaxBtn(this)">[status]</a>
-            <a href="/cgi-bin/CA77Enable" onclick="return simpleAjaxBtn(this)">[enable]</a>
-            <a href="/cgi-bin/CA77Disable" onclick="return simpleAjaxBtn(this)">[disable]</a>
+    <div style="margin: 8px">
+        <div class="x-switch" style="display: none" data-status="/cgi-bin/CA77Status" data-enable="/cgi-bin/CA77Enable" data-disable="/cgi-bin/CA77Disable">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="myonoffswitch1">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
         </div>
-        <div>
-            TTLFIX: 
-            <a href="/cgi-bin/TTLFIXStatus" onclick="return simpleAjaxBtn(this)">[status]</a>
-            <a href="/cgi-bin/TTLFIXEnable" onclick="return simpleAjaxBtn(this)">[enable]</a>
-            <a href="/cgi-bin/TTLFIXDisable" onclick="return simpleAjaxBtn(this)">[disable]</a>
+        <div class="x-switch-label" style="display: none">CA 77</div> 
+        <br>
+        <div class="x-switch" style="display: none" data-status="/cgi-bin/TTLFIXStatus" data-enable="/cgi-bin/TTLFIXEnable" data-disable="/cgi-bin/TTLFIXDisable">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox">
+                <label class="onoffswitch-label" for="myonoffswitch2">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+            <div class="x-switch-label" style="display: none"></div> 
         </div>
+        <div class="x-switch-label">TTL FIX</div> 
     </div>
     <div id='footer' class="side-center">
         <span trans='copyright'></span>
@@ -279,15 +289,32 @@
 <script>
     require.config( { waitSeconds : 30 })
     
-    window.simpleAjaxBtn = function (a) {
-        var url = a.href;
-        fetch(url).then(function (response) {
-            return response.text();
-        }).then(function (text) {
-            alert(text);
-        });
-        return false;
-    }
+    $('.x-switch').each(function () {
+        var self = this;
+        var $cb = $(self).find('input[type=checkbox]');
+        var statusUrl = $(self).data('status');
+        var enableUrl = $(self).data('enable');
+        var disableUrl = $(self).data('disable');
+
+        fetch(statusUrl).then(function (r) { return r.text() })
+            .then(function (t) {
+               console.log(t);
+               if (t.indexOf('enabled') > -1) {
+                   $cb.prop('checked', true);
+               }
+               (function (en, dis) {
+                   $cb.change(function () {
+                    setTimeout(function () {
+                        var url = $cb.is(':checked') ? en : dis;
+                        fetch(url).then(function (r) { return r.text() }).then(function (t) { console.log(t) });
+                    }, 1);
+               })
+               })(enableUrl, disableUrl);
+               
+               $(self).show();
+               $('.x-switch-label').show();
+            });
+    });
 </script>
 </body>
 </html>
