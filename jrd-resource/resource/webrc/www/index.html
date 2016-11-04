@@ -187,6 +187,20 @@
             </div>
         </div>
     </div>
+    <div>
+        <div>
+            CA77: 
+            <a href="/cgi-bin/CA77Status" onclick="return simpleAjaxBtn(this)">[status]</a>
+            <a href="/cgi-bin/CA77Enable" onclick="return simpleAjaxBtn(this)">[enable]</a>
+            <a href="/cgi-bin/CA77Disable" onclick="return simpleAjaxBtn(this)">[disable]</a>
+        </div>
+        <div>
+            TTLFIX: 
+            <a href="/cgi-bin/TTLFIXStatus" onclick="return simpleAjaxBtn(this)">[status]</a>
+            <a href="/cgi-bin/TTLFIXEnable" onclick="return simpleAjaxBtn(this)">[enable]</a>
+            <a href="/cgi-bin/TTLFIXDisable" onclick="return simpleAjaxBtn(this)">[disable]</a>
+        </div>
+    </div>
     <div id='footer' class="side-center">
         <span trans='copyright'></span>
     </div>
@@ -262,5 +276,18 @@
     </div>
 </script>
 <script type="text/javascript" data-main="js/main" src="js/lib/require/require-jquery-min.js"></script>
+<script>
+    require.config( { waitSeconds : 30 })
+    
+    window.simpleAjaxBtn = function (a) {
+        var url = a.href;
+        fetch(url).then(function (response) {
+            return response.text();
+        }).then(function (text) {
+            alert(text);
+        });
+        return false;
+    }
+</script>
 </body>
 </html>
