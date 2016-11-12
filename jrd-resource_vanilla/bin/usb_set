@@ -1,0 +1,11 @@
+#! /bin/sh
+
+  func5_path="/usb_conf/usb_func5"
+  if [ $1 == '0' -o $1 == '1' ]; then
+		if [ -f $func5_path ]; then
+			CONTENT=$(grep 'func5' $func5_path | cut -d '=' -f 2)
+			if [ $CONTENT != $1 ]; then
+				sed -i "s/^func5=.*/func5=$1/" $func5_path
+			fi
+		fi
+	fi

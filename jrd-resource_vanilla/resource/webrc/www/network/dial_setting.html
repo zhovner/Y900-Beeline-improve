@@ -1,0 +1,41 @@
+<form>
+<div class="form-body">
+    <div class="form-title" trans='dial_setting'></div>
+    <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans='dial_mode' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <input type="radio" name="modeGroup" id='auto_mode' value="auto_dial" data-bind="checked: selectMode, enable: enableFlag" />
+                    <label for='auto_mode' trans='auto_select'></label>
+                </div>
+            </div>
+
+            <div class="row-fluid">
+               <!-- <label class="span4 side-right"></label>-->
+                <div class="" style="line-height: 25px;">
+                    <input type="radio" name="modeGroup" id='manual_mode'  value="manual_dial" data-bind="checked: selectMode, enable: enableFlag" />
+                    <label for='manual_mode' trans='manual_select'></label>
+                </div>
+            </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <p id="roamBtn" class="checkbox floatleft margintop5 checkboxToggle" data-bind="css:{'checkbox_selected': isAllowedRoaming()=='on'}, click: setAllowedRoaming" manualControl="true">
+                    <input type="checkbox" id="isAllowedRoaming" value="on" data-bind="checked:isAllowedRoaming()=='on'"/>
+                </p>
+                <label for="isAllowedRoaming" trans="dial_roaming_remind" class="update_inline floatleft lineheight25"></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-buttons">
+        <input type="button" class="btn-1" data-bind='click: save, enable: enableFlag' trans="apply"/>
+    </div>
+    <div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content">
+			<li trans="diconneted_operate_note"></li>
+            <li trans="dial_setting_note_automatic"></li>
+            <li trans="dial_setting_note_manual"></li>
+        </ul>
+    </div>
+</div>
+</form>

@@ -1,0 +1,6 @@
+name:bob.data
+apn:bob.at
+protocol:1
+user:data@bob.at
+psw:ppp
+dial:*99#

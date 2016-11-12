@@ -1,0 +1,4 @@
+protocol:1
+name:Telekom HU NET
+apn:internet.telekom
+dial:*99#

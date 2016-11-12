@@ -1,0 +1,318 @@
+<div id="profileMge" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_profilesManagement}</a>
+        </h3>
+        <div class="settings-con">
+            <ul class="ipt-wrap">
+                <li>
+                    <label class="text">${ids_title_profilesManagement:}</label>
+                    <select class="select" id="selProfileName"></select>
+                </li>
+                <li>
+                    <label class="text">*${ids_profile_profileName:}</label>
+                    <input id="iptProfileName" type="text" class="ipt" maxLength="31">
+                </li>
+                <li>
+                    <label class="text">*${ids_profile_dialNumber:}</label>
+                    <input id="iptProfileNumber" type="text" class="ipt" maxLength="31">
+                </li>
+                <li>
+                    <label class="text">${ids_profile_apn:}</label>
+                    <input id="iptProfileApn" type="text" class="iptt" maxLength="32">
+                </li>
+                <li>
+                    <label class="text">${ids_profile_userName:}</label>
+                    <input id="iptProfileUserName" type="text" class="ipt" maxLength="31">
+                </li>
+                <li>
+                    <label class="text">${ids_profile_password:}</label>
+                    <input id="iptProfilePassword" type="password" class="ipt" maxLength="31">
+                </li>
+                <li>
+                    <label class="text">${ids_profile_protocal:}</label>
+                    <select id="selProfileProtoctol" class="select">
+                        <option value="0">None</option>
+                        <option value="1">PAP</option>
+                        <option value="2">CHAP</option>
+                        <option value="3">PAP & CHAP</option>
+                    </select>
+                </li>
+            </ul>
+            <p class="warnColor">${ids_profile_numRule}</p>
+        
+            <div class="btn-wrap">
+                <input type="button" id="btnProfileNew" class="btnNormal" value="${ids_btn_new}" />
+                <input type="button" id="btnProfileEdit" class="btnNormal" value="${ids_btn_edit}" />
+                <input type="button" id="btnProfileSave" class="btnNormal" value="${ids_btn_save}" />
+                <input type="button" id="btnProfileDelete" class="btnNormal" value="${ids_btn_delete}" />
+                <input type="button" id="btnProfileSetDefault" class="btnNormal" value="${ids_btn_setDefault}" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "profileManagement";
+$(function($) {
+    disableBtn();
+})
+var wanState = SDK.Connection.GetConnectionState().ConnectionStatus;
+
+var profileList=SDK.Profile.GetProfileList();
+var userDefineProfileLen=getUserDefineLen(profileList);
+var curprofile_operate = null;
+var selProfileNameId="#selProfileName";
+var userDefineProfileNameArray=[];
+
+
+$(document).ready(function() {
+    showlist(wanState);
+    $("#btnProfileSetDefault").click(setDefaultEvent);
+    $("#btnProfileEdit").click(function() {
+        editProfile($(selProfileNameId).val());
+    })
+    $("#btnProfileDelete").click(deleteProfile);
+    $("#btnProfileNew").click(function() {
+        removeRuleText();
+        newProfile();
+    });
+    $("#iptProfileName,#iptProfileNumber,#iptProfileUserName,#iptProfilePassword,#iptProfileApn,#selProfileProtoctol").bind("input change keyup keydown paste", function() {
+        $("#btnProfileSave").removeBtnDisabled();
+    });
+    $(selProfileNameId).change(function() {
+        removeRuleText();
+        change($(this).val(), wanState);
+    })
+    $("#btnProfileSave").click(function() {
+        removeRuleText();
+        saveProfile();
+    })
+});
+
+function removeRuleText() {
+    $(".iptText").removeClass("errorIpt");
+    $(".rule").remove();
+}
+
+function disableBtn() {
+    $("#btnProfileSave,#btnProfileNew,#btnProfileEdit,#btnProfileDelete,#btnProfileSetDefault").setBtnDisabled();
+}
+
+function disabledForm(val) {
+    $("#iptProfileName,#iptProfileNumber,#iptProfileUserName,#iptProfilePassword,#iptProfileApn,#selProfileProtoctol").attr("disabled", val);
+}
+
+function getUserDefineLen(list) {
+    var userDefineList = $.grep(list, function(n, i) {
+        return n.IsPredefine == PROFILE_TYPE_USER_DEFINE;
+    })
+    return userDefineList.length;
+}
+
+function showlist(){
+    $(selProfileNameId).html("");
+    var list = profileList;
+
+    if(list == null|| ($.isArray(list)&&list.length==0)) {
+		disabledForm(true);
+    	$("#btnProfileNew").removeBtnDisabled();
+    }else{
+    	var str="";
+        $.each(list,function(i,v){
+            str+=v.Default==DEFUALT_PROFILE_VALUE?"<option selected value ="+ v.ProfileID + ">"+v.ProfileName+" (D)</option>":"<option value ="+ v.ProfileID + ">"+v.ProfileName+"</option>";
+
+        })
+        $(selProfileNameId).append(str);
+        change($(selProfileNameId).val(),wanState)
+    }
+}
+
+function change(value,wanState){
+    var list=profileList;
+    list=$.grep(list, function(n,i){
+        return n.ProfileID==value;
+    })[0];
+    $("#btnProfileSave").setBtnDisabled();
+    $("#btnProfileNew,#btnProfileEdit,#btnProfileDelete,#btnProfileSetDefault").removeBtnDisabled();
+    if (list != null) {
+        $("#iptProfileName").val(list.ProfileName);
+        $("#iptProfileNumber").val(list.DailNumber);
+        $("#iptProfileUserName").val(list.UserName);
+        $("#iptProfilePassword").val(list.Password);
+        $("#iptProfileApn").val(list.APN);
+        $("#selProfileProtoctol").val(list.AuthType);
+        if(list.Default==DEFUALT_PROFILE_VALUE){
+            $("#btnProfileEdit,#btnProfileSetDefault,#btnProfileDelete").setBtnDisabled();
+        }
+        if(wanState == MACRO_PPP_CONNECTED|| wanState == MACRO_PPP_CONNECTING || wanState == MACRO_PPP_DISCONNECTING){
+            $("#btnProfileSetDefault").setBtnDisabled();
+        }
+        if (list.IsPredefine == PROFILE_TYPE_BUILD_IN) {
+            $("#btnProfileEdit,#btnProfileDelete").setBtnDisabled();
+        }
+    }
+    disabledForm(true);
+    if (userDefineProfileLen == PROFILE_USER_LEN) {
+        $("#btnProfileNew").setBtnDisabled();
+    }
+}
+
+function newProfile(){
+	disabledForm(false);
+	userDefineProfileNameArray=[];
+	$.each(profileList,function(i,v){
+		userDefineProfileNameArray.push(v.ProfileName)
+	})
+	$("#iptProfileName,#iptProfileNumber,#iptProfileUserName,#iptProfilePassword,#iptProfileApn").val("");
+    $("#selProfileProtoctol").val("0")
+    curprofile_operate = PROFILE_OPERATE_NEW;
+    $("#btnProfileSave,#btnProfileEdit,#btnProfileDelete,#btnProfileSetDefault").setBtnDisabled();
+}
+
+
+function editProfile(profileId){
+	if(profileId){
+		disabledForm(false);
+		$("#btnProfileSetDefault").setBtnDisabled();
+		curprofile_operate = PROFILE_OPERATE_EDIT;
+		var list=profileList;
+			list=$.grep(list, function(n,i){
+				return n.ProfileID==profileId;
+			})[0];
+		userDefineProfileNameArray=[];
+		$.each(profileList,function(i,v){
+			if(v.ProfileName!=list.ProfileName){
+				userDefineProfileNameArray.push(v.ProfileName);
+			}
+		})
+        
+		if(list.Default==DEFUALT_PROFILE_VALUE){
+			$("#btnProfileDelete,#btnProfileSetDefault").setBtnDisabled();
+		}
+	}
+}
+
+function saveProfile(){
+	var $selProfileName=$(selProfileNameId);
+	var $profileName=$("#iptProfileName");
+	var $userName=$("#iptProfileUserName");
+	var $password=$("#iptProfilePassword");
+	var $number=$("#iptProfileNumber");
+	var $apn=$("#iptProfileApn");
+	var $protoctol=$("#selProfileProtoctol");
+
+	var selProfileNameVal=parseInt($selProfileName.val());
+    var profileNameVal = $.trim($profileName.val());
+    var userNameVal=$.trim($userName.val());
+    var passwordVal=$password.val();
+    var numberVal=$.trim($number.val());
+    var apnVal=$.trim($apn.val());
+    var authTypeVal=parseInt($protoctol.val());
+
+    if(profileNameVal == ""){
+		$profileName.showRule("ids_profile_inputName");
+        return;
+    }
+	if($.inArray(profileNameVal,userDefineProfileNameArray)!=-1){
+		$profileName.showRule("ids_profile_nameWarn");
+		return;
+	}
+    if(!checkProfileName(profileNameVal)){
+		$profileName.showRule("ids_profile_profileNameRule");
+        return;
+    }
+
+    if ( numberVal== ""){
+		$number.showRule("ids_profile_inputDialNum");
+		return;
+	}
+	if(numberVal!= "" && !check_input_char(numberVal)){
+		$number.showRule("ids_profile_inputRule");
+		return;
+	}
+	/*
+	if (apnVal == ""){
+		$apn.showRule("ids_profile_inputApn");
+		return;
+	}
+	*/
+	if(apnVal!= "" && !check_input_char(apnVal)){
+		$apn.showRule("ids_profile_inputRule");
+		return;
+	}
+
+    if( userNameVal != "" && !check_input_char(userNameVal) ){
+		$userName.showRule("ids_profile_userNameRule");
+		return;
+    }
+
+    if( passwordVal != "" && !check_profile_password(passwordVal)){
+		$password.showRule("ids_profile_pwdRule");
+		return;
+    }
+    var sendData1=PROFILE_OPERATE_NEW ==curprofile_operate?{}:{"ProfileID":selProfileNameVal};
+
+    var sendData={
+        "ProfileName":profileNameVal,
+        "APN":apnVal,
+        "UserName":userNameVal,
+        "Password":passwordVal,
+        "AuthType":authTypeVal,
+        "DailNumber":numberVal,
+        "IPAdrress":""
+    }
+    disableBtn();
+    $.extend(sendData1,sendData);
+    if(curprofile_operate == PROFILE_OPERATE_NEW){
+        
+        //disableBtn();
+        var result = SDK.Profile.AddNewProfile(sendData1);
+        ShowDlgTips(result);
+    }else if(curprofile_operate == PROFILE_OPERATE_EDIT){
+        //disableBtn();
+        var result = SDK.Profile.EditProfile(sendData1);
+        ShowDlgTips(result);    
+    }else{
+        sys.alert("ids_fail",function(){
+            page.reloadMain();
+        })
+    }
+}
+
+function deleteProfile() {
+    sys.confirm("ids_profile_deleteWarn", function() {
+        disableBtn();
+        var Profileid = parseInt($(selProfileNameId).val());
+        var result = SDK.Profile.DeleteProfile(Profileid);
+        ShowDlgTips(result);
+    })
+}
+
+function setDefaultEvent(){
+	disableBtn();
+    var profileid = parseInt($(selProfileNameId).val());
+    var result = SDK.Profile.SetDefaultProfile(profileid);
+        ShowDlgTips(result);
+
+}
+
+function ShowDlgTips(result){
+    switch(result){
+        case 0:
+            sys.alert("ids_success",function(){
+                page.reloadMain();
+            })
+            break;        
+        default:
+            sys.alert("ids_fail",function(){
+                page.reloadMain();
+            })
+    }    
+}
+</script>

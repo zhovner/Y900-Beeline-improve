@@ -1,0 +1,135 @@
+#!shell by lijun.deng
+
+custom_info_file="/cache/backup_conf/custom_info"
+
+if [ ! -d /cache/backup_conf ]; then
+	mkdir -p /cache/backup_conf
+fi
+if [ ! -f ${custom_info_file} ]; then
+  echo "func5=n" > ${custom_info_file}
+  echo "AutoConnect=n" >> ${custom_info_file}
+  echo "Roaming=n" >> ${custom_info_file}
+  echo "security_mode=n" >> ${custom_info_file}
+  echo "auth_algs=n" >> ${custom_info_file}
+  echo "wep_key0=n" >> ${custom_info_file}
+  echo "wpa_pairwise=n" >> ${custom_info_file}
+  echo "wpa_passphrase=n" >> ${custom_info_file}
+  echo "ssid=n" >> ${custom_info_file}
+  echo "username=n" >> ${custom_info_file}
+  echo "uipasswd=n" >> ${custom_info_file}
+  echo "language=n" >> ${custom_info_file}
+  echo "mac_addr=n" >> ${custom_info_file}
+  echo "mac_wlan1_addr=n" >> ${custom_info_file}
+  echo "imei=n" >> ${custom_info_file}
+fi
+
+case "$1" in
+	ssid)
+      echo "set ssid :$2"
+	    sed -i "s/^ssid=.*/ssid=$2/" ${custom_info_file}
+		grep -q "ssid" ${custom_info_file} || echo "ssid=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+	AutoConnect)
+      echo "set AutoConnect :$2"
+	    sed -i "s/^AutoConnect=.*/AutoConnect=$2/" ${custom_info_file}
+		grep -q "AutoConnect" ${custom_info_file} || echo "AutoConnect=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+	Roaming)
+      echo "set Roaming :$2"
+	    sed -i "s/^Roaming=.*/Roaming=$2/" ${custom_info_file}
+		grep -q "Roaming" ${custom_info_file} || echo "Roaming=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+  language)
+      echo "set language :$2"
+	    sed -i "s/^language=.*/language=$2/" ${custom_info_file}
+		grep -q "language" ${custom_info_file} || echo "language=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;;  
+   sec_disable)   
+		  sed -i "s/^security_mode=.*/security_mode=0/" ${custom_info_file}
+		  grep -q "security_mode" ${custom_info_file} || echo "security_mode=0" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   sec_wep)   
+		  sed -i "s/^security_mode=.*/security_mode=1/" ${custom_info_file}
+		  grep -q "security_mode" ${custom_info_file} || echo "security_mode=1" >> ${custom_info_file}
+		  sed -i "s/^auth_algs=.*/auth_algs=$2/" ${custom_info_file}
+		  grep -q "auth_algs" ${custom_info_file} || echo "auth_algs=$2" >> ${custom_info_file}
+		  sed -i "s/^wep_key0=.*/wep_key0=$3/" ${custom_info_file}
+		  grep -q "wep_key0" ${custom_info_file} || echo "wep_key0=$3" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   sec_wpa)   
+		  sed -i "s/^security_mode=.*/security_mode=2/" ${custom_info_file}
+		  grep -q "security_mode" ${custom_info_file} || echo "security_mode=2" >> ${custom_info_file}
+		  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$2/" ${custom_info_file}
+		  grep -q "wpa_pairwise" ${custom_info_file} || echo "wpa_pairwise=$2" >> ${custom_info_file}
+		  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$3/" ${custom_info_file}
+		  grep -q "wpa_passphrase" ${custom_info_file} || echo "wpa_passphrase=$3" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+   sec_wpa2)   
+		  sed -i "s/^security_mode=.*/security_mode=3/" ${custom_info_file}
+		  grep -q "security_mode" ${custom_info_file} || echo "security_mode=3" >> ${custom_info_file}
+		  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$2/" ${custom_info_file}
+		  grep -q "wpa_pairwise" ${custom_info_file} || echo "wpa_pairwise=$2" >> ${custom_info_file}
+		  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$3/" ${custom_info_file}
+		  grep -q "wpa_passphrase" ${custom_info_file} || echo "wpa_passphrase=$3" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+   sec_wpa_mixed)   
+		  sed -i "s/^security_mode=.*/security_mode=4/" ${custom_info_file}
+		  grep -q "security_mode" ${custom_info_file} || echo "security_mode=4" >> ${custom_info_file}
+		  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$2/" ${custom_info_file}
+		  grep -q "wpa_pairwise" ${custom_info_file} || echo "wpa_pairwise=$2" >> ${custom_info_file}
+		  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$3/" ${custom_info_file}
+		  grep -q "wpa_passphrase" ${custom_info_file} || echo "wpa_passphrase=$3" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+   usb_func5)
+      echo "set usb func5 :$2"
+	    sed -i "s/^func5=.*/func5=$2/" ${custom_info_file}
+		grep -q "func5" ${custom_info_file} || echo "func5=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   username)
+      echo "set username :$2"
+	    sed -i "s/^username=.*/username=$2/" ${custom_info_file}
+		grep -q "username" ${custom_info_file} || echo "username=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   uipasswd)
+      echo "set uipasswd :$2"
+	    sed -i "s/^uipasswd=.*/uipasswd=$2/" ${custom_info_file}
+		grep -q "uipasswd" ${custom_info_file} || echo "uipasswd=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   mac_addr)
+      echo "set mac_addr :$2"
+	    sed -i "s/^mac_addr=.*/mac_addr=$2/" ${custom_info_file}
+		grep -q "mac_addr" ${custom_info_file} || echo "mac_addr=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+  mac_wlan1_addr)
+      echo "set mac_addr :$2"
+	    sed -i "s/^mac_wlan1_addr=.*/mac_wlan1_addr=$2/" ${custom_info_file}
+		grep -q "mac_wlan1_addr" ${custom_info_file} || echo "mac_wlan1_addr=$2" >> ${custom_info_file}
+	    echo "OK"
+      ;; 
+   imei)
+      echo "set imei :$2"
+	    sed -i "s/^imei=.*/imei=$2/" ${custom_info_file}
+	    echo "OK"
+      ;;
+   creat_imei)
+      echo "creat imei item"
+	    echo "imei=n" >> ${custom_info_file}
+	    echo "OK"
+      ;;
+   *)
+	 echo "errer!"
+	 ;;
+esac

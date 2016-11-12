@@ -1,0 +1,66 @@
+<form>
+<div class="form-body">
+    <div class="form-title" trans='net_select'></div>
+    <div class="content"  style="padding-left: 20px;">
+        <div class="row-fluid" style="line-height: 25px;">
+            <label class="" trans='net_select2' style="color: #8F8F8F; line-height: 25px;"></label>
+            <div class="">
+<input type="radio" name="selectGroup" id='auto_select' value="auto_select" data-bind="checked: selectMode, enable: enableFlag" />
+                <label for='auto_select' trans='auto_select'></label>
+                <select transid='auto_select_type' id="type" data-bind="options: types, value: selectedType, optionsText: transOption('auto_select_type'), optionsValue: 'value', enable: enableFlag() && selectMode() == 'auto_select'"></select>
+            </div>
+        </div>
+        <div class="row-fluid" style="line-height: 25px;">
+            <div class="">
+                <input type="radio" name="selectGroup" id='manual_select'  value="manual_select" data-bind="checked: selectMode, enable: enableFlag" />
+                <label for='manual_select' trans='manual_select'></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-buttons">
+        <input type="button" class="btn-1 " data-bind='click: save, visible: selectMode() == "auto_select", enable: enableFlag, css: {disabled: !enableFlag()}' trans='apply'/>
+        <input type="button" class="btn-1 " data-bind='click: search, visible: selectMode() != "auto_select", enable: enableFlag, css: {disabled: !enableFlag()}' trans='search'/>
+    </div>
+    
+    <div class="content" data-bind='visible: networkList().length > 0 && selectMode() == "manual_select"'>
+        <div class="form-title" trans='network_list'></div>
+        <div class="content" style="padding-left: 20px;">
+            <div class="ko-grid-container marginnone">
+                <table class="ko-grid colorHoverTable marginnone" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th width="15%" trans="option"></th>
+                        <th width="20%" trans="net_status"></th>
+                        <th width="25%" trans="network_provider2"></th>
+                        <th width="20%" trans="mccmnc2"></th>
+                        <th width="20%" trans="networktype"></th>
+                    </tr>
+                    </thead>
+                    <tbody data-bind='foreach: networkList'>
+                    <tr data-bind="css:{odd:$index()%2==1, even:$index()%2==0}">
+                        <td><input type="radio" name="networkGroup"
+                                   data-bind='value: $root.networkValue($data), checked: $root.selectNetwork, attr: {id: $root.networkValue($data)}, enable: ($root.enableFlag && $root.radioEnable($data))'/>
+                        </td>
+                        <td data-bind='attr: {trans: $root.networkStatusId($data)}, text: $root.networkStatus($data)'></td>
+                        <td data-bind='text: $root.operatorName($data)'></td>
+                        <td data-bind='text: $root.networkText($data)'></td>
+                        <td data-bind='attr: {trans: $root.networkTypeId($data)}, text: $root.networkType($data)'></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+	     <div class="form-buttons">
+		     <input type="button" class="btn-1 " data-bind='click: register, enable: selectNetwork() != "" && enableFlag, css: {disabled: selectNetwork() == "" || !enableFlag()}' trans='register'/>
+		 </div>
+     </div>
+    <div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content">
+			<li trans="diconneted_operate_note"></li>
+            <li trans="net_select_note_automatic"></li>
+            <li trans="net_select_note_manual"></li>
+        </ul>
+    </div>
+</div>
+</form>

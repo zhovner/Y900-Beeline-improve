@@ -1,0 +1,6 @@
+protocol:1
+name:Ziggo INTERNET
+apn:internet.ziggo.nl
+user:ziggo
+psw:ziggo
+dial:*99#

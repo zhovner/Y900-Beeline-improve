@@ -1,0 +1,120 @@
+<div class="form-body">
+    <div class="form-title" trans='wifi_basic'></div>
+    <form id="frmWifiSwitch">
+        <div class="content" style="padding-left: 20px;">
+            <div class="content" style="line-height: 25px;">
+                <label class="" trans="wifi_switch" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <div>
+                        <input type="radio" name="wifi_switch" id="wifi_switch_enable" data-bind="checked: wifi_enable" value="1"/>
+                        <label for="wifi_switch_enable" trans="enable"></label>
+                    </div>
+                    <div>
+                        <input type="radio" name="wifi_switch" id="wifi_switch_disable" data-bind="checked: wifi_enable" value="0"/>
+                        <label for="wifi_switch_disable" trans="disable"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-buttons">
+                <input id="mutissid_apply" type="submit" class="btn-1 " trans='apply'/>
+                <input id="multissid_cancel" type="button" class="btn-1 " data-bind='click: function(){clear("switch");}' trans='cancel'/>
+            </div>
+        </div>
+    </form>    
+    <div data-bind="visible: isShowSSIDInfoDiv" style="display: none;">
+    <form id="frmSSID1" class="clear" data-bind="css:{cus_hid_div:wifi_enable() != '1',cus_vis_div:wifi_enable() == '1'},visible: isShowSSIDInfoDiv">        
+        <div class="row-fluid">
+            <div class="content span6" style="padding-left: 20px;">
+                <div class="row-fluid" style="line-height: 25px;">
+                    <label class="" for="ssid" trans="network_name" style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <input type="text" name="ssid" data-bind="value: ssid" id="ssid" class="required" maxlength="32"/>
+                    </div>
+                </div>
+                <div class="row-fluid" style="line-height: 25px;">
+                    <label class="" trans="broadcast_network_name" style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <div>
+                            <input type="radio" name="broadcast" id="broadcastEnable" data-bind="checked: broadcast" value="0"/>
+                            <label for="broadcastEnable" trans="enable"></label>
+                        </div>
+                        <div>
+                            <input type="radio" name="broadcast" id="broadcastDisable" data-bind="checked: broadcast" value="1"/>
+                            <label for="broadcastDisable" trans="disable"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" style="line-height: 25px;">
+                    <label class="" trans="ap_isolation" style="color: #8F8F8F; line-height: 25px;"></label>  
+                    <div class="">
+                        <div>
+                            <input type="radio" name="apisolated" id="basicApIsolatedEnable" data-bind="checked: apIsolation" value="1"/>
+                            <label for="basicApIsolatedEnable" trans="enable"></label>
+                        </div>
+                        <div>
+                            <input type="radio" name="apisolated" id="basicApIsolatedDisable" data-bind="checked: apIsolation" value="0"/>
+                            <label for="basicApIsolatedDisable" trans="disable"></label>
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+            <div class="content span6" style="padding-left: 20px;">
+                <div class="row-fluid" style="line-height: 25px;">
+                    <label class="" for='mode' trans='security_mode2' style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <select transid='security_mode' id="mode" data-bind="options: modes, value: selectedMode, optionsText: transOption('security_mode'), optionsValue: 'value'" style="width: 180px"></select>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind='visible: selectedMode() != "OPEN"' style="line-height: 25px;">
+                    <label class="" for='pass' trans='pass_phrase' style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <input id='pass' name="pass" type="password" data-bind="value: passPhrase,visible:!showPassword()" class="required margintop5" minlength='8' maxlength='63' style="width: 167px"/>
+                        <input id='passShow' name="passShow" type="text" data-bind="value: passPhrase,visible:showPassword()" class="required margintop5" minlength='8' maxlength='63'/>
+                    </div>
+                </div>
+                <div class="row-fluid" style=" line-height: 0px;" data-bind='visible: selectedMode() != "OPEN"'>
+                    <label class=""></label>
+                    <div class="">
+                        <p class="checkbox floatleft margintop10 marginright5" data-bind="css:{'checkbox_selected': showPassword()}, click: showPasswordHandler" manualControl="true">
+                            <input id="showPassword" type="checkbox" data-bind="checked:showPassword"/>
+                        </p>
+                        <label class="floatleft lineheight25 margintop5" trans="display_password" for="showPassword"></label>
+                        <div  id="lblShowPassword" class="clear"></div>
+                    </div>
+                </div>
+                <div class="row-fluid" style="line-height: 25px;">
+                <label class="" for="maxStation" trans="max_station_number" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <select name="maxStation" id="maxStation" data-bind="options: maxStations, value: selectedStation, optionsText: 'text', optionsValue: 'value'" style="width: 180px"></select>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <input id="ssid1_apply" type="submit" class="btn-1 " trans='apply'/>
+            <input id="ssid1_cancel" type="button" class="btn-1 " data-bind='click: function(){clear();}' trans='cancel'/>
+        </div>
+    </form>  
+    </div>  
+    </div>
+    <div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content" style="padding-left: 20px;">
+            <li trans="wifi_basic_note_whole_page"></li>           
+            <li trans="wifi_basic_note_network_name"></li>
+           <!-- <li trans="wifi_basic_note_network_name_input"></li>-->
+            <li trans="wifi_basic_note_broadcast"></li>
+            <li trans="wifi_basic_note_security_mode"></li>
+            <li class="no-style">
+                <ul>
+                    <li trans="wifi_basic_note_no_encryption"></li>
+                    <li trans="wifi_basic_note_wpa_psk_aes"></li>
+                    <li trans="wifi_basic_note_wpa_psk"></li>
+                </ul>
+            </li>
+            <li trans="wifi_basic_note_pass_phrase"></li>
+            <li trans="wifi_basic_note_max_station_number"></li>
+            <li trans="wifi_basic_note"></li>
+        </ul>
+    </div>
+</div>

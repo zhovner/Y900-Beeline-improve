@@ -1,0 +1,4 @@
+protocol:2
+name:Optus LTE
+apn:Optuslte
+dial:*99#

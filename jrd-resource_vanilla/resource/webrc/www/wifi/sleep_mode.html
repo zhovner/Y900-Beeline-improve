@@ -1,0 +1,64 @@
+<div class="form-body">
+    <!--hide wifi range settings until sw implements it-->
+    <form id='wifiRangeForm'>
+        <div class="form-title" trans='sleep_mode'></div>
+
+        <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans='wifi_range' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <input type="radio" name="rangeGroup" id='short_mode' value="short_mode" data-bind="checked: wifiRangeMode" />
+                    <label for='short_mode' trans='wifi_short_mode'></label>
+                </div>
+            </div>
+            <div class="row-fluid" style="line-height: 25px;">
+                <div class="">
+                    <input type="radio" name="rangeGroup" id='medium_mode'  value="medium_mode" data-bind="checked: wifiRangeMode" />
+                    <label for='medium_mode' trans='wifi_medium_mode'></label>
+                </div>
+            </div>
+            <div class="row-fluid" style="line-height: 25px;">
+                <div class="">
+                    <input type="radio" name="rangeGroup" id='long_mode'  value="long_mode" data-bind="checked: wifiRangeMode" />
+                    <label for='long_mode' trans='wifi_long_mode'></label>
+                </div>
+            </div>
+
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans='apply'/>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="wifi_range_note_info"></li>
+                <li trans="wifi_range_note_range"></li>
+                <li class="no-style">
+                    <ul>
+                        <li trans="wifi_range_note_short"></li>
+                        <li trans="wifi_range_note_medium"></li>
+                        <li trans="wifi_range_note_long"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </form>
+    <form id='sleepModeForm'>
+        <!--<div class="form-title" trans='wifi_sleep'></div>-->
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" for='mode' trans='sleep_time' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                <select style="width:auto;min-width:177px;" transid='sleep_mode' id="mode" data-bind="options: modes, value: selectedMode, optionsText: transOption('sleep_mode'), optionsValue: 'value'"></select>
+                </div>
+            </div>
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans='apply'/>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="wifi_sleep_note_info"></li>
+            </ul>
+        </div>
+    </form>
+</div>
+</div>

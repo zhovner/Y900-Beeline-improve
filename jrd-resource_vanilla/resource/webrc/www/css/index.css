@@ -1,0 +1,239 @@
+@charset "utf-8";
+/**content**/
+.content {
+    max-width: 670px;
+    width: 100%;
+    margin: 10% auto 1%;
+}
+.content .conStatus, .content .usages, .content .logo, .content .more, .content .sms, .content .settings, .content .sharing, .content .sms-noSD, .content .settings-noSD {
+    float: left;
+    display: block;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    height: 130px;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+}
+.conStatus {
+    width: 100%;
+}
+.con-normal {
+    margin-top: 27px;
+}
+.single-wrap {
+    float: left;
+    width: 49%;
+    /* position: relative; */
+}
+.status-wrap {
+    float: left;
+    width: 50%;
+    text-align: left;
+}
+.single {
+    float: right;
+    *display: inline;
+    margin-right: 35px;
+    position: relative;
+}
+.simcard-status{
+    font-size: 30px;
+    line-height: 130px;
+}
+.usages, .logo, .more, .sms, .settings, .sharing {
+    width: 33%;
+}
+.logo, .settings {
+    width: 32%;
+    margin: 0 1%;
+}
+.content .logo{
+    
+}
+.content .logoa{
+    display:table-cell;
+    height: 130px;
+    vertical-align:middle;
+    text-align:center;
+}
+.logo img{
+    max-width: 100%;
+    height: auto;
+}
+.glyphicon-wrap {
+    position: relative;
+    width: 66px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.glyphicon {
+    display: inline-block;
+    width: 66px;
+    height: 66px;
+    margin: 0 auto 7px;
+}
+.glyphicon-single {
+    display: inline-block;
+    width: 84px;
+    height: 76px;
+    background: url(../images/icon_index.png) no-repeat 0 0;
+}
+.nw-name {
+    font-size: 32px;
+    line-height: 56px;
+    width: 95%;
+    height: 56px;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -moz-binding: url("ellipsis.xml#ellipsis");    
+}
+.nw-noservice{
+    font-size: 32px;
+    line-height: 76px;
+}
+.nw-type {
+    position: absolute;
+    left: -5px;
+    top: -5%;
+}
+.glyphicon-roaming {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: -33%;
+    top: -5%;
+    background: url(../images/sprite_index.png) no-repeat 0 -58px;
+}
+.glyphicon-connected {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: -33%;
+    bottom: 0;
+    background: url(../images/sprite_index.png) no-repeat 0 0;
+}
+.glyphicon-disConnected {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: -33%;
+    bottom: 0;
+    background: url(../images/sprite_index.png) no-repeat 0 -29px;
+}
+.sprite-index{
+    background: url(../images/sprite_index.png) no-repeat
+}
+.glyphicon-sms-unread {
+    position: absolute;
+    right: -15%;
+    top: -15%;
+    display: inline-block;
+    background-position: 0 -87px;
+    width: 24px;
+    height: 24px;
+}
+.glyphicon-sms-full {
+    position: absolute;
+    right: -28px;;
+    top: -15%;
+    display: inline-block;
+    background: url(../images/sprite_index.png) no-repeat 0 -116px;
+    width: 24px;
+    height: 24px;
+}
+.glyphicon-sms-new {
+    position: absolute;
+    right: -28px;
+    top: -15%;
+    display: inline-block;
+   /* background: url(../images/icon_sms_new.png) no-repeat;*/
+    background:url(../images/sprite_index.png) no-repeat 0 -87px;
+	text-align:center;
+	width:24px;
+	height:24px;
+	line-height:24px;
+	font-size:16px;
+}
+.login_wrap .glyphicon-admin{
+    width: 88px;
+    height: 88px;
+    margin: 30px auto 15px;
+    text-indent: -99999em;
+    overflow: hidden;
+    border-radius: 44px;
+    -webkit-border-radius: 44px;
+    -moz-border-radius: 40px;
+    background-image: url(../images/icon_index.png);
+    background-repeat: no-repeat;
+    background-position: -85px -355px;
+}
+/**************************************************
+PIN
+***************************************************/
+.pin_wrap, .puk_wrap, .simlock_wrap{
+    margin: 10px 0 20px;
+}
+.pin_wrap .ipt-wrap, .puk_wrap .ipt-wrap, .simlock_wrap .ipt-wrap{
+    margin-bottom: 10px;
+}
+.pin_wrap .ipt-wrap li, .puk_wrap .ipt-wrap li, .simlock_wrap .ipt-wrap li{
+    min-height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+}
+.pin_wrap .ipt-wrap .text, .puk_wrap .ipt-wrap .text, .simlock_wrap .ipt-wrap .text{
+    float: left;
+    display: inline-block;
+    width: 40%;
+    height: 30px;
+    text-align: right;
+    padding: 0 5px;
+}
+.pin_wrap .ipt-wrap input[type="text"],.pin_wrap .ipt-wrap input[type="password"],.puk_wrap .ipt-wrap input[type="text"],.puk_wrap .ipt-wrap input[type="password"],.simlock_wrap .ipt-wrap input[type="text"],.simlock_wrap .ipt-wrap input[type="password"]{
+    border:1px solid #ccc;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    padding: 4px 0;
+}
+.pin_wrap .ipt-wrap .lab input, .puk_wrap .ipt-wrap .lab input, .simlock_wrap .ipt-wrap .lab input{
+    vertical-align: middle;
+}
+.index #loading{
+    background-position: center;
+}
+/*---------No SD Share----------*/
+.sms-noSD, .settings-noSD{
+    width: 49.5%;
+}
+.sms-noSD{
+    margin-right: 1%;
+}
+.settings-noSD{
+    margin: 0;
+}
+.sms-noSD .glyphicon-sms-full,.sms-noSD .glyphicon-sms-new{
+    right: -28px;
+}
+@media(max-width: 480px){
+    header{
+        min-height: 45px;
+    }
+    .content {
+        margin: 0 auto 1%;
+    }
+    .nw-noservice {
+		font-size: 25px;
+	}
+	.glyphicon {
+		height: 52px;
+	}
+}

@@ -1,0 +1,34 @@
+<form id="dmzSettingForm">
+    <div class="form-body">
+        <div class="form-title" trans="dmz_setting"></div>
+        <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans="dmz_setting" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                <input type="radio" name="dmzGrp" id="dmzEnable" data-bind="checked: dmzSetting" value="1"/>
+                    <label for="dmzEnable" trans="enable"></label>
+                </div>
+                <div>
+                <input type="radio" name="dmzGrp" id="dmzDisable" data-bind="checked: dmzSetting" value="0"/>
+                    <label for="dmzDisable" trans="disable"></label>
+                </div>
+            </div>
+            <div class="row-fluid" data-bind='visible: dmzSetting() == "1"' style="line-height: 25px;">
+                <label class="" for="txtIpAddress" trans="ip_address" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                <input id="txtIpAddress" name="txtIpAddress"  type="text" data-bind="value: ipAddress, valueUpdate: 'keypress'" class="required" maxlength="15"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans="apply"/>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="dmz_note_info"></li>
+                <li trans="dmz_note_function"></li>
+            </ul>
+        </div>
+    </div>
+</form>

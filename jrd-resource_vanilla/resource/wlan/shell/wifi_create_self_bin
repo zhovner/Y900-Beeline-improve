@@ -1,0 +1,6 @@
+cp /jrd-resource/resource/wlan/tools/athtestcmd /usr/bin/
+/usr/bin/athtestcmd -i wlan0 --selfInit
+sleep 1
+/usr/bin/athtestcmd -i wlan0 --selfInit_result
+sleep 1 
+cp /lib/firmware/ath6k/AR6004/hw3.0/bdata_self.bin /cache/

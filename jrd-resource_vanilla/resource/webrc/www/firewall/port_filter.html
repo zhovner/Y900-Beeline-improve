@@ -1,0 +1,113 @@
+<div class="form-body">
+	<div data-bind="visible: actionMode()=='nil' ">
+	    <form id="filterBasicForm">
+	        <div class="form-title" trans="port_filter"></div>
+	        <div class="content" style="padding-left: 20px;">
+	            <div class="row-fluid">
+	                <div class="span6">
+	                    <div class="row-fluid"  style="line-height: 25px; margin-top: 5px;">
+	                        <label class="" trans="port_filter" style="color: #8F8F8F;"></label>
+	                        <div class="">
+	                            <input type="radio" name="filterGrp" id="filterEnable" data-bind="checked: portFilterEnable" value="1"/>
+	                            <label for="filterEnable" trans="enable"></label>
+	                        </div>
+	                        <div>
+	                            <input type="radio" name="filterGrp" id="filterDisable" data-bind="checked: portFilterEnable" value="0"/>
+	                            <label for="filterDisable" trans="disable"></label>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="form-buttons">
+	            <input type="submit" class="btn-1 " trans="apply"/>
+	        </div>
+	        <div class="form-note">
+	            <div class="notes-title">&nbsp;</div>
+	            <ul class="notes-content">
+	                <li trans="default_policy_note"></li>
+	                <li trans="default_policy_note_filter"></li>
+	            </ul>
+	        </div>
+	    </form>
+    </div>
+    <div data-bind="visible: oriPortFilterEnable() == '1' && actionMode() == 'nil'">
+        <form id="portFilterListForm">
+            <div class="form-title" trans="lan_ip_port_filter"></div>
+            <div class="content" style="padding-left: 20px;">
+                <div>
+                    <div id="portFilters" class="fixTableScroll" data-bind="simpleGrid: gridTemplate"></div>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <input type="submit" class="btn-1 " trans="add" data-bind="enable: rulesSize() < rulesMaxSize()"/>
+            </div>
+        </form>
+    </div>
+    <div data-bind="visible: actionMode() == 'add' || actionMode() ==  'edit' ">
+    	 <form id="portFilterForm">
+            <div class="form-title" trans="add" data-bind="visible: actionMode() == 'add'"></div>
+          	<div class="form-title" trans="edit" data-bind="visible: actionMode() == 'edit'"></div>
+            <div class="content2" style="padding-left: 20px;">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <div class="row-fluid"   style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="txtLanIpAddress" trans="lan_ip_address" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtLanIpAddress" id="txtLanIpAddress" data-bind="value: lan_ip"  maxlength="15"/>
+                            </div>
+                        </div>
+                        <div class="row-fluid"  style="line-height: 25px; margin-top: 10px;">
+                            <label class="" for="txtLanPort" trans="lan_port" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtLanPort" id="txtLanPort" data-bind="value: lan_port"  maxlength="15"/>
+                            </div>
+                        </div>
+                        <div class="row-fluid"  style="line-height: 25px; margin-top: 5px;">
+                           <label class="" for="txtWanIpAddress" trans="wan_ip_address_flt" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtWanIpAddress" id="txtWanIpAddress" data-bind="value: wan_ip"  maxlength="15"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                    	 <div class="row-fluid"  style="line-height: 25px; margin-top: 5px;">
+                             <label class="" for="txtWanPort" trans="wan_port" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtWanPort" id="txtWanPort" data-bind="value: wan_port"  maxlength="15"/>
+                            </div>
+                        </div>
+                     	<div class="row-fluid"  style="line-height: 25px; margin-top: 10px;">
+                            <label class="" for="protocol" trans="protocol" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <select id="protocol" transid="protocol" data-bind="options: ip_protocols, value: ip_protocol, optionsText: transOption('protocol',false),optionsValue: 'value'"></select>
+                            </div>
+                        </div>
+                      <div class="row-fluid"  style="line-height: 25px; margin-top: 10px;">
+                            <label class="" for="ipFirewallState" trans="net_status" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <select id="ipFirewallState" transid="ipFilter"  data-bind="options: ruleSwitchModes, value: ip_status, optionsText:  transOption('ipFilter',false),optionsValue: 'value'"></select>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="form-buttons">
+                <input type="submit" class="btn-1 " trans="apply"/>
+                <input type="button" class="btn-1 " trans="cancel" data-bind="click:cancel"/>
+            </div>
+        </form> 
+    </div>
+   
+</div>
+ <div class="form-note">
+          <div class="notes-title">&nbsp;</div>
+          <ul class="notes-content" style="padding-left: 20px;">
+              <li trans="port_filter_note_des"></li>
+              <li trans="port_filter_note_lan_wan_port_des"></li>
+              <li trans="port_filter_note_note_max_lengh_des"></li>
+             
+          </ul>
+    </div>

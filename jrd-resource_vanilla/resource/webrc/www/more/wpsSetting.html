@@ -1,0 +1,223 @@
+<div id="wpsSettingPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_more}</h2>
+    </div>
+    <div class="item-content">
+        <h3><a href="#more/more.html" class="changeLink">${ids_title_wps}</a>
+        </h3>
+        <div class="scroll-pane jspScrollable">
+            <div class="wps-con">
+                <ul class="ipt-wrap">
+                    <li>
+                        <label>
+                            <input type="radio" name="wpsStat" id="radioPbc" value="pbc" /> ${ids_wifi_pbc}</label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="radio" name="wpsStat" id="radioPin" value="pin" /> ${ids_wifi_wpsPin}</label>
+                    </li>
+                </ul>
+                <div class="con-wrap" id="pbcTable">
+                    <div class="pbc-btn">
+                        <a href="javascript:void(0)" id="setPBCLink">
+                            <img src="../images/wps.png" />
+                        </a>
+                        <p>${ids_wifi_pbcConfiguration}</p>
+                    </div>
+                    <p class="des">${ids_wifi_pbcDecription}</p>
+                </div>
+                <div class="con-wrap" id="pinTable" style="display:none">
+                    <div class="wpsForm">
+                        <div>
+                            <label class="text">${ids_wifi_wpsPin:}</label>
+                            <input id="iptWpsPin" type="text" class="iptText" maxlength="8" style="float: right;position: absolute;top: 53px;left: 87px;">
+                        </div>
+                        <p class="rule hidden" id="wpsRule">${ids_wifi_wpsPinRule}</p>
+                    </div>
+                    <div class="btn-wrap">
+                        <input type="button" id="btnApply" class="btnNormal" value="${ids_btn_apply}" />
+                        <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                    </div>
+                    <p class="des">${ids_wifi_pinDecription}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 5;
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/wlan.js"></script>
+<script>
+pageName = "wpsSetting";
+var model = 0;
+var SECRUTIY_TYPE_WPA_AES = 1;
+var MAC_POLICY_ENABLE = 1;
+var WPA_TYPE_TKIP = 0;
+var wlanData = SDK.Wlan.GetWlanSettings();
+var wlanAPMode = wlanData.WlanAPMode;
+var securityMode, wpaSec;
+if (wlanAPMode == WLAN_WLAN_MODE_5G) {
+    securityMode = wlanData.SecurityMode_5G;
+    wpaSec = wlanData.WpaType_5G;
+} else {
+    securityMode = wlanData.SecurityMode;
+    wpaSec = wlanData.WpaType;
+}
+var macData = SDK.Firewall.GetMacFilterSettings();
+var wlan_mac_policy = macData.filter_policy;
+$(function($) {
+    initScroll($("article#more"));
+    formLoad();
+    $("#mainBox button").setBtnDisabled();
+    $("input[name='wpsStat']").click(function() {
+        showTable($(this).val())
+    });
+    $("#iptWpsPin").bind("change keydown keyup input paste", function() {
+        $("#mainBox button").removeBtnDisabled()
+    })
+    $("#btnCancel").click(reloadPage);
+    $("#btnApply").click(setPinEvent);
+    $("#btnBack").click(function() {
+        page.changePage("#settings/wifiSetting.html");
+    })
+    $("#setPBCLink").click(function() {
+        setPbc();
+        return false;
+    })
+})
+
+function formLoad() {
+    if (model == 0) {
+        $("#radioPbc").attr("checked", true);
+        showTable("pbc");
+    } else if (model == 1) {
+        $("#radioPin").attr("checked", true);
+        showTable("pin");
+    }
+}
+
+function reloadPage() {
+    $("#iptWpsPin").val("");
+    $(".iptText").removeClass("errorIpt");
+    $(".rule").remove();
+}
+
+function showTable(type) {
+    if ("pin" == type) {
+        $("#pinTable,#pinButtonTable").css("display", "");
+        $("#pbcTable").css("display", "none");
+    } else {
+        $("#pinTable,#pinButtonTable").css("display", "none");
+        $("#pbcTable").css("display", "");
+    }
+}
+
+function isNotSupportWps(securityMode) {
+    var isSupport = false;
+    if (securityMode == SECRUTIY_TYPE_WEP || securityMode == SECRUTIY_TYPE_WPA_PSK || (securityMode == SECRUTIY_TYPE_WPS2_PSK && wpaSec == WPA_TYPE_TKIP) || (securityMode == SECRUTIY_TYPE_WPA_MIXED && wpaSec == WPA_TYPE_TKIP)) {
+        isSupport = true;
+    }
+    return isSupport;
+}
+
+function isWpsPin(str) {
+    if (str.length != 4 && str.length != 8) {
+        return false;
+    }
+    if (isNaN(str) == true) {
+        return false;
+    }
+    return true;
+}
+
+function setPinEvent() {
+    var wpsPinVal = $.trim($("#iptWpsPin").val());
+    if (!isWpsPin(wpsPinVal)) {
+        $("#wpsRule").removeClass("hidden");
+        return;
+    }
+    var wlState = SDK.Wlan.GetWlanState().WlanState;
+    if (wlState == MACRO_WLAN_DISABLED) {
+        sys.alert("ids_wifi_offTip", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    if (wlState == MACRO_WLAN_WPS) {
+        sys.alert("ids_wifi_wpsActive", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    var wlSsidState = wlanData.SsidHidden;
+    if (wlSsidState == MACRO_WLAN_SSID_HIDDEN) {
+        sys.alert("ids_wifi_wpsNotSuppotSSIDHidden", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    if (isNotSupportWps(securityMode)) {
+        sys.alert("ids_wifi_notSuppotWepWpa", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    $("#mainBox button").setBtnDisabled();
+    var result = SDK.Wlan.SetWPSPin(wpsPinVal);
+    ShowDlgTips(result);
+}
+
+function setPbc() {
+    var wlState = SDK.Wlan.GetWlanState().WlanState;
+    if (wlState == MACRO_WLAN_DISABLED) {
+        sys.alert("ids_wifi_offTip", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    if (wlState == MACRO_WLAN_WPS) {
+        sys.alert("ids_wifi_wpsActive", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    var wlSsidState = wlanData.SsidHidden;
+    if (wlSsidState == MACRO_WLAN_SSID_HIDDEN) {
+        sys.alert("ids_wifi_wpsNotSuppotSSIDHidden", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    if (isNotSupportWps(securityMode)) {
+        sys.alert("ids_wifi_notSuppotWepWpa", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    if (wlan_mac_policy == MAC_POLICY_ENABLE) {
+        sys.alert("ids_wifi_notSuppotMacFilter", function() {
+            page.reloadMain();
+        });
+        return;
+    }
+    var result = SDK.Wlan.SetWPSPbc();
+    ShowDlgTips(result);
+
+}
+
+function ShowDlgTips(result) {
+    switch (result) {
+        case 0:
+            sys.alert("ids_success", function() {
+                page.reloadMain();
+            })
+            break;
+        default:
+            sys.alert("ids_fail", function() {
+                page.reloadMain();
+            })
+    }
+}
+</script>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<custom_info version="1.0">
+   <connection>
+      <!-- AutoConnect: 
+              0 - Manual
+              1 - Auto
+      -->
+      <AutoConnect_value>1</AutoConnect_value>
+      <!-- Roaming: 
+              0 - roaming+national
+              1 - roaming+international
+      -->
+			<Roaming_value>0</Roaming_value>
+	</connection>
+	<wifi>
+		<psw_gen>
+			<security_mode>
+				<!-- security mode:
+					0 - SEC_DISABLED
+					1 - SEC_STATIC_WEP
+					2 - SEC_WPA_PSK 
+					3 - SEC_WPA2_PSK
+					4 - SEC_MIXED_WPA_PSK 
+				-->
+				<security_mode_value>3</security_mode_value>
+			</security_mode>
+			<sec_sub_mode>
+				<!-- security sub mode:
+        if securtiy_mode is SEC_STATIC_WEP then
+        	0 - OPEN_SYSTEM
+					1 - SHARED_KEY
+					
+				if securtiy_mode is SEC_WPA_PSK/SEC_WPA2_PSK/SEC_MIXED_WPA_PSK then
+        	0 - WPA_TKIP
+					1 - WPA_CCMP
+					2 - WPA_AUTO					
+				-->
+				<sec_sub_mode_value>2</sec_sub_mode_value>
+			</sec_sub_mode>
+			<psw_gen_type>
+				<!-- password generate type:
+					0 - no password
+					1 - fixed pwd: the value is psw_fixed_pwd
+					2 - based MAC addr, for example: the MAC address is "XX:XA:BC:DE:FG:HI"(A~I is in the range 0~F) a=(A^I)%10, b=(B^I)%10 ...... h=(H^I)%10
+					    then the password is "abcdefgh"(a~h is in the range 0~9). if securtiy_mode is SEC_STATIC_WEP then the password is "defgh" 5 number
+					3 - based IMEI last 8 number, if securtiy_mode is SEC_STATIC_WEP then based IMEI last 5 number
+					4 - based MAC addr last 8 char, if securtiy_mode is SEC_STATIC_WEP then based MAC addr last 5 char
+				-->
+				<psw_gen_type_value>3</psw_gen_type_value>
+				<!-- len(psw_fixed_pwd)=8 -->
+				<psw_fixed_pwd_value>12345678</psw_fixed_pwd_value>
+			</psw_gen_type>
+		</psw_gen>
+	</wifi>
+	<login>
+		<!-- Login username, len(username) < 32
+		-->
+		<username_value>admin</username_value>
+		<!-- Login Password, len(passwd)< 32
+		-->
+		<passwd_value>admin</passwd_value>
+		<!-- Language,len(lang)< 32
+		-->
+		<lang_value>ru</lang_value>
+	</login>
+	<ssid>
+			<ssid_gen_type>
+				<!-- password generate type:
+					1 - NO:     SSID = cust_model_name
+					2 - MAC_L4: SSID = cust_model_name + mac_l4
+					3 - MAC_L6: SSID = cust_model_name + mac_l6
+					4 - MAC_F4: SSID = cust_model_name + mac_f4
+					5 - IMEI_L4:SSID = cust_model_name + imei_l4
+					6 - IMEI_F4:SSID = cust_model_name + imei_f4
+					7 - VAR_MAC_L4:SSID = cust_model_name + variant + - + mac_l4
+				-->
+				<ssid_gen_type_value>7</ssid_gen_type_value>
+				<cust_model_name_value>Y900</cust_model_name_value>
+				<!-- ssid mode generate type:
+				    1 - 2.4GHz only
+					2 - 5GHz only
+					3 - 2.4GHz and 5GHz
+				-->
+				<ssid_gen_mode>3</ssid_gen_mode>
+			</ssid_gen_type>
+	</ssid>
+	<device_info>
+		<dev_name_value>Y900NB</dev_name_value>
+	</device_info>
+	<SIMLOCK>
+    <Code>
+      <PN>25099,28204,28301,25502,25503,40101,43404,43605,43701</PN>
+      <PU></PU>
+      <PP></PP>
+      <PC></PC>
+      <PF></PF>
+    </Code>
+    <Action>
+      <PN>2</PN>
+      <PU>0</PU>
+      <PP>0</PP>
+      <PC>0</PC>
+      <PF>0</PF>
+    </Action>
+  </SIMLOCK>
+</custom_info>

@@ -1,0 +1,127 @@
+#! /bin/sh
+
+if [ -f /jrd-resource/resource/webs-cfg/webs.conf ]; then
+	rm -f /jrd-resource/resource/webs-cfg/webs.conf 
+fi
+if [ -f /jrd-resource/resource/webs-cfg/webs_lan.conf ]; then
+	rm -f /jrd-resource/resource/webs-cfg/webs_lan.conf 
+fi
+if [ -f /etc/mobileap_cfg.xml ]; then
+	rm -f /etc/mobileap_cfg.xml 
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan0.conf ]; then
+	rm -f /jrd-resource/resource/wlan/ap_wlan0.conf 
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan1.conf ]; then
+	rm -f /jrd-resource/resource/wlan/ap_wlan1.conf 
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan0_5g.conf ]; then
+	rm -f /jrd-resource/resource/wlan/ap_wlan0_5g.conf 
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan1_5g.conf ]; then
+	rm -f /jrd-resource/resource/wlan/ap_wlan1_5g.conf 
+fi
+if [ -f /etc/hosts ]; then
+	rm -f /etc/hosts 
+fi
+if [ -f /etc/hostapd-wlan1.conf ]; then
+	rm -f /etc/hostapd-wlan1.conf 
+fi
+if [ -f /etc/hostapd.conf ]; then
+	rm -f /etc/hostapd.conf 
+fi
+
+#begin added by zxb 2015-1-13 for sd share
+if [ -f /usr/local/samba/lib/sd_back.conf ]; then
+	rm -f /usr/local/samba/lib/sd_back.conf 
+fi
+#end added by zxb 2015-1-13 for sd share
+
+if [ -d /jrd-resource/resource/profile/create ]; then
+	rm -rf /jrd-resource/resource/profile/create 
+fi
+if [ -f /jrd-resource/bin/custom_ip_type ]; then
+	rm -f /jrd-resource/bin/custom_ip_type
+fi
+
+if [ -f /jrd-resource/bin/sms_report_flag ]; then
+	rm -f /jrd-resource/bin/sms_report_flag
+fi
+
+if [ -f /jrd-resource/resource/statistics/UsageHistory.data ]; then
+	rm -f /jrd-resource/resource/statistics/UsageHistory.data
+fi
+cd /usr/
+
+if [ -d /usr/restore4temp_etc ]; then
+	rm -rf /usr/restore4temp_etc
+fi
+
+mkdir restore4temp_etc
+
+if [ -d /usr/restore4temp_etc ]; then
+	tar xzf /usr/bag4restore_etc -C /usr/restore4temp_etc/
+fi
+
+if [ -d /jrd-resource/resource/webs-cfg ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/webs.conf /jrd-resource/resource/webs-cfg/webs.conf
+fi
+
+if [ -d /jrd-resource/resource/webs-cfg ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/webs_lan.conf /jrd-resource/resource/webs-cfg/webs_lan.conf
+fi
+
+if [ -d /jrd-resource/resource/wlan ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/ap_wlan0.conf /jrd-resource/resource/wlan/ap_wlan0.conf
+fi
+
+if [ -d /jrd-resource/resource/wlan ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/ap_wlan1.conf /jrd-resource/resource/wlan/ap_wlan1.conf
+fi
+
+if [ -d /jrd-resource/resource/wlan ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/ap_wlan0_5g.conf /jrd-resource/resource/wlan/ap_wlan0_5g.conf
+fi
+
+if [ -d /jrd-resource/resource/wlan ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/ap_wlan1_5g.conf /jrd-resource/resource/wlan/ap_wlan1_5g.conf
+fi
+
+if [ -d /etc ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/mobileap_cfg.xml /etc/mobileap_cfg.xml
+fi
+
+if [ -d /etc ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/hosts /etc/hosts
+fi
+
+if [ -d /etc ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/hostapd-wlan1.conf /etc/hostapd-wlan1.conf
+fi
+
+if [ -d /etc ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/hostapd.conf /etc/hostapd.conf
+fi
+
+#begin added by zxb 2015-1-13 for sd share
+if [ -d /usr/local/samba ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/sd_back.conf /usr/local/samba/lib/sd_back.conf
+fi
+#end added by zxb 2015-1-13 for sd share
+
+if [ -d /jrd-resource/resource/profile/ ]; then
+	cp -rf /usr/restore4temp_etc/temp_etc/create /jrd-resource/resource/profile/create
+fi
+
+if [ -d /jrd-resource/bin ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/custom_ip_type /jrd-resource/bin/custom_ip_type
+fi
+
+if [ -d /jrd-resource/bin ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/sms_report_flag /jrd-resource/bin/sms_report_flag
+fi
+
+if [ -d /jrd-resource/bin ]; then
+	cp -f /usr/restore4temp_etc/temp_etc/UsageHistory.data /jrd-resource/resource/statistics/UsageHistory.data
+fi
+rm -rf /usr/restore4temp_etc

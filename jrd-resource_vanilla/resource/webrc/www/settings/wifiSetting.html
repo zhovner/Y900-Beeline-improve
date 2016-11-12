@@ -1,0 +1,449 @@
+<script>
+currentMenu = 3;
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/wlan.js"></script>
+<script>
+pageName = "wifiSetting";
+var pageWlanSettings = null;
+$(function() {
+    initScroll($("article#settings"));
+    initMaxWlanNum("32");
+    initWifiSettignsPage();
+
+    $("input[type='radio'][name='WpaType']").click(function() {
+        $("input[data-field='WpaType']").val($(this).val());
+    });
+    $("input[name='SsidHidden']").click(function() {
+        $("input[data-field='SsidHidden']").val($(this).prop("checked") == true ? WLAN_BROADCAST_ENABLE : WLAN_BROADCAST_DISABLE);
+    });
+
+    $(".chkShowPwd").change(function() {
+        switchPw($(this).attr("checked"));
+    });
+
+    $("#wlan_mode").change(function() {
+        uiInitWlanInfo(pageWlanSettings, $(this).val());
+        //$('.scroll-pane').jScrollPane();
+    });
+
+    $("#securityItem").change(function() {
+        uiInitWlanSecurity($(this).val());
+        //$('.scroll-pane').jScrollPane();
+    });
+
+    $("#wlan_state").off("change").on("change", function() {
+        uiShowWlanState($(this).val());
+        //$('.scroll-pane').jScrollPane();
+    })
+
+    $("#wifiBox input,#wifiBox select").bind("input change keyup keydown paste", function() {
+        $("#btnSave,#btnCancel").removeBtnDisabled();
+    });
+
+});
+
+function initWifiSettignsPage() {
+    $("#btnSave,#btnCancel").setBtnDisabled();
+    var wlanState = SDK.Wlan.GetWlanState().WlanState;
+    if (wlanState != WLAN_STATUS_OFF) {
+        wlanState = WLAN_STATUS_ON
+    }
+    pageWlanSettings = SDK.Wlan.GetWlanSettings();
+    $("#wlan_state").val(wlanState);
+    uiShowWlanState(wlanState);
+
+    $("#wlan_mode").val(pageWlanSettings.WlanAPMode);
+    uiInitWlanInfo(pageWlanSettings, pageWlanSettings.WlanAPMode);
+    //$('.scroll-pane').jScrollPane();
+}
+
+function uiShowWlanState(wlanState) {
+    var $wlanWrap = $("#field-wrap-wlan");
+    if (wlanState == WLAN_STATUS_OFF) {
+        $wlanWrap.hide(0);
+        $("#wifioffrule").css("display", "block");
+    } else {
+        $wlanWrap.show(0);
+        $("#wifioffrule").css("display", "none");
+    }
+}
+
+
+
+//show password
+function switchPw(flag) {
+    var $iptWepKey = $("#iptWepKey");
+    var $iptWpaKey = $("#iptWpaKey");
+    var showType = flag ? "text" : "password";
+    $iptWepKey.replaceWith('<input data-field="WepKey" id="iptWepKey" data-type="string" type="' + showType + '"  maxlength="26" class="iptText" value="' + $iptWepKey.val() + '">');
+    $iptWpaKey.replaceWith('<input data-field="WpaKey" id="iptWpaKey" data-type="string" type="' + showType + '"  maxlength="63" class="iptText" value="' + $iptWpaKey.val() + '">');
+}
+
+//show wlan Settings
+function uiInitWlanInfo(wifiSetting, wlanMode) {
+    ininWlanCountryAndChannel(wifiSetting.CountryCode)
+    var is5gStr = wlanMode == WLAN_WLAN_MODE_5G ? "_5G" : "";
+    uiMakeWlanModeString(wlanMode);
+    $("#field-wrap-wlan [data-field]").each(function() {
+        var $this = $(this);
+        var dataField = $this.attr("data-field") + "" + is5gStr;
+        $this.val(wifiSetting[dataField]);
+    });
+    var ssidHiddenKey = "SsidHidden" + is5gStr;
+    var wpaTypeKey = "WpaType" + is5gStr;
+    var securityModeKey = "SecurityMode" + is5gStr;
+    $("input[type='checkbox'][name='SsidHidden']").prop("checked", wifiSetting[ssidHiddenKey] == WLAN_BROADCAST_ENABLE ? "checked" : "");
+    $("input[type='radio'][name='WpaType'][value='" + wifiSetting[wpaTypeKey] + "']").attr("checked", true);
+    uiInitWlanSecurity(wifiSetting[securityModeKey]);
+
+}
+
+function uiInitWlanSecurity(securityMode) {
+    $(".wpa_item,.wep_item,.wep_wpa_item").hide(0);
+    switch (parseInt(securityMode)) {
+        case WLAN_SECURITY_WEP:
+            $(".wep_item,.wep_wpa_item").fadeIn(0);
+            break;
+        case WLAN_SECURITY_WPA:
+        case WLAN_SECURITY_WPA2:
+        case WLAN_SECURITY_WPA_WPA2:
+            $(".wpa_item,.wep_wpa_item").fadeIn(0);
+            break;
+    }
+}
+
+
+//set wlan Settings
+function uiSetWlanSettings() {
+    var wlanState = SDK.Wlan.GetWlanState().WlanState;
+    var selWlanState = parseInt($("#wlan_state").val());
+
+    if (wlanState == WLAN_STATUS_WPS) {
+        sys.alert("ids_wifi_wpsActiveWarn");
+        return false;
+    }
+
+    if (selWlanState == WLAN_STATUS_OFF) {
+        if (wlanState == WLAN_STATUS_OFF) {
+            sys.alert("ids_wifi_cannotSet");
+        } else {
+            sys.confirm("ids_wifi_disconWarning", function() {
+                var result = SDK.Wlan.SetWlanOff();
+                sys.alert(result == API_RESULT_SUCCESS ? "ids_success" : "ids_fail", function() {
+                    initWifiSettignsPage();
+                });
+            })
+        }
+
+    } else {
+        var empty = {};
+        var sendData = {};
+        var wlanAPMode = parseInt($("#wlan_mode").val());
+        var is5gStr = wlanAPMode == WLAN_WLAN_MODE_5G ? "_5G" : "";
+        $("#field-wrap-wlan [data-field]").each(function() {
+            var $this = $(this);
+            var dataField = $this.attr("data-field") + "" + is5gStr;
+            sendData[dataField] = $this.attr("data-type") != "string" ? parseInt($this.val()) : $this.val();
+        })
+
+        sendData.WlanAPMode = wlanAPMode;
+        sendData.CountryCode = $("#wlan_country").val();
+
+        var ssidValue = $.trim(sendData["Ssid" + is5gStr]);
+        if (ssidValue == '') {
+            sys.alert("ids_wifi_inputSsid", function() {
+                $("[data-field='Ssid']").val("").select();
+            });
+            return false;
+        }
+
+        if (check_ssid(ssidValue) == false) {
+            sys.alert("ids_wifi_maxSsid", function() {
+                $("[data-field='Ssid']").select();
+            });
+            return false;
+        }
+
+        switch (sendData["SecurityMode" + is5gStr]) {
+            case WLAN_SECURITY_DISABLE:
+                delete sendData["WepType" + is5gStr];
+                delete sendData["WepKey" + is5gStr];
+                delete sendData["WpaType" + is5gStr];
+                delete sendData["WpaKey" + is5gStr];
+                break;
+            case WLAN_SECURITY_WEP:
+                delete sendData["WpaType" + is5gStr];
+                delete sendData["WpaKey" + is5gStr];
+                var WepKeyVal = sendData["WepKey" + is5gStr];
+                if (WepKeyVal == "" || is_wep_key(WepKeyVal) == false) {
+                    sys.alert("ids_wifi_wepDescription", function() {
+                        $("[data-field='WepKey']").select();
+                    });
+                    return false;
+                } else if (check_input_char(WepKeyVal) == false) {
+                    sys.alert("ids_wifi_wepRule", function() {
+                        $("[data-field='WepKey']").select();
+                    });
+                    return false;
+                }
+                break;
+            case WLAN_SECURITY_WPA:
+            case WLAN_SECURITY_WPA2:
+            case WLAN_SECURITY_WPA_WPA2:
+                delete sendData["WepType" + is5gStr];
+                delete sendData["WepKey" + is5gStr];
+                var WpaKeyVal = sendData["WpaKey" + is5gStr];
+                if ((WpaKeyVal.length < 8) || (WpaKeyVal.length > 63)) {
+                    sys.alert("ids_wifi_wpaDescription", function() {
+                        $("[data-field='WpaKey']").select();
+                    });
+                    return false;
+                } else if (check_input_char(WpaKeyVal) == false) {
+                    sys.alert("ids_wifi_wpaRule", function() {
+                        $("[data-field='WpaKey']").select();
+                    });
+                    return false;
+                }
+                break;
+
+        }
+
+        var postParams = $.extend(empty, pageWlanSettings, sendData);
+        var result, wlanOnResutlInfo, wlanSettingResultInfo;
+        var onWlanResult = true,
+            settignsWlanResult = true;
+
+
+        if (wlanState == WLAN_STATUS_OFF) {
+            wlanOnResutlInfo = SDK.Wlan.SetWlanOn();
+            if (wlanOnResutlInfo != API_RESULT_SUCCESS) {
+                onWlanResult = false;
+            }
+            wlanSettingResultInfo = SDK.Wlan.SetWlanSettings(postParams)
+            if (wlanSettingResultInfo != API_RESULT_SUCCESS) {
+                settignsWlanResult = false;
+            }
+            result = onWlanResult && settignsWlanResult;
+            sys.alert(result ? "ids_success" : "ids_fail", function() {
+                page.startLoading();
+                setTimeout("timeLoad()", 20000);
+            });
+        } else {
+            sys.confirm("ids_wifi_disconWarning", function() {
+                wlanSettingResultInfo = SDK.Wlan.SetWlanSettings(postParams)
+                sys.alert(wlanSettingResultInfo == API_RESULT_SUCCESS ? "ids_success" : "ids_fail", function() {
+                    page.startLoading();
+                    setTimeout("timeLoad()", 20000);
+                });
+            })
+        }
+    }
+}
+
+function ininWlanCountryAndChannel(countryCode) {
+    var $country = $("#wlan_country");
+    var selCountryOptionStr = "";
+    $.each(countryArray, function(i, v) {
+        selCountryOptionStr += "<option value=" + v[0] + ">" + v[2] + "</option>";
+    });
+    $country.html(selCountryOptionStr);
+
+    makeChannelOption(countryCode, $("#wlan_mode").val());
+    $country.change(function() {
+        makeChannelOption($(this).val(), $("#wlan_mode").val());
+    }).val(countryCode);
+}
+
+function makeChannelOption(val, wlanAPMode) {
+    var currentCountry = null;
+    $.each(countryArray, function(i, v) {
+            if (v[0] == val) {
+                currentCountry = v;
+                return false;
+            }
+        })
+        //2g
+    var selChannel2GOptionStr = "<option value=0>Auto</option>";
+    var maxChannel = currentCountry[1];
+
+    for (var i = 1; i <= maxChannel; i++) {
+        selChannel2GOptionStr += "<option value=" + i + ">" + i + "</option>";
+    }
+
+
+    //5g
+    var selChannel5GOptionStr = "<option value=0>Auto</option>";
+    $.each(country5gChannelObj[currentCountry[3]], function(i, v) {
+        selChannel5GOptionStr += "<option value=" + v + ">" + v + "</option>";
+    });
+    $("#selChannel").html(wlanAPMode == WLAN_WLAN_MODE_2G ? selChannel2GOptionStr : selChannel5GOptionStr);
+}
+
+function uiMakeWlanModeString(wlanAPMode) {
+    var str2g = '<option value="0">802.11b</option><option value="1">802.11b/g</option><option value="2">802.11b/g/n</option>';
+    var str5g = '<option value="4">802.11a</option><option value="5">802.11a/n</option><option value="6">802.11a/c</option>';
+    var str = (wlanAPMode == WLAN_WLAN_MODE_5G ? str5g : str2g) + '<option value="3">Auto</option>';
+    $("#selWMode").html(str);
+
+}
+
+function initMaxWlanNum(maxNum) {
+    var $selMaxNumsta = $("#maxNumsta");
+    var str = "";
+    for (i = maxNum; i >= 1; i--) {
+        str += '<option value="' + i + '">' + i + '</option>';
+    }
+
+    $selMaxNumsta.html(str);
+}
+
+function timeLoad() {
+    page.stopLoading();
+    initWifiSettignsPage();
+}
+</script>
+
+<style type="text/css">
+.wep_item,
+.wpa_item,
+.wep_wpa_item {
+    display: none;
+}
+</style>
+
+<div id="wifiSettingPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_wifiSettings}</a></h3>
+        <div class="scroll-pane jspScrollable">
+            <div id="wifiBox" class="settings-con clearfix">
+                <ul class="ipt-wrap" style="display:none">
+                    <li>
+                        <label class="text">${ids_wifi_wifi:}</label>
+                        <select id="wlan_state" class="select">
+                            <option value="1">${ids_wifi_on}</option>
+                            <option value="0">${ids_wifi_off}</option>
+                        </select>
+                    </li>
+                </ul>
+                <div class="item-wlan" id="field-wrap-wlan">
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label class="text">${ids_wifi_wlan_mode:}</label>
+                            <select id="wlan_mode" class="select">
+                                <option value="0">2.4GHz</option>
+                                <option value="1">5GHz</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text">${ids_wifi_country:}</label>
+                            <select id="wlan_country" class="select">
+                                <option value="CN2">China333</option>
+                                <option value="US">United states</option>
+                                <option value="CN">China</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text">SSID:</label>
+                            <input data-field="Ssid" data-type="string" maxlength="32" type="text">
+                        </li>
+                        <input type="hidden" data-field="SsidHidden">
+                        <li>
+                            <label class="text"></label>
+                            <label>
+                                <input type="checkbox" name="SsidHidden" />&nbsp;${ids_wifi_ssidBroadcast}</label>
+                        </li>
+                        <li>
+
+                            <label class="text">${ids_wifi_wifiSecurity:}</label>
+                            <select data-field="SecurityMode" id="securityItem" class="select security_item">
+                                <option value="0">${ids_disable}</option>
+                                <option value="1">${ids_wifi_wep}</option>
+                                <option value="2">${ids_wifi_wpa}</option>
+                                <option value="3">${ids_wifi_wpa2}</option>
+                                <option value="4">${ids_wifi_wpaWpa2Psk}</option>
+                            </select>
+                        </li>
+
+                        <li class="wep_item">
+                            <label class="text">${ids_wifi_encryption:}</label>
+                            <select name="wep_mode" data-field="WepType" class="select">
+                                <option value="0">${ids_wifi_wepOpen}</option>
+                                <option value="1">${ids_wifi_wepShare}</option>
+                            </select>
+                        </li>
+                        <input type="hidden" data-field="WpaType">
+
+                        <li class="wpa_item">
+                            <label class="text">${ids_wifi_cipher:}</label>
+                            <div class="wifiradio">
+                                <label class="marginStyle vertical">
+                                    <input type="radio" value="0" name="WpaType" />${ids_wifi_wpaTkip}</label>
+                                <label class="marginStyle vertical">
+                                    <input type="radio" value="1" name="WpaType" />${ids_wifi_wpaAes}</label>
+                                <label class="marginStyle vertical">
+                                    <input type="radio" value="2" name="WpaType" />${ids_auto}</label>
+                            </div>
+                        </li>
+
+                        <li class="wep_item">
+                            <label class="text">${ids_wifi_key:}</label>
+                            <input data-field="WepKey" id="iptWepKey" data-type="string" type="password" maxlength="26" class="iptText">
+                        </li>
+
+                        <li class="wpa_item">
+                            <label class="text">${ids_wifi_key:}</label>
+                            <input data-field="WpaKey" id="iptWpaKey" data-type="string" type="password" maxlength="63" class="iptText" />
+                        </li>
+
+                        <li class="wep_wpa_item">
+                            <label class="text"></label>
+                            <label>
+                                <input type="checkbox" class="chkShowPwd" />&nbsp;${ids_wifi_showPwd}</label>
+                        </li>
+
+                        <li>
+                            <label class="text">${ids_wifi_802mode:}</label>
+                            <select class="select" data-field="WMode" id="selWMode">
+                                <option value="0">802.11b</option>
+                                <option value="1">802.11b/g</option>
+                                <option value="2">802.11b/g/n</option>
+                                <option value="4">802.11a</option>
+                                <option value="5">802.11a/n</option>
+                                <option value="6">802.11a/c</option>
+                                <option value="3">Auto</option>
+                            </select>
+                        </li>
+
+                        <li>
+                            <label class="text">${ids_wifi_channel:}</label>
+                            <select class="select" data-field="Channel" id="selChannel">
+                            </select>
+                        </li>
+
+                        <li>
+                            <label class="text">${ids_wifi_maxUser:}</label>
+                            <select class="select" id="maxNumsta" data-field="max_numsta">
+                            </select>
+                        </li>
+                        <li>
+                            <label class="text">${ids_wifi_apIsotation:}</label>
+                            <select class="select" data-field="ApIsolation">
+                                <option value="0">${ids_disable}</option>
+                                <option value="1">${ids_enable}</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <p class="warnColor des" id="wifioffrule">${ids_wifi_offRule}</p>
+            </div>
+            <div class="btn-wrap" id="wlanSettingsWrap">
+                <input type="button" id="btnSave" class="btnNormal" onclick="uiSetWlanSettings()" value="${ids_btn_apply}" />
+                <input type="button" id="btnCancel" class="btnNormal" onclick="page.reloadMain()" value="${ids_btn_cancel}" />
+            </div>
+        </div>
+    </div>
+</div>

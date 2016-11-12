@@ -20,9 +20,12 @@
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Disable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Enable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CA77Status
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/CDCEnable
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/RNDISEnable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXDisable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXEnable
 777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/TTLFIXStatus
+777  root:wheel ./jrd-resource/resource/webrc/www/cgi-bin/USBStatus
 755  root:wheel ./jrd-resource/resource/webrc/www/comm_help
 711  root:wheel ./jrd-resource/resource/webrc/www/comm_help/um_en.html
 755  root:wheel ./jrd-resource/resource/webrc/www/css

@@ -1,0 +1,32 @@
+<form>
+<div class="form-body">
+    <div class="form-title" trans='oled_setting'></div>
+    <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans='oled_time_out' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                 <select name="oled_time" id="oled_time" transid="oledtime_item" data-bind="options: oledtimes, value: selectedTime, optionsText: transOption('oledtime_item'), optionsValue: 'value'" required="true"></select> 
+                </div>
+            </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <p id="charingOnBtn" class="checkbox floatleft margintop5 checkboxToggle" data-bind="css:{'checkbox_selected': isCharingOnState()=='1'}, click: setCharingOnState" manualControl="true">
+                    <input type="checkbox" id="isCharingOn" value="on" data-bind="checked:isCharingOnState()=='1'"/>
+                </p>
+                <label for="isCharingOn" trans="oled_turn_charing" class="update_inline floatleft lineheight25"></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-buttons">
+        <input type="button" class="btn-1" data-bind='click: save' trans="apply"/>
+    </div>
+    <div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content">
+			<li trans="diconneted_operate_note"></li>
+            <li trans="dial_setting_note_automatic"></li>
+            <li trans="dial_setting_note_manual"></li>
+        </ul>
+    </div>
+</div>
+</form>

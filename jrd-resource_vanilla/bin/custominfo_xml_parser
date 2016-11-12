@@ -1,0 +1,20 @@
+#! /bin/sh
+
+custom_info_xml="/jrd-resource/resource/jrdcfg/custom_info.xml"
+echo ${custom_info_xml}
+if [ -f ${custom_info_xml} ]; then
+  AutoConnect=$(grep 'AutoConnect_value' ${custom_info_xml} | cut -d '>' -f 2 | cut -d '<' -f 1 | sed "s/^[ ]*//g" | sed "s/[ ]*$//g")
+  . custominfo_set AutoConnect ${AutoConnect}
+  
+  Roaming=$(grep 'Roaming_value' ${custom_info_xml} | cut -d '>' -f 2 | cut -d '<' -f 1 | sed "s/^[ ]*//g" | sed "s/[ ]*$//g")
+  . custominfo_set Roaming ${Roaming}
+  
+  username=$(grep 'username_value' ${custom_info_xml} | cut -d '>' -f 2 | cut -d '<' -f 1 | sed "s/^[ ]*//g" | sed "s/[ ]*$//g")
+  . custominfo_set username ${username}
+  
+  passwd=$(grep 'passwd_value' ${custom_info_xml} | cut -d '>' -f 2 | cut -d '<' -f 1 | sed "s/^[ ]*//g" | sed "s/[ ]*$//g")
+  . custominfo_set uipasswd ${passwd}
+  
+  lang=$(grep 'lang_value' ${custom_info_xml} | cut -d '>' -f 2 | cut -d '<' -f 1 | sed "s/^[ ]*//g" | sed "s/[ ]*$//g")
+  . custominfo_set language ${lang}
+fi

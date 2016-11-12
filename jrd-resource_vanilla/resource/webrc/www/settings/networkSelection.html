@@ -1,0 +1,278 @@
+<div id="networkPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_networkMode}</a></h3>
+        <div class="scroll-pane jspScrollable">
+            <div class="connectShow settings-con">
+                <ul class="ipt-wrap">
+                    <li>
+                        <label class="text network-text">${ids_title_networkMode:}</label>
+                        <select class="select" id="seleNetworkMode">
+                            <option value="0">${ids_auto}</option>
+                            <option value="1">${ids_net_2gOnly}</option>
+                            <option value="2">${ids_net_3gOnly}</option>
+                            <option value="3">${ids_net_4gOnly}</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label class="text network-text">${ids_net_select:}</label>
+                        <label class="vertical"><input type="radio" checked name="networkSelection" value="0" id="automatic"> ${ids_automatic}</label>
+                        <label class="vertical"><input type="radio" name="networkSelection" value="1" id="manual"> ${ids_manual}</label>
+                    </li>
+                </ul>
+                <div class="btn-wrap">
+                    <!-- <button class="btnNormal" id="btnApply">${ids_btn_apply}</button> -->
+                    <input type="button" id="btnApply" class="btnNormal" value="${ids_btn_apply}" />
+                </div>
+
+                <div id="networkListBox">
+                    <table class="nw-list" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th width="10%"></th>
+                            <th width="30%">${ids_net_operator}</th>
+                            <th width="30%">${ids_net_service}</th>
+                            <th width="30%">${ids_net_status}</th>
+                        </tr>
+                        <tbody id="fileDetailList">
+                        </tbody>
+                    </table>
+                    <p style="height: 25px;line-height: 25px;background: #fff;color:#000;margin:0 1px;border-top:1px solid #ccc;padding:0 7px;display:none" id="select_result">${ids_fail}</p>
+                    <p style="height: 25px;line-height: 25px;background: #fff;color:#000;margin:0 1px;border-top:1px solid #ccc;padding:0 7px;display:none" id="select_text">${ids_net_searching}</p>
+                </div>
+                <div class="btn-wrap">
+                    <!-- <button class="btnNormal" id="btnRefresh">${ids_btn_refresh}</button>
+                    <button class="btnNormal" id="btnSelect">${ids_btn_select}</button>
+                    <button class="btnNormal" id="btnCancel">${ids_btn_cancel}</button> -->
+
+                    <input type="button" id="btnRefresh" class="btnNormal" value="${ids_btn_refresh}" />
+                    <input type="button" id="btnSelect" class="btnNormal" value="${ids_btn_select}" />
+                    <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                </div>
+            </div>
+            <div class="statusContent" id="simCardStatus"></div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "networkSelection";
+var registState = SDK.Network.GetNetworkRegisterState();
+if ((registState != null) && (registState == NW_REG_STAT_REGISTRATING)) {
+    page.changePage("connection/networkRegist.html?rand=" + Math.random());
+}
+
+var simInfo = SDK.SIM.GetSimStatus();
+var simState = simInfo.SIMState;
+var pinState = simInfo.PinState;
+
+var wanState = SDK.Connection.GetConnectionState().ConnectionStatus;
+var networkSettings = SDK.Network.GetNetworkSettings();
+var networkMode = networkSettings.NetworkMode;
+var networkSelection = networkSettings.NetselectionMode;
+$(document).ready(function() {
+    initScroll($("article#settings"));
+    $("#mainBox .btnNormal").setBtnDisabled();
+    initNetworkSelection();
+    showSmsCardState(simCardState, pinState);
+});
+
+function initNetworkSelection() {
+    $("#btnRefresh,#btnSelect,#btnCancel,#btnApply").setBtnDisabled();
+    if ((simState != MACRO_UIM_STATE_READY) ||
+        (wanState == MACRO_PPP_CONNECTED) || (wanState == MACRO_PPP_CONNECTING)) {
+        $("input[name='networkSelection']:radio,#seleNetworkMode").attr("disabled", true);
+
+    } else if (networkSelection == SEL_MODE_MANUAL) {
+        initGetNetListInfo();
+    }
+
+    $("#seleNetworkMode,input[name='networkSelection']").change(function() {
+        $("#btnApply,#btnCancel").removeBtnDisabled();
+    });
+
+    showNetworkMode(networkMode);
+    showNetworkSelection(networkSelection);
+    $("#btnApply").click(applyEvent);
+    $("#btnRefresh").click(refreshEvent);
+    $("#btnSelect").click(selectEvent);
+    $("#btnCancel").click(page.reloadMain);
+}
+
+function showNetworkMode(networkMode) {
+    $("#seleNetworkMode").val(networkMode);
+}
+
+function showNetworkSelection(networkSelection) {
+    $("input[name='networkSelection'][value='" + networkSelection + "']").attr("checked", true);
+}
+
+function startSelect() {
+    if (intervalgetNetworkList != null) {
+        stopSelect()
+    }
+    intervalgetNetworkList = setTimeout("initGetNetListInfo();", 5000);
+}
+
+function stopSelect() {
+    clearTimeout(intervalgetNetworkList);
+    intervalgetNetworkList = null;
+}
+
+function initGetNetListInfo() {
+
+    SDK.requestJsonRpcAsync("SearchNetworkResult", null, "2.1", function(data) {
+        if (data != null && data.hasOwnProperty("error")) {
+           data.SearchState = NW_SELECT_FAILURE;
+            initnetlist(data);
+        } else {
+           initnetlist(data);
+        }
+    });
+}
+
+function initnetlist(data) {
+    if (data == null) {
+        return;
+    }
+    var nwSelStat = data.SearchState;
+    var nwList = data.ListNetworkItem || {};
+    var nwListLen = nwList.length || 0;
+    if (nwSelStat == NW_SELECT_SUCCESS && nwListLen > 0) {
+        $("#select_text,#select_result").css("display", "none");
+        var listStr = "";
+        $.each(nwList, function(i, v) {
+            listStr += addlistItem(v);
+        });
+        $("#fileDetailList").html(listStr);
+        $("#btnRefresh").removeBtnDisabled();
+        $("#seleNetworkMode,input[name='networkSelection']").attr("disabled", false);
+    } else if (nwSelStat == NW_SELECT_FAILURE || (nwSelStat == NW_SELECT_SUCCESS && nwListLen == 0)) {
+        $("#seleNetworkMode,input[name='networkSelection']").attr("disabled", false);
+        $("#fileDetailList").html("");
+        $("#select_text").css("display", "none");
+        $("#select_result").css("display", "block");
+        $("#btnRefresh").removeBtnDisabled();
+    } else if (nwSelStat == NW_SELECTING) {
+        $("#fileDetailList").html("");
+        $("#btnRefresh,#btnSelect,#btnCancel,#btnApply").setBtnDisabled();
+        $("#select_text").css("display", "block");
+        $("#select_result").css("display", "none");
+        $("#seleNetworkMode,input[name='networkSelection']").attr("disabled", true);
+        startSelect();
+    } else {
+        $("#select_text,#select_result").css("display", "none");
+        $("#btnRefresh").removeBtnDisabled();
+    }
+}
+
+function addlistItem(data) {
+    if (data == null) {
+        return;
+    }
+
+    var htmlStr = '<tr align="center"><td style="width: 10%; ">%1</td><td style="width: 30%; cursor: pointer; ">%2</td><td>%3</td><td style="width: 30%; cursor: pointer; ">%4</td></tr>';
+
+    var isDisabledStr = (data.State == NW_STATE_CURRENT || data.State == NW_STATE_AVAILABLE) ? "" : " disabled=disabled ";
+    var rodioStr = "<input type='radio'" + isDisabledStr + "name='registerRadio' value='" + data.NetworkID + "' " + "onclick='changBtnState()'/>";
+
+    var serviceValue;
+    switch (data.Rat) {
+        case NW_TYPE_GSM:
+            serviceValue = sys.getRes("ids_net_gsm");
+            break;
+        case NW_TYPE_UMTS:
+            serviceValue = sys.getRes("ids_net_umts");
+            break;
+        case NW_TYPE_LTE:
+            serviceValue = sys.getRes("ids_net_lte");
+            break;
+        default:
+            serviceValue = sys.getRes("ids_sim_unknown");
+    }
+
+    var statusValue;
+    if (data.State == NW_STATE_CURRENT) {
+        statusValue = sys.getRes("ids_net_active");
+    } else if (data.State == NW_STATE_AVAILABLE) {
+        statusValue = sys.getRes("ids_net_available");
+    } else if (data.State == NW_STATE_FORBIDDEN) {
+        statusValue = sys.getRes("ids_net_forbid");
+    } else {
+        statusValue = sys.getRes("ids_sim_unknown");
+    }
+
+    return formatHtmlStr(htmlStr, rodioStr, data.ShortName, serviceValue, statusValue);
+
+}
+
+function changBtnState() {
+    if ($("input[name='registerRadio']:radio:checked").length > 0) {
+        $("#btnSelect,#btnCancel").removeBtnDisabled();
+    } else {
+        $("#btnSelect,#btnCancel").setBtnDisabled();
+    }
+
+}
+
+function applyEvent() {
+    $("#btnApply").setBtnDisabled();
+    var networkModeVal = parseInt($("#seleNetworkMode").val()),
+        nwSelectModeVal = parseInt($("input[name='networkSelection']:checked").val());
+
+    var result = SDK.Network.SetNetworkSettings(networkModeVal, nwSelectModeVal);
+
+    if (result == API_RESULT_SUCCESS) {
+        sys.alert("ids_success", function() {
+            page.reloadMain();
+        })
+    } else {
+        sys.alert("ids_fail", function() {
+            page.reloadMain();
+        })
+    }
+
+}
+
+function refreshEvent() {
+    $("#btnRefresh").setBtnDisabled();
+
+    var result = SDK.Network.SearchNetwork();
+    if (result == API_RESULT_SUCCESS) {
+        initGetNetListInfo();
+    } else {
+        sys.alert("ids_fail");
+        page.reloadMain()
+    }
+}
+
+function selectEvent() {
+    var registerRadio = $("input[name='registerRadio']:radio:checked");
+    var registerId;
+    if (registerRadio.length < 1) {
+        sys.alert("ids_net_selectWarn");
+        return;
+    } else {
+        registerId = registerRadio.val();
+    }
+
+    var params = {
+        "index": registerId
+    }
+    $("#btnSelect").setBtnDisabled();
+    var result = SDK.Network.RegisterNetwork(parseInt(registerId));
+    switch (result) {
+        case 0:
+            page.changePage("settings/networkRegist.html");
+            break;
+        default:
+            sys.alert("ids_fail", function() {
+                $("#btnSelect").removeBtnDisabled();
+            })
+    }
+}
+</script>

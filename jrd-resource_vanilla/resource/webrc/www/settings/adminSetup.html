@@ -1,0 +1,119 @@
+<div id="adminSetupPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_loginSettings}</a></h3>
+        <div class="settings-con">
+            <ul class="ipt-wrap">
+                <li>
+                    <label class="text" for="">${ids_login_loginPwd:}</label>
+                    <input type="text" id="iptOldpsw" name="iptOldPsw" class="ipt" maxlength="16"/>
+                </li>
+                <li>
+                    <label class="text" for="">${ids_login_newPwd:}</label>
+                    <input type="password" id="iptNewPsw" name="iptNewPsw" class="ipt" maxlength="16"/>
+                </li>
+                <li>
+                    <label class="text" for="">${ids_login_confirmPwd:}</label>
+                    <input type="password" id="iptVerifyPsw" name="iptVerifyPsw" class="ipt" maxlength="16"/>
+                </li>
+            </ul>
+            <p class="alert alert-error error hidden">${ids_login_nameOrPwdWrong}</p>
+            <div class="btn-wrap">
+                <input type="button" id="btnSetPassword" class="btnNormal" value="${ids_btn_save}" />
+                <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+            </div>
+        </div>
+    </div>
+</div>
+<script> currentMenu = 1; </script>
+<script src="/js/childCommon.js"></script>
+
+<script>
+pageName = "adminSetup";
+
+$(document).ready(function() {	
+    $("#btnSetPassword").on("click", function(event) {
+        event.preventDefault();
+        setPasswordEvent();
+    }); /*add event to save button*/
+
+    $("#btnCancel").click(page.reloadMain);	
+    $("article.active input[type='button']").setBtnDisabled();
+    $("article.active select,article.active input").bind("change keydown keyup input paste", function() {
+        $("article.active input[type='button']").removeBtnDisabled()
+    });
+	//$(".y-inputFocus").JPlaceHolder();
+});
+
+function setPasswordEvent() {
+    var $oldPassword = $("#iptOldpsw");
+    var $newPassword = $("#iptNewPsw");
+    var $verifyPassword = $("#iptVerifyPsw");
+    var oldPassword = $oldPassword.val();
+    var newPassword = $newPassword.val();
+    var verifyPassword = $verifyPassword.val();
+
+    /*if (newPassword != verifyPassword) {
+        $('p.alert').html(sys.getRes("ids_dlg_login_confirmPwd")).removeClass("hidden");
+        $("#iptNewPsw,#iptVerifyPsw").on("focusin", function(event) {
+            $('p.alert').html("").addClass("hidden");
+        })
+        return false;
+    }*/
+    if(oldPassword ==""){
+        $oldPassword.showRule("ids_login_inputOldPwd");
+        return false;
+    }
+	if(oldPassword !="" && (!check_password(oldPassword))){
+        $oldPassword.showRule("ids_login_checkPwdRule");
+        return false;
+    }
+    if(newPassword ==""){
+        $newPassword.showRule("ids_login_inputNewPwd");
+        return false;
+    }
+    if(newPassword !="" && (!check_password(newPassword))){
+        $newPassword.showRule("ids_login_checkPwdRule");
+        return false;
+    }
+    if(verifyPassword =="" && newPassword !=""){
+        $verifyPassword.showRule("ids_login_inputConfirmPwd");
+        return false;
+    }
+    if(newPassword != verifyPassword){
+        $verifyPassword.showRule("ids_login_confirmPwdRule");
+        return false;
+    }
+    var result = SDK.User.ChangePassword("admin", oldPassword, newPassword);
+
+    if (result == USER_CHANGE_PASSWORD_SUCCESS) {
+        sys.alert("ids_success", function() {
+            page.reloadMain();
+        });
+    } else if (result == USER_CURRENT_PASSWORD_ERROR) {
+        $('p.alert').html(sys.getRes("ids_login_inputCurrPwd")).removeClass("hidden");
+        $("#iptOldpsw,#iptNewPsw,#iptVerifyPsw").on("focusin", function(event) {
+            $('p.alert').html("").addClass("hidden");
+        })
+
+        return false;
+
+    } else if (result == USER_CHANGE_PASSWORD_FAILED) {
+        $('p.alert').html(sys.getRes("ids_fail")).removeClass("hidden");
+        $("#iptOldpsw").on("focusin", function(event) {
+            $('p.alert').html("").addClass("hidden");
+        })
+        return false;
+    } else {
+        $('p.alert').html(sys.getRes("ids_login_inputCurrPwd")).removeClass("hidden");
+        $("#iptOldpsw,#iptNewPsw,#iptVerifyPsw").on("focusin", function(event) {
+            $('p.alert').html("").addClass("hidden");
+        })
+        return false;
+    }
+
+}
+</script>
+ 

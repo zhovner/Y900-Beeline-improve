@@ -1,0 +1,6 @@
+protocol:1
+name:Belgium BASE Pro
+apn:busint.base.be
+user:businessinternet
+psw:busint
+dial:*99***1#

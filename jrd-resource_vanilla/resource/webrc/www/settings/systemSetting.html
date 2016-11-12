@@ -1,0 +1,244 @@
+<div id="systemPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content settings-system">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_about}</a>
+        </h3>
+        <div class="scroll-pane jspScrollable">
+            <div class="settings-con">
+                <table class="common-table sys-info">
+                    <tr>
+                    <td>${ids_sys_swVersion:}</td>
+                        <td>
+                            <span id="softVersion"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_sys_hwVersion:}</td>
+                        <td>
+                            <span id="hardVersion"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_sys_deviceName:}</td>
+                        <td>
+                            <span id="deviceName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_sys_imei:}</td>
+                        <td>
+                            <span id="IMEI"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_sys_macAddress:}</td>
+                        <td>
+                            <span id="macAddr"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_sys_ipAddress:}</td>
+                        <td>
+                            <span id="ipAddr"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td>${ids_subnetMask:}</td>
+                        <td>
+                            <span id="subnetMask"></span>
+                        </td>
+                    </tr>
+                </table>
+
+            <h4>${ids_sys_system:}</h4>
+                <table class="common-table sys-control">
+                    <tr>
+                        <td>
+                            <input type="button" class="btnNormal" id="btnReboot" value="${ids_btn_reboot}" />
+                        </td>
+                        <td> ${ids_sys_rebootDecription}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="btnNormal" id="btnSysReset" value="${ids_btn_reset}" />
+                        </td>
+                        <td>${ids_sys_resetDecription}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" class="btnNormal" id="btnSysBackup" value="${ids_btn_backup}" />
+                        </td>
+                        <td>${ids_sys_backupDecription}</td>
+                    </tr>
+                    <tr class="upload-file-tr">
+                        <td>
+                            <input type="button" class="btnNormal" id="btnSysRestore" value="${ids_btn_restore}" />
+                        </td>
+                        <td>
+                            <form id="uploadForm" name="form" action="" method="post" enctype="multipart/form-data">
+                                <span class="uploadImg">
+                                    <input type="file" size="1" name="iptUpload" id="iptUpload" class="file-input" />
+                                    <button type="button">${ids_sys_chooseFile}</button>
+                                </span>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr class="file-name-tr">
+                        <td>
+                        </td>
+                        <td>
+                            <div class="file-name"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 6;
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/ajaxfileupload.js"></script>
+<script>
+pageName = "systemSetting";
+var systInfo = SDK.System.GetSystemInfo();
+var strIMEI = systInfo.IMEI;
+var SwVersion = systInfo.SwVersion;
+var HwVersion = systInfo.HwVersion;
+var DeviceName = systInfo.DeviceName;
+var WebUiVersion = systInfo.WebUiVersion;
+var MacAddress = systInfo.MacAddress;
+var lanInfo = SDK.LAN.GetLanSettings();
+var ipAddress = lanInfo.IPv4IPAddress;
+var subnetMask = lanInfo.SubnetMask;
+
+$(document).ready(function() {
+    formload();
+    initScroll($("article#settings"));
+    $("#btnReboot").click(setRebootEvent);
+    $("#btnSysReset").click(sysResetEvent);
+    $("#btnSysBackup").click(sysBackupEvent);
+    $("#btnSysRestore").click(sysRestoreEvent);
+    $("#iptUpload").fileInputInit();
+});
+
+function formload() {
+    $("#softVersion").html(SwVersion);
+    $("#hardVersion").html(HwVersion);
+    $("#deviceName").html(DeviceName);
+    $("#IMEI").html(strIMEI);
+    $("#macAddr").html(MacAddress);
+    $("#ipAddr").html(ipAddress);
+    $("#subnetMask").html(subnetMask);
+}
+
+function setRebootEvent() {
+    sys.confirm("ids_sys_rebootWarn", function() {
+        disabledBtn(true);
+        var result = SDK.System.SetDeviceReboot();
+       // ShowDlgTips(result);
+	   if(result==API_RESULT_SUCCESS){ sys.alert("ids_sys_setRebootEvent",function(){
+                page.reloadMain();
+            })
+			return;
+			}
+	   else {
+        sys.alert("ids_fail",function(){
+                page.reloadMain();
+            })}
+    })
+}
+
+function sysResetEvent() {
+    sys.confirm("ids_sys_restoreFactoryWarn", function() {
+        disabledBtn(true);
+        var result = SDK.System.SetDeviceReset();
+       // ShowDlgTips(result);
+	   if(result==API_RESULT_SUCCESS){ sys.alert("ids_success",function(){
+                page.reloadMain();
+            })
+			return;
+			}
+			
+		 else {
+        sys.alert("ids_fail",function(){
+                page.reloadMain();
+            })}
+    })
+}
+
+function sysBackupEvent() {
+    disabledBtn(true);
+    var result = SDK.System.SetDeviceBackup();
+    ShowDlgTips(result);
+    if (result == API_RESULT_SUCCESS) {
+        getBackupSettings();
+    } else {
+        page.reloadMain();
+    }
+}
+
+function sysRestoreEvent() {
+    //var data = SDK.System.SetDeviceRestore();
+    if ($("#iptUpload").val() == "") {
+        sys.alert("ids_sys_selectFilePrompt");
+        return;
+    }
+    sys.confirm("ids_sys_restoreBackupWarn", function() {
+        page.startLoading();
+        $.ajaxFileUpload({
+            url: "/goform/uploadBackupSettings",
+            secureuri: false,
+            fileElementId: "iptUpload",
+            dataType: "json",
+            complete: function() {
+                page.stopLoading();
+            },
+            success: function(data, status) {
+				if (SDK.requestJsonRpcIsOk(data)) {
+                    sys.alert("ids_success");
+                } else {
+                    sys.alert("ids_fail", function() {
+						$("#iptUpload").fileInputInit();
+					});					
+                }
+            },
+            error: function(data, status, e) {
+                sys.alert("ids_error", function() {
+					$("#iptUpload").fileInputInit();
+				});					
+            }
+        });
+    })
+}
+
+function getBackupSettings() {
+    $("body").append("<iframe src='/cfgbak/configure.bin' style='display: none'></iframe>");
+}
+
+function disabledBtn(opt) {
+    if (opt == null || opt == true) {
+        $("#btnReboot,#btnSysReset,#btnSysBackup,#btnSysRestore").setBtnDisabled();
+    } else {
+        $("#btnReboot,#btnSysReset,#btnSysBackup,#btnSysRestore").removeBtnDisabled();
+    }
+
+}
+
+function ShowDlgTips(result) {
+    switch (result) {
+        case 0:
+            sys.alert("ids_success", function() {
+                page.reloadMain();
+            })
+            break;
+        default:
+            sys.alert("ids_fail", function() {
+                page.reloadMain();
+            })
+    }
+}
+</script>

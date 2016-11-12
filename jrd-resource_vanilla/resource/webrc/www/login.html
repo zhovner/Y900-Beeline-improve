@@ -1,0 +1,101 @@
+<div id="loginForms" style="margin-top: -35px;">
+	<div class="login_frame" id="loginContainer" data-bind="visible:pageState()!=4">
+        <div style="width: 320px; background: #FFB612; margin: 0px auto;">
+            <div id="autoStatus" style="text-align: left; color: #fff; padding-left: 15px;" data-bind="attr:{'trans':autoTextStatus}"></div>
+		<form id="frmLogin" data-bind="visible:pageState()==0">
+            <div class="field-group colorRed" data-bind="visible: loginSecuritySupport() && accountLocked()">
+                <span trans="password_error_account_lock"></span> <span data-bind="text: leftUnlockTime"></span>
+            </div>
+			<div class="field-group">
+				<div class="field-group_l"><span class="label" trans="password" for="txtPwd"></span></div>
+				<div class="field-group_r"><input id="txtPwd" autocomplete="off" class="required" type="password" data-bind="value:password, valueUpdate: 'keypress'" maxlength="32" name="txtPwd"/></div>
+                <div class="clear"></div>
+			</div>
+			<div class="field-group">
+				<div class=""><label class="label">&nbsp;</label></div>
+                <div class="floatright" style=" padding-bottom: 10px;"><input id="btnLogin" class="btn-1" type="submit" trans="login" /></div>
+                <div class="clear"></div>
+			</div>			
+		</form>
+		<form id="frmPIN" data-bind="visible:pageState()==1">
+			<div class="prompt">
+				<p trans="enter_pin"></p>
+				<p class="important-prompt marginbottom15" data-bind="visible:pinNumber()>1">
+					<span trans="attempts_left"></span> <span data-bind='text:pinNumber'></span>
+				</p>
+				<p class="important-prompt" data-bind="visible:pinNumber()==1" trans="last_enter_pin"></p>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l">
+					<label class="label" for='txtPIN' trans='pin'></label>
+				</div>
+				<div class="field-group_r">
+					<input id='txtPIN' autocomplete="off" name="txtPIN" type="password" class="required" maxlength='8' data-bind="value:PIN, valueUpdate: 'keypress'" />
+				</div>
+                <div class="clear"></div>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l">
+					<label class="label">&nbsp;</label>
+				</div>
+				<div class="floatright" style=" padding-bottom: 10px;">
+					<input id="btnPinApply" class="btn-1" type="submit" trans="next_step" />
+				</div>
+                <div class="clear"></div>
+			</div>
+		</form>
+		<form id="frmPUK" data-bind="visible:pageState()==2">
+			<div class="prompt">
+				<p trans="enter_puk"></p>
+				<p class="important-prompt" data-bind="visible:pukNumber()>1">
+					<span trans="attempts_left"></span> <span data-bind='text:pukNumber'></span>
+				</p>
+				<p class="important-prompt" data-bind="visible:pukNumber()==1" trans="last_enter_puk"></p>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l">
+					<label class="label" for='txtPUK' trans='puk'></label>
+				</div>
+				<div class="field-group_r">
+					<input id='txtPUK' autocomplete="off" name="txtPUK" type="password" class="required" maxlength='8' data-bind="value:PUK, valueUpdate: 'keypress'" />
+				</div>
+                <div class="clear"></div>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l">
+					<label class="label" for='txtNewPIN' trans='new_pin'></label>
+				</div>
+				<div class="field-group_r">
+					<input id='txtNewPIN' autocomplete="off" name="txtNewPIN" type="password" class="required" maxlength='8' data-bind="value:newPIN, valueUpdate: 'keypress'" />
+				</div>
+                <div class="clear"></div>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l" style="width: 200px;">
+					<label class="label" for='txtConfirmPIN' trans='confirm_pin' style="width: 250px;"></label>
+				</div>
+				<div class="field-group_r">
+					<input id='txtConfirmPIN' autocomplete="off" name="txtConfirmPIN" type="password" class="required" maxlength='8'
+						data-bind="value:confirmPIN, valueUpdate: 'keypress'"
+					/>
+				</div>
+                <div class="clear"></div>
+			</div>
+			<div class="field-group">
+				<div class="field-group_l">
+					<label class="label">&nbsp;</label>
+				</div>
+				<div class="floatright" style=" padding-bottom: 10px; margin-top: 5px;">
+					<input id="btnPUKApply" class="btn-1" type="submit" trans="next_step" style="background: #000;" />
+				</div>
+                <div class="clear"></div>
+			</div>
+		</form>
+        <div data-bind="visible:pageState()==5">
+            <img id="loadingImg" src="css/mac/loading.gif"/>
+        </div>
+		<div id="puk_locked" class="important-prompt prompt" trans="puk_locked" data-bind="visible:pageState()==3"></div>
+		<div class="login_bottom"></div>
+        </div>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<form id='smsSettingForm'>
+    <div class="form-body">
+        <div class="form-title" trans='sms_setting2'></div>
+        <div class="content row-fluid" style="padding-left: 20px;">
+            <div class="span6">
+            <div class="row-fluid" style="margin-bottom: 20px; line-height:25px;">
+                <label class=" side-right" for='txtValidity' trans='sms_validity' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <select transid='sms_validity' id="txtValidity" data-bind="options: modes, value: selectedMode, optionsText: transOption('sms_validity'), optionsValue: 'value'"></select>
+                </div>
+            </div>
+            <div class="row-fluid" style="margin-bottom: 40px; line-height:25px;">
+                <label class=" side-right" for='txtCenterNumber' trans='center_number' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <input id='txtCenterNumber' name="txtCenterNumber" type="text" data-bind="value: centerNumber" class="required" maxlength='40'/>
+                </div>
+            </div>
+            </div>
+            <div class="span6">
+            <div class="row-fluid" class="row-fluid" style="line-height:25px;">
+                <label class=" side-right" trans='delivery_report' style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <!--<input type="radio" name="deliveryReport" id="reportOn" data-bind="checked: deliveryReport" value="1"/>
+                    <label for="reportOn" trans="enable"></label>
+                    <input type="radio" name="deliveryReport" id="reportOff" data-bind="checked: deliveryReport" value="0"/>
+                    <label for="reportOff" trans="disable"></label>-->
+                    <label id="reportText" data-bind='text: deliveryReport() != 0? "On" : "Off",attr:{trans:deliveryReport() != 0?"settings_messages_delivery_state_on" : "settings_messages_delivery_state_off" }'></label>
+                    <img style="cursor: pointer" data-bind="attr: {src: deliveryReport() != 0? 'images/sms_on.png' : 'images/sms_off.png'},click:changeSMSonoff" />
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <input type="submit" class="btn-1" trans='apply'/>
+            <input type="button" class="btn-1" data-bind='click: clear' trans='cancel'/>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="sms_setting_note_validity"></li>
+                <li trans="sms_setting_note_center_number"></li>
+                <li trans="sms_setting_note_delivery_report"></li>
+            </ul>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,149 @@
+﻿<div class="row-fluid paddingtop15 floatleft" id="div-nosimcard">
+    <div class="span3" style="display: none;">
+        <form id="frmHome">
+            <div class="row-fluid">
+                <div class="span12 table paddingtop15 paddingbottom15">
+                    <div class="row-fluid side-center marginbottom10">
+                        <img id="imgState" data-bind="attr:{src: imagePath }"/>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="current_flux" class="span7 side-right"></label>
+                        <label class="span5" id="tdCurrentFlux">0B</label>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="connected_time" class="span7 side-right"></label>
+                        <label class="span5" id="tdConnectedTime">00:00:00</label>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="flux_up" class="span7 side-right"></label>
+                        <label class="span5" id="tdUpSpeed">0B/s</label>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="flux_down" class="span7 side-right"></label>
+                        <label class="span5" id="tdDownSpeed">0B/s</label>
+                    </div>
+                    <div class="row-fluid side-center margintop15 marginbottom10">
+                        <input type="submit" class="btn-1 btn_connect disabled" trans="connect" disabled="disabled"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row-fluid" data-bind="visible: supportQrCode">
+            <div class="side-center"><span trans="wifi_access" class="fontBold font15"></span></div>
+            <div class="side-center">
+                <img id="qrcode_ssid1" src="" data-bind="attr: {src: qrcode_ssid1}" width="128" alt=""/>
+            </div>
+        </div>
+    </div>
+    <div data-bind="attr: {'class': isHomePage()==true?'form-body span12':'form-body span12 fixContainerWidth'}" style="margin-left: 0px;">
+        <div class="form-title" trans="no_sim_card_title"></div>
+        <div class="content" data-bind="visible:page()==pageState.NO_SIM" style="padding-left: 20px;">
+            <div class="colorRed font18" trans="no_sim_card_message"></div>
+        </div>
+        <form id="frmPIN" data-bind="visible:page()==pageState.WAIT_PIN">
+            <div class="form-body">
+                <div class="content" style="padding-left: 20px;">
+                    <div class="prompt">
+                        <p trans="enter_pin"></p>
+
+                        <p class="important-prompt" data-bind="visible:pinNumber()>1">
+                            <span trans="attempts_left"></span> <span data-bind='text:pinNumber'></span>
+                        </p>
+
+                        <p class="important-prompt" data-bind="visible:pinNumber()==1" trans="last_enter_pin"></p>
+                    </div>
+                    <div class="row-fluid">
+                        <label class="" for='txtPIN' trans='pin'></label>
+
+                        <div class="">
+                            <input id='txtPIN' autocomplete="off" name="txtPIN" type="password" class="required"
+                                   maxlength='8' data-bind="value:PIN, valueUpdate: 'keypress'"/>
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <input id="btnPinApply" class="btn-1 " type="submit" trans="apply"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form id="frmPUK" data-bind="visible:page()==pageState.WAIT_PUK">
+            <div class="form-body">
+                <div class="content" style="padding-left: 20px;">
+                    <div class="prompt">
+                        <p trans="enter_puk"></p>
+
+                        <p class="important-prompt" data-bind="visible:pukNumber()>1">
+                            <span trans="attempts_left"></span> <span data-bind='text:pukNumber'></span>
+                        </p>
+
+                        <p class="important-prompt" data-bind="visible:pukNumber()==1" trans="last_enter_pin"></p>
+                    </div>
+                    <div class="row-fluid" style="line-height: 25px;">
+                        <label class="" for='txtPUK' trans='puk' style="color: #8F8F8F; line-height: 25px;"></label>
+
+                        <div class="">
+                            <input id='txtPUK' autocomplete="off" name="txtPUK" type="password" class="required"
+                                   maxlength='8'
+                                   data-bind="value:PUK, valueUpdate: 'keypress'"/>
+                        </div>
+                    </div>
+                    <div class="row-fluid" style="line-height: 25px;">
+                        <label class="" for='txtNewPIN' trans='new_pin' style="color: #8F8F8F; line-height: 25px;"></label>
+
+                        <div class="">
+                            <input id='txtNewPIN' autocomplete="off" name="txtNewPIN" type="password" class="required"
+                                   maxlength='8'
+                                   data-bind="value:newPIN, valueUpdate: 'keypress'"/>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="row-fluid" style="line-height: 25px;">
+                        <label class="" for='txtConfirmPIN' trans='confirm_pin' style="color: #8F8F8F; line-height: 25px;"></label>
+
+                        <div class="">
+                            <input id='txtConfirmPIN' autocomplete="off" name="txtConfirmPIN" type="password"
+                                   class="required"
+                                   maxlength='8' data-bind="value:confirmPIN, valueUpdate: 'keypress'"/>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="form-buttons">
+                        <input id="btnPUKApply" class="btn-1 " type="submit" trans="apply"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="content" data-bind="visible:page()==pageState.PUK_LOCKED" style="padding-left: 20px;">
+            <div class="colorRed font18" trans="no_sim_card_message"></div>
+        </div>
+        <div id="divStation" data-bind="visible:false">
+            <div class="form-title" trans="station_info"></div>
+            <div class="content" style="padding-left: 20px;">
+                <div class="ko-grid-container marginnone">
+                    <table cellPadding="0" cellSpacing="0" id="tabStation" class="ko-grid colorHoverTable marginnone">
+                        <thead>
+                        <tr style="background: none;">
+                            <th trans="station_number"></th>
+                            <th trans="host_name"></th>
+                            <th trans="mac_address"></th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="foreach:deviceInfo">
+                        <tr data-bind="css:{odd:$index()%2==1, even:$index()%2==0}">
+                            <td data-bind="text:hostName==''?'&nbsp;':$index()+1"></td>
+                            <td data-bind="text:hostName"></td>
+                            <td data-bind="text:macAddress"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-note">
+                <div class="notes-title">&nbsp;</div>
+                <ul class="notes-content">
+                    <li trans="home_note"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

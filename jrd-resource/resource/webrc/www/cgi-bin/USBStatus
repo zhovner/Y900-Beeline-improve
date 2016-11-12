@@ -1,0 +1,23 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+
+USBMODE=$(cat /usb_conf/*)
+
+RNDIS="0196func5=101960196"
+CDC="0192func5=101920192"
+
+
+if [ "$USBMODE" = "$RNDIS" ]; then
+    echo '{"RNDIS": "enabled"}'
+    exit 0
+fi
+
+if [ "$USBMODE" = "$CDC" ]; then
+    echo '{"CDC": "enabled"}'
+    exit 0
+fi
+
+
+echo '{"error": "something wrong"}'
+exit 0

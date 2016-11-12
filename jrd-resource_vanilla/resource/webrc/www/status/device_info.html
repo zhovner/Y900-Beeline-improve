@@ -1,0 +1,182 @@
+<div class="form-body">
+    <div class="form-title" id = "device_main">
+        <ul class="nav nav-pills">
+            <li class="dropdown">
+                <button data-toggle="dropdown" class="dropdown-toggle btn">
+                    <span id="currentStatus" trans = 'subsection_menu'></span><b class="caret"></b>
+                </button> <!--data-bind="text:currentText,attr:{trans:currentText2}"-->
+                <ul class="dropdown-menu">
+                    <li><a data-bind="click:function(){showConnectModeItem('connect')}"><span trans= 'connection'></span><em class="menu_current" id = "connect_menu_current" trans= 'current_menu_str'></em></a></li>
+                    <li><a data-bind="click:function(){showConnectModeItem('modem')}"><span trans= "mod_sim"></span><em class="menu_current" id = "modem_menu_current" trans= 'current_menu_str' style="display:none"></em></a></li>
+        </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div id="connectDiv" class="content" style="display: none" >
+        <div class="form-title" trans='connection' style="padding-left: 20px;"></div>
+        <h4 style="padding-left: 40px; font-family: officinaserifcbold;font-size:16px;" trans="Network_Connection">Network connection</h4>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="signal_strength_label" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: signal" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="network_provider" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: networkOperator" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="net_priority" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label id="selectedType" class="span7" data-bind="text: selectedType" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="sim_serial_number" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: simSerialNumber" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <h4 style="padding-left: 40px; padding-top: 10px; font-family: officinaserifcbold;font-size:16px;" trans="connection_status">Data connection status</h4>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="Data_connection" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: pppStatus" id="connectStatus" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="network_mode" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: selectMode" id="selectMode" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="profile" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: selectedProfile" id="profileName" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv4WanIpAddr">
+            <label class="span5 side-right" trans="apn_ipv4_apn2" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: apn" id="apn" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid"  data-bind="visible: showIpv6WanIpAddr">
+            <label class="span5 side-right" trans="apn_ipv6_apn2" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: apnV6" id="apnV6" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" style="display: none">
+            <label class="span5 side-right" trans="imei" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: imei" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" style="display: none">
+            <label class="span5 side-right" trans="imsi" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: imsi" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div data-bind="visible: false">
+            <div data-bind="visible: !showMssid()">
+                <div class="row-fluid modify_link">
+                    <label class="span5 side-right" trans="network_name" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <span class="span7" style="line-height: 20px !important; min-height: 20px !important;">
+                        <span data-bind="text: ssid"></span>
+                        <a href="#wifi_basic" trans="modify"></a>
+                    </span>
+                </div>
+                <div class="row-fluid">
+                    <label class="span5 side-right" trans="max_access_num" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <label class="span7" data-bind="text: max_access_num" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                </div>
+            </div>
+            <div data-bind="visible: showMssid()">
+                <div class="row-fluid modify_link">
+                    <label class="span5 side-right" trans="network_name_ssid1" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <span class="span7"  style="line-height: 20px !important; min-height: 20px !important;">
+                        <span data-bind="text: ssid"></span>
+                        <a href="#wifi_basic" trans="modify"></a>
+                    </span>
+                </div>
+                <div class="row-fluid">
+                    <label class="span5 side-right" trans="max_access_num_ssid1" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <label class="span7" data-bind="text: max_access_num" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                </div>
+                <div class="row-fluid">
+                    <label class="span5 side-right" trans="network_name_ssid2" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <label class="span7"  data-bind="text: m_ssid" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                </div>
+                <div class="row-fluid">
+                    <label class="span5 side-right" trans="max_access_num_ssid2" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                    <label class="span7" data-bind="text: m_max_access_num" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                </div>
+            </div>
+            <div class="row-fluid modify_link">
+                <label class="span5 side-right" trans="wifi_range" style="line-height: 20px !important; min-height: 20px !important;"></label>
+                <span class="span7"  style="line-height: 20px !important; min-height: 20px !important;">
+                    <span data-bind="attr:{trans: wifiRange}"></span>
+                    <a href="#sleep_mode" trans="modify"></a>
+                </span>
+            </div>
+        </div>
+        <div class="row-fluid" style="display: none">
+            <label class="span5 side-right" trans="lan_domain" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: lanDomain" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="ip_address" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: ipAddress" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: false">
+            <label class="span5 side-right" trans="mac_address" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: macAddress" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv4WanIpAddr">
+            <label class="span5 side-right" trans="wan_ip_address" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: wanIpAddress" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv6WanIpAddr">
+            <label class="span5 side-right" trans="ipv6_wan_ip_address" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: ipv6WanIpAddress" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv4WanIpAddr">
+            <label class="span5 side-right" trans="dns_PriAddrV4" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: dnsPriAddrV4" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv4WanIpAddr">
+            <label class="span5 side-right" trans="dns_SecAddrV4" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: dnsSecAddrV4" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv6WanIpAddr">
+            <label class="span5 side-right" trans="dns_PriAddrV6" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: dnsPriAddrV6" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid" data-bind="visible: showIpv6WanIpAddr">
+            <label class="span5 side-right" trans="dns_SecAddrV6" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: dnsSecAddrV6" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+    </div>
+    <div id="modemSIM" class="content" style="display: none">
+        <div class="form-title" trans='mod_sim' style="padding-left: 20px;"></div>
+        <h4 style="padding-left: 40px; font-family: officinaserifcbold;font-size:16px;" trans="sim_card_status"></h4>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="service_prv_name" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: networkOperatorSPN" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="sms_of_sim" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" id="simCap" data-bind="text: capabilitySMSForSIM" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="contacts_of_sim" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: capabilityPbmForSIM" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+
+        <h4 style="padding-left: 40px; padding-top: 10px; font-family: officinaserifcbold;font-size:16px;" trans="modem_diag">Data connection status</h4>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="imei" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: imei" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="modem" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: modelText" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="software_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: sw_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="firmware_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: fw_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+        <div class="row-fluid">
+            <label class="span5 side-right" trans="hardware_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+            <label class="span7" data-bind="text: hw_version" style="line-height: 20px !important; min-height: 20px !important;"></label>
+        </div>
+    </div>
+</div>

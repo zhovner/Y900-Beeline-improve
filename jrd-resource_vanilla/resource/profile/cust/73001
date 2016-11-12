@@ -1,0 +1,6 @@
+name:BAM Entel PCS
+apn:imovil.entelpcs.cl
+dial:*99#
+protocol:2
+user:entelpcs
+psw:entelpcs

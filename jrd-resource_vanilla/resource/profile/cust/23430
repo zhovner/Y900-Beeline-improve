@@ -1,0 +1,6 @@
+protocol:1
+name:Internet
+apn:everywhere
+user:eesecure
+psw:secure
+dial:*99#

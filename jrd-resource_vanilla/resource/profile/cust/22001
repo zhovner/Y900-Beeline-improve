@@ -1,0 +1,6 @@
+name:Telenor NET
+apn:net
+protocol:3
+user:telenor
+psw:gprs
+dial:*99#

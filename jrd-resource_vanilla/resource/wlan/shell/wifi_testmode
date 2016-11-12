@@ -1,0 +1,8 @@
+killall hostapd
+/etc/init.d/wlan stop
+#echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/unbind
+sleep 1
+#echo msm_hsic_host > /sys/bus/platform/drivers/msm_hsic_host/bind
+/etc/init.d/wlan start_ftm
+sleep 1
+ftmdaemon -n -dd  

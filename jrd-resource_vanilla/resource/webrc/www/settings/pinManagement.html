@@ -1,0 +1,657 @@
+<div id="pinMgtPage" class="jsTemplate">
+	<div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div> 
+    <div class="item-content" id="pinMgt-wrap">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_pinCodeSettings}</a></h3>
+         <div class="scroll-pane jspScrollable">
+        <div class="settings-con">
+            <div id = "hasSimcard">
+                <h4>${ids_sim_pinManagement}</h4>
+                <div id="pinOperate">              
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label class="text">${ids_sim_pinCodeOperation:}</label>
+                            <select id="selPinOpera"  name="selPinOpera"class="select">
+                        		<option value="0">${ids_validate}</option>
+    							<option value="1">${ids_enable}</option>
+    							<option value="2">${ids_disable}</option>
+    							<option value="3">${ids_modify}</option>
+                            </select>
+                        </li>
+                    </ul>
+                    <!--Init PIn-->
+                    <div id="initPin" style="display:none;">
+                        <ul class="ipt-wrap">
+                            <li>
+                                <label class="text">${ids_sim_pinCode:}</label>
+                                <input type="password" name="pinInit" id="iptPinInit" value="" maxlength="8" class="ipt">
+                            </li>
+                            <li>
+                                <label class="text">${ids_sim_remainTime:}</label>
+                                <span id="lblInitTime" class="remainPinTime"></span>
+                            </li>
+                        </ul>
+                        <p class="alert alert-error error hidden">${ids_sim_pinError}</p>
+                        <div class="btn-wrap">
+                            <!-- <button class="btnNormal btnSubmit" id="btnInitApply" name="initPin">${ids_btn_apply}</button>
+                            <button class="btnNormal" id="btnInitCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+                            <input type="button" id="btnInitApply" class="btnNormal" value="${ids_btn_apply}" />
+                            <input type="button" name="btnCancel" id="btnInitCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                        </div>
+                    </div>
+                    <!--disable/enable PIN-->
+                    <div id="changePinStatus" style="display:none;">
+                        <ul class="ipt-wrap">
+                            <li>
+                                <label class="text">${ids_sim_pinCode:}</label>
+                                <input type="password" name="pinCode" id="iptCurrPin" maxLength="8" value="" class="iptText">
+                            </li>
+                            <li>
+                                <label class="text">${ids_sim_remainTime:}</label>
+                                <span id="lblPinTime" class="remainPinTime"></span>
+                            </li>
+                        </ul>
+                        <p class="alert alert-error error hidden">${ids_sim_pinError}</p>
+                        <div class="btn-wrap">
+                            <!-- <button class="btnNormal btnSubmit" id="btnPinStateApply" name="pinApply">${ids_btn_apply}</button>
+                            <button class="btnNormal" id="btnPinCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+
+                            <input type="button" id="btnPinStateApply" class="btnNormal" value="${ids_btn_apply}" />
+                            <input type="button" name="btnCancel" id="btnPinCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                        </div>
+                    </div>
+                    <!--Modify PIN-->
+                    <div id="changePinCode" style="display:none;">
+                        <ul class="ipt-wrap">
+                            <li>
+                                <label class="text">${ids_sim_pinCode:}</label>
+                                <input type="password" name="oldpin" id="iptOldPin" maxLength="8" value="" class="iptText">
+                            </li>
+                            <li>
+                                <label class="text">${ids_sim_newPinCode:}</label>
+                                <input type="password" name="newpin" id="iptPinNew" maxLength="8" value="" class="iptText">
+                            </li>
+                            <li>
+                                <label class="text">${ids_sim_confirmPinCode:}</label>
+                                <input type="password" name="confirmPin" id="iptConfirmPin" maxLength="8" value="" class="iptText">
+                            </li>
+                            <li>
+                                <label class="text">${ids_sim_remainTime:}</label>
+                                <span id="lblChangeTime" class="remainPinTime"></span>
+                            </li>
+                        </ul>
+                        <p class="alert alert-error error hidden">${ids_sim_changePinError}</p>
+                        <div class="btn-wrap">
+                            <!-- <button class="btnNormal btnSubmit" id="btnModifyPinApply" name="ModifyPin">${ids_btn_apply}</button>
+                            <button class="btnNormal" id="btnChangeCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+
+                            <input type="button" id="btnModifyPinApply" class="btnNormal" value="${ids_btn_apply}" />
+                            <input type="button" name="btnCancel" id="btnChangeCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                        </div>
+                    </div>
+                </div>
+                <!--PUK-->
+                <div id="unlockPuk" style="display:none;">
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label class="text">${ids_sim_pukCode:}</label>
+                            <input type="password" name="pukCode" maxLength="8" value="" id="iptPukCode" class="iptText">
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_newPinCode:}</label>
+                            <input type="password" name="pukNew" maxLength="8" value="" id="iptNewPin" class="iptText">
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_confirmPinCode:}</label>
+                            <input type="password" name="pukVerify" maxLength="8" id="iptVerifyPin" class="iptText">
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_remainTime:}</label>
+                            <span id="lblPukTime" class="remainPukTime"></span>
+                        </li>
+                    </ul>
+                    <p class="alert alert-error error hidden">${ids_sim_pukError}</p>
+                    <div class="btn-wrap">
+                        <!-- <button class="btnNormal btnSubmit" id="btnPukApply" name="pukApply">${ids_btn_apply}</button>
+                        <button class="btnNormal" id="btnPukCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+
+                        <input type="button" id="btnPukApply" class="btnNormal" value="${ids_btn_apply}" />
+                        <input type="button" name="btnCancel" id="btnPukCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                    </div>
+                </div>
+                <!--simlock-->
+                <div id="unlockSimlock" style="display:none;">  
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label class="text" id="lblSimLock"></label>
+                            <input type="password" name="simLock" id="iptSimLock" value="" class="iptText" maxLength="10">
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_remainTime:}</label>
+                            <span id="spnSimLockTime" class="simlockTime"></span>
+                        </li>
+                    </ul>
+                    <p class="alert alert-error error hidden">${ids_sim_simlockError}</p>
+                    <div class="btn-wrap">
+                        <!-- <button class="btnNormal" id="btnSimlockApply" name="SimlockApply">${ids_btn_apply}</button>
+                        <button class="btnNormal" id="btnSimlockCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+
+                        <input type="button" id="btnSimlockApply" class="btnNormal" value="${ids_btn_apply}" />
+                        <input type="button" name="btnCancel" id="btnSimlockCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                    </div>
+                </div>
+                <!--autoPin-->
+                <div id="autoPin">
+                    <h4>${ids_sim_autoPin}</h4>
+                    <ul class="ipt-wrap">
+                        <li>
+                            <label class="text">${ids_sim_autoPinState}:</label>
+                            <p class="pinStatus"><span id="autoPinStatus"></span></p>
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_autoValidate:}</label>
+                            <label class="vertical"><input type="radio" value="1" id="rdoEnable" name="autoValidate"> ${ids_enable}</label>
+                            <label class="vertical"><input type="radio" value="0" id="rdoDisable" name="autoValidate"> ${ids_disable}</label>
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_pinCode:}</label>
+                            <input type="password" name="pinInit" id="iptAutoPinCode" value="" maxlength="8" class="ipt">
+                        </li>
+                        <li>
+                            <label class="text">${ids_sim_remainTime:}</label>
+                            <span id="lblInitTime" class="remainPinTime"></span>
+                        </li>
+                    </ul>
+                    <p class="autopinalert alert-error error autopin hidden">${ids_sim_autoPinError}</p>
+                    <div class="btn-wrap">
+                        <!-- <button class="btnNormal" id="btnAutoPinApply" name="AutoPinApply">${ids_btn_apply}</button>
+                        <button class="btnNormal" id="btnAutoPinCancel" name="btnCancel">${ids_btn_cancel}</button> -->
+
+                        <input type="button" id="btnAutoPinApply" class="btnNormal" value="${ids_btn_apply}" />
+                        <input type="button" name="btnCancel" id="btnAutoPinCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                    </div>
+                </div> <!-- autopin end-->             
+          </div> 
+          <div id="simCarderror" style="display:none;padding:50px; text-align:center"></div>        
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "pinManagement";
+
+var simInfo = SDK.SIM.GetSimStatus();
+var simCardState = simInfo.SIMState;
+var pinState = simInfo.PinState;
+var pinTime = simInfo.PinRemainingTimes;
+var pukTime =  simInfo.PukRemainingTimes;
+var simlockState = simInfo.SIMLockState;
+var simlockTime = simInfo.SIMLockRemainingTimes;
+
+var autoPinState = SDK.SIM.GetAutoEnterPinState();
+
+$(document).ready(function() {
+    initScroll($("article#settings"));    
+    initPage();
+   $("#selPinOpera").change(function(){
+		var $selValue = $("#selPinOpera").val();
+		if($selValue == 3){
+			$("#changePinCode").css("display","");
+			$("#changePinStatus").css("display","none");
+		}else {
+			$("#changePinCode").css("display","none");
+			$("#changePinStatus").css("display","")
+		}
+	})
+	
+	$("#btnInitApply").click(unlockPINEvent);
+	$("#btnPukApply").click(unlockPUKEvent);
+	$("#btnModifyPinApply").click(modifyPinEvent);
+	$("#btnPinStateApply").click(changePinStateEvent);
+	$("#btnSimlockApply").click(simLockEvent);
+	$("#btnAutoPinApply").click(autoPinEvent);
+	$("input[name='btnCancel']").click(cancelEvent);	
+	
+	$("input[name='autoValidate']").change(function(){
+		var state = $(this).val();
+		if(state == SIM_AUTO_PIN_DISABLE){
+			$("#rdoDisable").attr("checked",true);
+		} else {
+			$("#rdoEnable").attr("checked",true);
+	    }
+   })
+
+   var connectionStatus =SDK.Connection.GetConnectionState().ConnectionStatus;
+   if(connectionStatus != MACRO_PPP_DISCONNECTED){
+        $("#pinMgt-wrap input:visible,#pinMgt-wrap select:visible,#pinMgt-wrap button:visible").attr("disabled",true);
+        $("#pinMgt-wrap input[type='button']:visible").setBtnDisabled();
+   }
+});
+
+function showContent(id) {
+    $("#" + id).css("display", "");
+}
+
+function initPage() {
+    var $simCardState = $("#simCarderror");
+
+    var realState = getSimCardState(simCardState, pinState);
+
+    switch (realState) {
+        case "noCard":
+		    $("#hasSimcard").css("display","none");
+            showContent("simCarderror");
+            $simCardState.html(sys.getRes("ids_sim_noSimCard"));
+            break;
+        case "pinReq":
+		    $("option[value='1'],option[value='2'],option[value='3']").remove();
+            showContent("initPin");
+			initAutoPinState();
+            break;
+        case "pukReq":
+			$("#pinOperate").css("display","none");
+			$("#autoPin").css("display","none");
+            showContent("unlockPuk");
+            break;
+        case "normal":
+            switch (pinState) {
+                case MACRO_UIM_PIN_STATE_DISABLED:
+                    showContent("changePinStatus");
+					$("#autoPin").css("display","none");
+					$("option[value='0'],option[value='2'],option[value='3']").remove();
+                    break;
+                case MACRO_UIM_PIN_STATE_ENABLED_VERIFIED:
+                    showContent("changePinStatus");
+					$("option[value='0'],option[value='1']").remove();	
+					initAutoPinState();				
+                    break;
+                case MACRO_UIM_PIN_STATE_BLOCKED:
+				    $("#pinOperate").css("display","none");
+					$("#autoPin").css("display","none");
+                    showContent("unlockPuk");
+                    break;
+				case MACRO_UIM_PIN_STATE_PERMANENTLY_BLOCKED:
+			        $("#hasSimcard").css("display","none");
+                    showContent("simCarderror");
+                    $simCardState.html(sys.getRes("ids_sim_invalidSimCard"));
+					break;
+                default:
+		          $("#hasSimcard").css("display","none");
+                  showContent("simCarderror");
+                  $simCardState.html(sys.getRes("ids_sim_pinNotAvailable"));
+                    break;
+            }
+            break;
+        case "simLock":
+			if(simInfo.SIMLockState == SIMLOCK_PERSO_RCK_FORBID){
+		    	$("#hasSimcard").css("display","none");
+            	showContent("simCarderror");
+            	$simCardState.html(sys.getRes("ids_sim_lockForbidden"));
+			}else{
+				$("#pinOperate").css("display","none");
+			    $("#autoPin").css("display","none");
+                showContent("unlockSimlock");
+				$("#lblSimLock").html(simlock_state_str(simlockState));
+			}			
+            $("#spnSimLockTime").html(simlockTime);
+            break;
+		case "simIniting":
+			$("#hasSimcard").css("display","none");
+            showContent("simCarderror");
+            $simCardState.html(sys.getRes("ids_sim_initializing"));
+			initSimCard(function(){
+	       		page.reloadMain();	    
+	        });
+		     break;
+        case "invalid":
+		    $("#hasSimcard").css("display","none");
+            showContent("simCarderror");
+            $simCardState.html(sys.getRes("ids_sim_invalidSimCard"));
+            break;
+        default:
+		    $("#hasSimcard").css("display","none");
+            showContent("simCarderror");
+            $simCardState.html(sys.getRes("ids_sim_noSimCard"));
+            break;
+    }
+    $(".remainPinTime").html(pinTime);
+	$(".remainPukTime").html(pukTime);
+}
+
+function initAutoPinState()
+{		
+	if (SIM_AUTO_PIN_DISABLE == autoPinState)
+	{
+	     $("#rdoDisable").attr("checked",true);
+		 $("#autoPinStatus").html(sys.getRes("ids_sim_pinDisable"));
+	}
+	else
+	{
+	  $("#rdoEnable").attr("checked",true);
+	   $("#autoPinStatus").html(sys.getRes("ids_sim_pinEnable"));
+	}	
+}
+
+function cancelEvent(){
+	//$("input[type='password']").val("");
+	 page.reloadMain();	
+}
+
+(function ($) {
+    $.fn.extend({
+        pinShowAlert:function(msg){
+            var ruleMsg = msg!=null?sys.getRes(msg):"";
+            return this.each(function () {
+                var $this = $(this);
+                $('p.alert').html(ruleMsg).removeClass("hidden");
+                $this.first().select();
+                $this.val("").off().on("click keypress",function(event){
+                        $('p.alert').html("").addClass("hidden");
+                })  
+            });
+        }
+    });
+})(jQuery);
+
+
+	/*------------------  PIN unlock ---------------------*/
+	
+function unlockPINEvent() {
+
+	var $iptPinCode = $("#iptPinInit");
+    var iptPinCode = $.trim($iptPinCode.val());
+    
+	if (!validatePin(iptPinCode)) {
+		$('p.alert').html(sys.getRes("ids_sim_pinRule")).removeClass("hidden");
+	    $("#iptPinInit").on("focusin",function(event){
+		    $('p.alert').html("").addClass("hidden");
+		 })
+        return false;
+    }
+	
+	var result = SDK.SIM.UnlockPin(iptPinCode);
+	
+	if(result == SIM_UNLOCK_PIN_SUCCESS){
+		sys.alert("ids_success",function(){
+		   startLoading();
+	       initSimCard(function(){
+	       		stopLoading();
+	       		page.reloadMain();
+	    
+	       });
+		}) ;
+	
+	}else if(result == SIM_UNLOCK_PIN_FAILED){
+	 	simInfo = SDK.SIM.GetSimStatus();
+
+	    if (simInfo.PinState == MACRO_UIM_PIN_STATE_BLOCKED) {
+	    	stopLoading();
+	        page.reloadMain();
+
+	    } else {
+	        $("#iptPinInit").val("");
+			$(".remainPinTime").html(simInfo.PinRemainingTimes);
+		    $('p.alert').html(sys.getRes("ids_fail")).removeClass("hidden");
+	        $("#iptPinInit").on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+	   }
+	} else {
+			$('p.alert').html(sys.getRes("ids_sim_pinRule")).removeClass("hidden");
+	        $("#iptPinInit").on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+	       
+		   return false;
+	}
+}
+	
+	/*---------------- PIN Code Enable or Disable Change  -----------*/
+	
+function changePinStateEvent(){
+	var $currPinCode = $("#iptCurrPin");
+	var currPinCode = $.trim($currPinCode.val());
+	
+	if (false == validatePin(currPinCode)){
+	    $currPinCode.pinShowAlert("ids_sim_pinRule");
+		return false;
+	}
+	
+	var operType = pinState == MACRO_UIM_PIN_STATE_ENABLED_VERIFIED?0:1;
+	
+	var result = SDK.SIM.ChangePinState(operType, currPinCode);
+	
+	if(result == SIM_CHANGE_PIN_STATE_SUCCESS){
+		sys.alert("ids_success",function(){
+			page.reloadMain();
+		});
+	}else{
+        sys.alert("ids_fail",function(){
+            simInfo = SDK.SIM.GetSimStatus();
+            if (simInfo.PinState == MACRO_UIM_PIN_STATE_BLOCKED) {
+                page.reloadMain();
+            }else {
+                $(".remainPinTime").html(simInfo.PinRemainingTimes);
+                $currPinCode.pinShowAlert();
+            }
+        });
+        
+    }
+}
+	
+	/* --------------- Modify Pin Code ----------------*/
+	
+function modifyPinEvent(){
+	var $oldPinCode = $("#iptOldPin");
+	var oldPinCodeVal = $.trim($oldPinCode.val());
+	var $newModPinCode = $("#iptPinNew");
+	var newModPinCodeVal = $.trim($newModPinCode.val());
+	var $comfirmModPin = $("#iptConfirmPin");
+	var comfirmModPinVal = $.trim($comfirmModPin.val());
+
+    if(!validatePin(oldPinCodeVal)){
+        $oldPinCode.pinShowAlert("ids_sim_pinRule");
+        return false;
+    }
+
+    if(!validatePin(newModPinCodeVal)){
+        $newModPinCode.pinShowAlert("ids_sim_pinRule");
+        return false;
+    }
+	
+	if(newModPinCodeVal != comfirmModPinVal){
+        $comfirmModPin.pinShowAlert("ids_sim_pinConfirmed");
+		return false;
+	}
+		
+	var result = SDK.SIM.ChangePinCode(oldPinCodeVal, newModPinCodeVal);
+	
+	if(result == SIM_CHANGE_PIN_CODE_SUCCESS){
+		sys.alert("ids_success",function(){
+			page.reloadMain();
+		}) ;
+	}else{
+        simInfo = SDK.SIM.GetSimStatus();
+        if (simInfo.PinState == MACRO_UIM_PIN_STATE_BLOCKED) {
+            page.reloadMain();
+        }else { 
+            $(".remainPinTime").html(simInfo.PinRemainingTimes);
+            $("#iptOldPin,#iptPinNew,#iptConfirmPin").pinShowAlert("ids_fail");
+            $oldPinCode.select();
+        }
+    } 
+}
+
+function timeLoad(){
+    stopLoading()
+    page.reloadMain();
+}
+	
+	/*---------------- Unlock Sim Lock -------------*/
+function simLockEvent(){
+	var $simLockCode = $("#iptSimLock");
+	var simLockCodeValue = $.trim($simLockCode.val());
+		
+	if(false == validateSimlock(simLockCodeValue)){
+		$('p.alert').html(sys.getRes("ids_sim_lockCodeRule")).removeClass("hidden");
+	    $simLockCode.on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		})			
+		return false;
+	}
+	
+	var result = SDK.SIM.UnlockSimlock(simInfo.SIMLockState, simLockCodeValue);
+
+	if(result == SIM_UNLOCK_SIMLOCK_SUCCESS){
+		sys.alert("ids_success",function(){
+				startLoading();
+			    setTimeout("timeLoad()",3000);
+		});
+	}else{
+	      simInfo = SDK.SIM.GetSimStatus();
+
+	     if (simInfo.SIMLockState == SIMLOCK_PERSO_RCK_FORBID) {
+	        page.reloadMain();
+
+	    } else {
+	       	$simLockCode.val("");
+			$("#lblSimLock").html(simlock_state_str(simInfo.SIMLockState));			
+            $("#spnSimLockTime").html(simInfo.SIMLockRemainingTimes);			
+		    $('p.alert').html(sys.getRes("ids_fail")).removeClass("hidden");
+	        $simLockCode.on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+	   }		
+	}	
+}
+	
+function unlockPUKEvent() {
+	var $iptPukCode = $("#iptPukCode");
+    var $iptNewPin = $("#iptNewPin");;
+    var $iptConfirmPin = $("#iptVerifyPin");
+    var iptPukCode = $.trim($iptPukCode.val());
+    var iptNewPin = $.trim($iptNewPin.val());
+    var iptConfirmPin = $.trim($iptConfirmPin.val());
+	
+    if (!validatePuk(iptPukCode)) {
+		$('p.alert').html(sys.getRes("ids_sim_pukRule")).removeClass("hidden");
+	    $iptPukCode.on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		})
+    	return false;
+    }
+    if (!validatePin(iptNewPin) || !validatePin(iptConfirmPin)){
+			$('p.alert').html(sys.getRes("ids_sim_pinRule")).removeClass("hidden");
+	        $("#iptNewPin,#iptVerifyPin").on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+    	   return false;
+    }
+    if (iptNewPin !== iptConfirmPin) {
+		    $('p.alert').html(sys.getRes("ids_sim_pinConfirmed")).removeClass("hidden");
+	        $("#iptNewPin,#iptVerifyPin").on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+            return false;
+     }
+	 
+	 var result = SDK.SIM.UnlockPuk(iptPukCode, iptNewPin);
+
+	 if (result == SIM_UNLOCK_PUK_SUCCESS) {
+     	sys.alert("ids_success",function(){
+				startLoading();
+	            initSimCard(function() {	        
+	    		  stopLoading();
+	        	  page.reloadMain();
+	            });	
+		}) ;
+	            
+	 } else if(result == SIM_UNLOCK_PUK_FORMAT_ERROR) {
+		$('p.alert').html(sys.getRes("ids_sim_pukRule")).removeClass("hidden");
+	    $iptPukCode.on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		})
+    	return false;
+	 }else{
+	      simInfo = SDK.SIM.GetSimStatus();
+
+	     if ((simInfo.PinState == MACRO_UIM_PIN_STATE_PERMANENTLY_BLOCKED)||(simInfo.SIMState ==MACRO_UIM_STATE_PIN1_PERM_BLOCKED)) {
+	        page.reloadMain();
+
+	    } else {
+	       	$("#iptVerifyPin, #iptNewPin, #iptPukCode").val("");
+			$(".remainPukTime").html(simInfo.PukRemainingTimes);
+		    $('p.alert').html(sys.getRes("ids_fail")).removeClass("hidden");
+	        $iptPukCode.on("focusin",function(event){
+		    	$('p.alert').html("").addClass("hidden");
+		    })
+	   }	
+     }
+}
+	/*-------------------- pin auto validation ----------------------*/
+	
+function autoPinEvent(){
+	var $iptPinCode = $("#iptAutoPinCode");
+	var pinCodeValue = $.trim($iptPinCode.val());
+	var pinStateValue = $("input[name='autoValidate']:checked").val();
+	
+    if (!validatePin(pinCodeValue)){
+			$('p.autopinalert').html(sys.getRes("ids_sim_pinRule")).removeClass("hidden");
+	        $("#iptAutoPinCode").on("focusin",function(event){
+		    	$('p.autopinalert').html("").addClass("hidden");
+		    })
+    	return false;
+    }
+	
+	var a_state;
+	if(pinStateValue == "1"){
+	    a_state = 1;
+	}else{
+	    a_state = 0;
+	}
+			
+    var result = SDK.SIM.SetAutoEnterPinState(a_state,pinCodeValue);
+	
+	if(result == SIM_SET_AUTOVAL_PIN_SUCCESS){
+		sys.alert("ids_success",function(){
+			if(pinState == MACRO_UIM_PIN_STATE_ENABLED_NOT_VERIFIED){
+     			startLoading();
+	    		initSimCard(function() {	        
+	    			stopLoading();
+	        		page.reloadMain();
+	    		});	
+			}else{
+		   		page.reloadMain();
+			}				
+		}) ;	
+	
+	}else if (result == SIM_SET_AUTOVAL_PIN_FAILED){
+	     simInfo = SDK.SIM.GetSimStatus();
+
+	     if ((simInfo.PinState == MACRO_UIM_PIN_STATE_BLOCKED)||(simInfo.SIMState == MACRO_UIM_STATE_PUK1_OR_PUK_REQ)) {
+	        page.reloadMain();
+
+	     } else {
+	       	$("#iptAutoPinCode").val("");
+			$(".remainPinTime").html(simInfo.PinRemainingTimes);
+		    $('p.autopinalert').html(sys.getRes("ids_fail")).removeClass("hidden");
+	        $("#iptAutoPinCode").on("focusin",function(event){
+		    	$('p.autopinalert').html("").addClass("hidden");
+		    })
+	    }
+	
+	}else{
+			$('p.alert').html(sys.getRes("ids_sim_pinRule")).removeClass("hidden");
+	        $("#iptAutoPinCode").on("focusin",function(event){
+		    	$('p.autopinalert').html("").addClass("hidden");
+		    })
+    	   return false;
+	}
+
+}
+</script>

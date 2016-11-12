@@ -1,0 +1,151 @@
+<form id="apn_setting_form">
+	<div class="form-body">
+       <div class="form-title" trans="apn_setting"></div>
+        <div style="position: relative; margin-bottom: 20px;">            
+            <div id="add_new_div" style="width: 60px; position: absolute; right: 10px; margin-top: -60px;">
+                <button id="add_new" style="border: none; background: none; font-size: 12px;" class="width60"
+                        data-bind="click: addAct,visible: showFlag() == false && autoApnChecked() == false && disableProfile() == false && hasCapacity() == true">
+                    <div class="btn-new"></div>
+                    <span trans='add_new'></span>
+                </button>
+            </div>
+        </div>
+		<div class="content">
+			<div class="row-fluid" style="display: none">
+				<label class="span4 side-right" trans="apn_currentApn"></label>
+				<label class="span8" data-bind="text: defApn"></label>
+			</div>
+			<div class="row-fluid" style="display: none">
+				<label class="span4 side-right" trans="apn_mode"></label>
+                <div class="span8">
+					<input type="radio" name="apnMode" id="apnMode_auto" data-bind="checked: apnMode, event: {click: apnModeChangeHandler}, disable: autoApnChecked() == false && disableProfile() == true" value="auto"/>
+					<label for="apnMode_auto" trans="apn_auto_apn"></label>
+					<input type="radio" name="apnMode" id="apnMode_manual" data-bind="checked: apnMode, event: {click: apnModeChangeHandler}, disable: autoApnChecked() == false && disableProfile() == true" value="manual"/>
+					<label for="apnMode_manual" trans="apn_manual_apn"></label>
+                </div>
+			</div>
+            <div class="row-fluid">
+                <label class="span2 side-right" for="profile" trans="apn_profile" data-bind="visible: showFlag() == false"></label>
+                <div class="span10">
+                    <select name="autoProfile" id="autoProfile" data-bind="options: autoProfiles, value: selectedAutoProfile, optionsText: 'text', optionsValue: 'value', disable: disableProfile, event:{ change: autoProfileChangeHandler}, visible: apnMode() == 'auto'"></select>
+                    <select name="profile" id="profile" data-bind="options: profiles, value: selectedProfile, optionsText: 'text', optionsValue: 'value', disable: disableProfile, visible: apnMode() == 'manual' && showFlag() == false"></select>&nbsp;
+                  <!--  <input type="button" data-bind="click: addAct, visible: showFlag() == false && autoApnChecked() == false && disableProfile() == false && hasCapacity() == true" class="btn-1 " trans="add_new"/>-->
+
+                    <!-- <input type="button" data-bind="click: cancelAddAct, visible: autoApnChecked() == false && disableProfile() == true && hasCapacity() == true" class="btn-1 " trans="cancel"/>-->
+                    <input type="button" data-bind="click: deleteAct,visible:showFlag() == false" class="btn-1 btn-primary" trans="delete" style="float: right; margin-top: 5px;"/>
+                    <input type="button" data-bind="click: profileChangeHandler, visible:showFlag() == false " class="btn-1 " trans="edit" style="float: right; margin-top: 5px;"/>
+                </div>
+            </div>
+			<div id="apn_form_container" data-bind="visible: showFlag() == true">
+
+				<div class="row-fluid" data-bind="visible: supportIPv6()">
+					<label class="span4 side-right" for="apn_pdp_type" trans="apn_pdp_type"></label>
+	                <div class="span8">
+	                    <select name="apn_pdp_type" id="apn_pdp_type" data-bind="options: pdpTypes, value: selectedPdpType, optionsText: 'text', optionsValue: 'value', disable: checkInputDisable"></select>&nbsp;
+	                </div>
+				</div>
+				<div class="row-fluid">
+					<label class="span4 side-right" for="profile_name" trans="apn_profile_name"></label>
+	                <div class="span8">
+	                    <input type="text" name="profile_name" data-bind="value: profileName, disable: checkInputDisable" id="profile_name" class="required" maxlength="15"/>
+	                </div>
+				</div>
+				<div data-bind="">
+					<div class="row-fluid">
+						<label class="span4 side-right" for="apn_ipv4_apn" data-bind="attr:{trans: transApn}"></label>
+		                <div class="span8">
+							<input type="text" name="apn_ipv4_apn" data-bind="value: apn, disable: checkInputDisable" id="apn_ipv4_apn" class="required" maxlength="64"/>
+		                </div>
+					</div>
+					<div data-bind="visible: selectedPdpType() == 'IP'||selectedPdpType() == 'IPv4v6'">
+						<div class="row-fluid" data-bind="visible: showApnDns()">
+							<label class="span4 side-right" data-bind="attr:{trans: transDnsMode}"></label>
+			                <div class="span8">
+			                    <input type="radio" name="apn_auto_dns_ipv4" id="apn_auto_dns_ipv4" data-bind="checked: dnsMode, disable: checkInputDisable" value="auto"/>
+			                    <label for="apn_auto_dns_ipv4" trans="apn_auto_dns"></label>
+			                    <input type="radio" name="apn_manual_dns_ipv4" id="apn_manual_dns_ipv4" data-bind="checked: dnsMode, disable: checkInputDisable" value="manual"/>
+			                    <label for="apn_manual_dns_ipv4" trans="apn_manual_dns"></label>
+			                </div>
+						</div>
+						<div class="row-fluid" data-bind="visible: showDns() && showApnDns()">
+							<label class="span4 side-right" for="apn_dns1_ipv4" data-bind="attr:{trans: transDns1}"></label>
+			                <div class="span8">
+			                    <input type="text" name="apn_dns1_ipv4" data-bind="value: dns1, disable: checkInputDisable" id="apn_dns1_ipv4" class="required ipv4" maxlength="15"/>
+			                </div>
+						</div>
+						<div class="row-fluid" data-bind="visible: showDns() && showApnDns()">
+							<label class="span4 side-right" for="apn_dns2_ipv4" data-bind="attr:{trans: transDns2}"></label>
+			                <div class="span8">
+			                    <input type="text" name="apn_dns2_ipv4" data-bind="value: dns2, disable: checkInputDisable" id="apn_dns2_ipv4" class="ipv4" maxlength="15"/>
+			                </div>
+						</div>
+					</div>
+					<!--end-->
+					<div data-bind="visible: selectedPdpType() == 'IPv6'||selectedPdpType() == 'IPv4v6'">
+						<div class="row-fluid" data-bind="visible: showApnDns()">
+							<label class="span4 side-right" trans="apn_dns_mode_ipv6"></label>
+			                <div class="span8">
+			                    <input type="radio" name="dns_ipv6" id="apn_auto_dns_ipv6" data-bind="checked: dnsModeV6, disable: checkInputDisable" value="auto"/>
+			                    <label for="apn_auto_dns_ipv6" trans="apn_auto_dns"></label>
+			                    <input type="radio" name="dns_ipv6" id="apn_manual_dns_ipv6" data-bind="checked: dnsModeV6, disable: checkInputDisable" value="manual"/>
+			                    <label for="apn_manual_dns_ipv6" trans="apn_manual_dns"></label>
+			                </div>
+						</div><!--ipv6 APN mode-->
+						<div class="row-fluid" data-bind="visible: showDnsV6() && showApnDns()">
+							<label class="span4 side-right" for="apn_dns1_ipv6" trans="apn_dns1_ipv6"></label>
+			                <div class="span8">
+			                    <input type="text" name="apn_dns1_ipv6" id="apn_dns1_ipv6" data-bind="value: dns1V6, disable: checkInputDisable" class="required ipv6"/>
+			                </div>
+						</div>
+						<div class="row-fluid" data-bind="visible: showDnsV6() && showApnDns()">
+							<label class="span4 side-right" for="apn_dns2_ipv6" trans="apn_dns2_ipv6"></label>
+			                <div class="span8">
+			                    <input type="text" name="apn_dns2_ipv6" id="apn_dns2_ipv6" data-bind="value: dns2V6, disable: checkInputDisable" class="ipv6"/>
+			                </div>
+						</div>
+					</div>
+					<div class="row-fluid">
+						<label class="span4 side-right" for="apn_authentication_ipv4" data-bind="attr:{trans: transAuth}"></label>
+		                <div class="span8">
+		                    <select transid='none_trans'  name="apn_authentication_ipv4" id="apn_authentication_ipv4" data-bind="options: authModes, disable: checkInputDisable, value: selectedAuthentication, optionsText: transOption('none_trans'), optionsValue: 'value'"></select>
+		                </div>
+					</div>
+					<div class="row-fluid">
+						<label class="span4 side-right" for="apn_user_name_ipv4" data-bind="attr:{trans: transUserName}"></label>
+		                <div class="span8">
+							<input type="text" name="apn_user_name_ipv4" data-bind="value: username, disable: checkInputDisable" id="apn_user_name_ipv4" maxlength="64"/>
+		                </div>
+					</div>
+					<div class="row-fluid">
+						<label class="span4 side-right" for="apn_password_ipv4" data-bind="attr:{trans: transPassword}"></label>
+		                <div class="span8">
+							<input type="password" name="apn_password_ipv4" data-bind="value: password, disable: checkInputDisable" id="apn_password_ipv4" maxlength="64"/>
+		                </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-buttons" style="margin-right: 0px;">
+			<input type="button" data-bind="click: setDefaultAct, visible: showFlag() == false" class="btn-1 btn-primary" trans="set_default"/>
+			<input type="submit" data-bind="visible: showAutoApnDetail() && showFlag() == true" class="btn-1 btn-primary" trans="apply"/>
+            <input type="button" data-bind="click: cancelAddAct, visible: autoApnChecked() == false && showFlag() == true" class="btn-1 " trans="cancel"/>
+
+		</div>
+		<div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+        		<li trans="apn_note_whole_page"></li>
+        		<li trans="apn_note_mode"></li>
+        		<li trans="apn_note_profile"></li>
+        		<li trans="apn_note_pdp_type" data-bind="visible: supportIPv6()"></li>
+        		<li trans="apn_note_profile_name"></li>
+        		<li trans="apn_note_apn"></li>
+        		<li trans="apn_note_dns_mode" data-bind="visible: showApnDns()"></li>
+        		<li trans="apn_note_authentication"></li>
+        		<li trans="apn_note_username"></li>
+        		<li trans="apn_note_password"></li>
+        		<li trans="apn_note_set_default"></li>
+        	</ul>
+		</div>
+	</div>
+</form>

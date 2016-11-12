@@ -1,0 +1,4 @@
+name:T-mobile WAP AT
+apn:gprsinternet
+protocol:1
+dial:*99#

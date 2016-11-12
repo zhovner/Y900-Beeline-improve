@@ -1,0 +1,117 @@
+<script> currentMenu=5; </script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/sharing.js"></script>
+<script>
+pageName = "sharingSD";
+var SD_ROOT_TOTAL_PAGE = 1;
+var SD_ROOT_CURRENT_PAGE = 1;
+var SD_ROOT_PATH = "/";
+$(function(){ 
+    uiShowFileList(SD_ROOT_PATH);
+});
+
+function uiShowFileList(path){
+	var $fileListBox = $("#file-list-box");
+	$fileListBox.html("");
+	var sdRootFileList = SDK.Sharing.GetSDFileList(path,1);
+	SD_ROOT_TOTAL_PAGE = sdRootFileList.TotalPage;
+    SD_ROOT_PATH = path;
+    $("#current-folder-path").html(substringFileName(SD_ROOT_PATH,20)).attr("title",SD_ROOT_PATH);
+    var htmlStr = uiMakeFileListStr(sdRootFileList);
+    $fileListBox.html(htmlStr);
+    if(SD_ROOT_TOTAL_PAGE>SD_ROOT_CURRENT_PAGE){
+         uiGetMoreFileList();
+    }
+    $('.scroll-pane').jScrollPane();
+    $(".sd_back").css("display",SD_ROOT_PATH=="/"?"none":"").off().on("click",function(){
+        backUpFolder(path);
+    })
+}
+
+function backUpFolder(currentPath){
+    var currentPathArr =[];
+    var upFolder = "/";
+    if(currentPath!="/"){
+        currentPathArr = SD_ROOT_PATH.split('/').slice(1,-2);
+        if(currentPathArr.length>=1){
+            upFolder ="/"+currentPathArr.join("/")+"/"
+        }        
+    }
+    uiShowFileList(upFolder);
+}
+
+function uiGetMoreFileList(){
+	var $fileListBox = $("#file-list-box");
+	var sdRootFileList = SDK.Sharing.GetSDFileList(SD_ROOT_PATH,SD_ROOT_CURRENT_PAGE+1);
+    var htmlStr = uiMakeFileListStr(sdRootFileList);
+    $fileListBox.append(htmlStr);
+    if(SD_ROOT_TOTAL_PAGE>SD_ROOT_CURRENT_PAGE){
+         uiGetMoreFileList();
+    }
+    
+}
+
+function uiMakeFileListStr(sdRootFileList){
+    var fileList = sdRootFileList.FileList;
+    SD_ROOT_CURRENT_PAGE = sdRootFileList.Page;
+    var htmlStr = '';
+    if($.isArray(fileList) && fileList.length>0){
+        htmlStr += "<ul>";
+        $.each(fileList,function(i,n){
+            if(n.FileType == SD_FILE_TYPE_FOLDER){
+                htmlStr += uiGetFolderHtmlStr(n);
+            }else{
+                htmlStr += uiGetFileHtmlStr(n);
+            }
+        })
+        htmlStr += "</ul>";
+    }
+    return htmlStr;
+}
+
+function uiGetFolderHtmlStr(obj){
+    var folderPath = SD_ROOT_PATH+''+obj.FileName+"/";
+	var str = '<li class="file-item folder">';
+		str += '<h4 class="file-name" title="'+obj.FileName+'"><a class="folder-link" href="javascript:uiShowFileList(\''+folderPath+'\')">'+substringFileName(obj.FileName)+'</a></h4>';
+		str += '<span class="file-time">'+obj.CreateTime+'</span>';
+		str +='</li>';
+	return str;
+}
+
+function uiGetFileHtmlStr(obj){
+	var str = '<li class="file-item file">';
+		str += '<h4 class="file-name" title="'+obj.FileName+'">'+substringFileName(obj.FileName)+'</h4>';
+		str += '<span class="file-time">'+obj.CreateTime+'</span>';
+		str += ' | <span class="file-size">'+sys.covertNum(obj.Size*1024)+'</span>';
+		str +='</li>';
+	return str;
+}
+
+function substringFileName(fileName,len){
+    var subStringLen = 30;
+    if(len){
+        subStringLen = parseInt(len);
+    }
+    return fileName.length > subStringLen?fileName.substring(0,subStringLen)+"...":fileName;
+}
+
+</script>
+<style type="text/css">
+    .path-link:hover{
+        text-decoration: underline;
+    }
+    .item-content h3{line-height:40px; padding-top: 10px;height: 40px;overflow: hidden;}
+    .back-box {text-align: right;}
+</style>
+<div id="sharingSD" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_sharing}</h2>
+    </div>
+    <div class="item-content">
+         <h3><a href="#sharing/sharingSetting.html">${ids_sd_currentFolder:}</a><span id="current-folder-path"></span></h3>
+         <div class="back-box"><a href="javascript:void(0)" class="sd_back path-link"><b>${ids_back}</b></a></div>
+    </div>
+    <div class="scroll-pane jspScrollable" id="sd-file-list-wrap">
+        <div id="file-list-box"></div>
+    </div>
+</div>

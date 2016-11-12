@@ -1,0 +1,6 @@
+name:Germany E-Plus
+apn:internet.eplus.de
+protocol:3
+user:eplus
+psw:internet
+dial:*99***1#

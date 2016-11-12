@@ -1,0 +1,7 @@
+name:Sun Broadband Nomad
+apn:mbband
+protocol:0
+user:blank
+psw:blank
+dial:*99#
+

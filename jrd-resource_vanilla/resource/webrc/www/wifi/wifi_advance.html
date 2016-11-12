@@ -1,0 +1,52 @@
+<form id="wifi_advance_form">
+<div class="form-body">
+	<div class="form-title" trans="wifi_advance"></div>
+	<div class="content" style="padding-left: 20px;">
+        <div class="row-fluid">
+            <div class="span6">
+		<div class="row-fluid" data-bind="visible: hasWifiBand()" style="line-height: 25px;">
+			<label style="color: #8F8F8F; line-height: 25px;" class="" for="band_select" trans="network_band_selection"></label>
+            <div class="">
+                <select name="band_select" id="band_select" transid="bandSelect_unit" data-bind="options: bands, value: selectedBand, optionsText: transOption('bandSelect_unit'), optionsValue: 'value', event:{ change: bandChangeHandler}" required="true"></select>
+            </div>
+		</div>
+		<div class="row-fluid" style="line-height: 25px;">
+			<label class="" style="color: #8F8F8F; line-height: 25px;" for="mode" trans="network_mode"></label>
+            <div class="">
+                <select name="mode" transid="network_mode_select" id="mode" data-bind="options: modes, value: selectedMode, optionsText: transOption('network_mode_select'), optionsValue: 'value'" required="true" style="display:none"></select>
+				<select name="mode" transid="network_modes_band_select" id="modeFor5HZ" data-bind="options: modes, value: selectedMode, optionsText: transOption('network_modes_band_select'), optionsValue: 'value'" required="true" style="display:none"></select>
+            </div>
+		</div>
+            </div>
+            <div class="span6">
+		<div class="row-fluid" style="line-height: 25px;">
+			<label style="color: #8F8F8F; line-height: 25px;" class="" for="country" trans="country_region_code"></label>
+            <div class="">
+                <select name="country" id="country" data-bind="options: countries, value: selectedCountry, optionsText: 'text', optionsValue: 'value', event:{ change: countryChangeHandler}" style="width: 180px"></select>
+             </div>
+		</div>
+		<div class="row-fluid" style="line-height: 25px;">
+			<label style="color: #8F8F8F; line-height: 25px;" class="" for="channel" trans="frequency_channel"></label>
+            <div class="">
+                <select name="channel" id="channel" transid="frequency_channel" data-bind="options: channels, value: selectedChannel, optionsText: transOption('frequency_channel', true), optionsValue: 'value'" style="width: 180px"></select>
+            </div>
+		</div>
+            </div>
+        </div>
+	</div>
+	<div class="form-buttons">
+		<input type="submit" class="btn-1 " trans="apply"/>
+	</div>
+	<div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content">
+            <li trans="wifi_advanced_note_whole_page"></li>
+            <li trans="wifi_advanced_note_band_selection" data-bind="visible: hasWifiBand()"></li>
+            <li trans="wifi_advanced_note_network_mode"></li>
+            <li trans="wifi_advanced_note_country_code"></li>
+            <li trans="wifi_advanced_note_frequency"></li>
+            <li trans="wifi_advanced_note_apply"></li>
+         </ul>
+	</div>
+</div>
+</form>

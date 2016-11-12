@@ -1,0 +1,225 @@
+#! /bin/sh
+
+custom_info_file="/cache/backup_conf/custom_info"
+
+webs_file="/jrd-resource/resource/webs-cfg/webs.conf"
+temp_webs_file="/cache/backup_conf/temp/temp_webs.conf"
+
+webs_lan_file="/jrd-resource/resource/webs-cfg/webs_lan.conf"
+temp_webs_lan_file="/cache/backup_conf/temp/temp_webs_lan.conf"
+
+mobileap_cfg_file="/etc/mobileap_cfg.xml"
+temp_mobileap_cfg_file="/cache/backup_conf/temp/temp_mobileap_cfg.xml"
+
+ap_wlan0_file="/jrd-resource/resource/wlan/ap_wlan0.conf"
+temp_ap_wlan0_file="/cache/backup_conf/temp/temp_ap_wlan0.conf"
+
+ap_wlan1_file="/jrd-resource/resource/wlan/ap_wlan1.conf"
+temp_ap_wlan1_file="/cache/backup_conf/temp/temp_ap_wlan1.conf"
+
+ap_wlan0_5g_file="/jrd-resource/resource/wlan/ap_wlan0_5g.conf"
+temp_ap_wlan0_5g_file="/cache/backup_conf/temp/temp_ap_wlan0_5g.conf"
+
+ap_wlan1_5g_file="/jrd-resource/resource/wlan/ap_wlan1_5g.conf"
+temp_ap_wlan1_5g_file="/cache/backup_conf/temp/temp_ap_wlan1_5g.conf"
+
+hosts_file="/etc/hosts"
+temp_hosts_file="/cache/backup_conf/temp/temp_hosts"
+
+wlan1_hostapd_file="/etc/hostapd-wlan1.conf"
+temp_wlan1_hostapd_file="/cache/backup_conf/temp/temp_wlan1_hostapd.conf"
+
+hostapd_file="/etc/hostapd.conf"
+temp_hostapd_file="/cache/backup_conf/temp/temp_hostapd.conf"
+
+create_directory="/jrd-resource/resource/profile/create"
+temp_create_directory="/cache/backup_conf/temp/temp_create"
+
+usage_history_file="/jrd-resource/resource/statistics/UsageHistory.data"
+device_pushinfo_file="/jrd-resource/resource/statistics/DevicePushInfo.data"
+
+bak_ap_wlan0_file="/jrd-resource/resource/wlan/bak_ap_wlan0.conf"
+bak_ap_wlan1_file="/jrd-resource/resource/wlan/bak_ap_wlan1.conf"
+bak_wlan1_hostapd_file="/etc/bak_wlan1_hostapd.conf"
+bak_hostapd_file="/etc/bak_hostapd.conf"
+bak_mobileap_cfg_file="/etc/bak_mobileap_cfg.xml"
+bak_webs_file="/jrd-resource/resource/webs-cfg/bak_webs.conf"
+bak_webs_lan_file="/jrd-resource/resource/webs-cfg/bak_webs_lan.conf"
+bak_hosts_file="/jrd-resource/resource/hostname_bak/bak_hosts"
+webs_led_file="/jrd-resource/resource/webs-cfg/webs_led.conf"
+bak_webs_led_file="/jrd-resource/resource/webs-cfg/bak_webs_led.conf"
+
+#start add by zxb for sdshare restore to default setting when factory reset 2015-01-15 
+bak_sd_file="/usr/local/samba/lib/sd_back.conf"
+#end add by zxb for sdshare restore to default setting when factory reset 2015-01-15 
+
+active_sim_file="/usr/bin/active_sim"
+bak_active_sim_file="/jrd-resource/resource/jrdcfg/bak_active_sim"
+
+auto_pin_flag_file="/usr/bin/auto_pin_flag"
+bak_auto_pin_flag_file="/jrd-resource/resource/jrdcfg/bak_auto_pin_flag"
+
+if [ ! -d /cache/backup_conf ]; then
+	mkdir -p /cache/backup_conf
+fi
+
+if [ ! -d /cache/backup_conf/temp ]; then
+	mkdir -p /cache/backup_conf/temp
+fi
+
+case "$1" in
+  temp_backup)
+		if [ -f ${webs_file} ]; then
+			cp -f ${webs_file} ${temp_webs_file}
+		fi
+		if [ -f ${webs_lan_file} ]; then
+			cp -f ${webs_lan_file} ${temp_webs_lan_file}
+		fi
+		if [ -f ${mobileap_cfg_file} ]; then
+			cp -f ${mobileap_cfg_file} ${temp_mobileap_cfg_file}
+		fi
+		if [ -f ${ap_wlan0_file} ]; then
+			cp -f ${ap_wlan0_file} ${temp_ap_wlan0_file}
+		fi
+		if [ -f ${ap_wlan1_file} ]; then
+			cp -f ${ap_wlan1_file} ${temp_ap_wlan1_file}
+		fi
+		if [ -f ${ap_wlan0_5g_file} ]; then
+			cp -f ${ap_wlan0_5g_file} ${temp_ap_wlan0_5g_file}
+		fi
+		if [ -f ${ap_wlan1_5g_file} ]; then
+			cp -f ${ap_wlan1_5g_file} ${temp_ap_wlan1_5g_file}
+		fi
+		if [ -f ${hosts_file} ]; then
+			cp -f ${hosts_file} ${temp_hosts_file}
+		fi
+		
+		if [ -f ${wlan1_hostapd_file} ]; then
+			cp -f ${wlan1_hostapd_file} ${temp_wlan1_hostapd_file}
+		fi
+		
+		if [ -f ${hostapd_file} ]; then
+			cp -f ${hostapd_file} ${temp_hostapd_file}
+		fi
+		
+		if [ -d ${create_directory} ]; then
+		  if [ -d ${temp_create_directory} ]; then
+		    rm -rf ${temp_create_directory}
+		  fi
+			cp -rf ${create_directory} ${temp_create_directory}
+		fi
+		if [ ! -f /etc/update_flag ]; then
+		  touch /etc/update_flag
+		fi
+		;;
+		
+	temp_restore)
+		if [ -f ${temp_webs_file} ]; then
+			cp -f ${temp_webs_file} ${webs_file}
+		fi
+		if [ -f ${temp_webs_lan_file} ]; then
+			cp -f ${temp_webs_lan_file} ${webs_lan_file}
+		fi
+		if [ -f ${temp_mobileap_cfg_file} ]; then
+			cp -f ${temp_mobileap_cfg_file} ${mobileap_cfg_file}
+		fi
+		if [ -f ${temp_ap_wlan0_file} ]; then
+			cp -f ${temp_ap_wlan0_file} ${ap_wlan0_file}
+		fi
+		if [ -f ${temp_ap_wlan1_file} ]; then
+			cp -f ${temp_ap_wlan1_file} ${ap_wlan1_file}
+		fi
+		if [ -f ${temp_ap_wlan0_5g_file} ]; then
+			cp -f ${temp_ap_wlan0_5g_file} ${ap_wlan0_5g_file}
+		fi
+		if [ -f ${temp_ap_wlan1_5g_file} ]; then
+			cp -f ${temp_ap_wlan1_5g_file} ${ap_wlan1_5g_file}
+		fi
+		if [ -f ${temp_hosts_file} ]; then
+			cp -f ${temp_hosts_file} ${hosts_file}
+		fi
+		
+		if [ -f ${temp_wlan1_hostapd_file} ]; then
+			cp -f ${temp_wlan1_hostapd_file} ${wlan1_hostapd_file}
+		fi
+		
+		if [ -f ${temp_hostapd_file} ]; then
+			cp -f ${temp_hostapd_file} ${hostapd_file}
+		fi
+		
+		if [ -d ${temp_create_directory} ]; then
+		  if [ -d ${create_directory} ]; then
+		    rm -rf ${create_directory}
+		  fi
+			cp -rf ${temp_create_directory} ${create_directory}
+		fi
+    ;; 
+
+	temp_delete)
+		if [ -d /cache/backup_conf/temp ]; then
+		  rm -rf /cache/backup_conf/temp
+	  fi
+	  ;;
+
+	factory_restore)
+		if [ -f ${bak_ap_wlan0_file} ]; then
+			cp -f ${bak_ap_wlan0_file} ${ap_wlan0_file}
+		fi
+		if [ -f ${bak_ap_wlan1_file} ]; then
+			cp -f ${bak_ap_wlan1_file} ${ap_wlan1_file}
+		fi
+		if [ -f ${bak_wlan1_hostapd_file} ]; then
+			cp -f ${bak_wlan1_hostapd_file} ${wlan1_hostapd_file}
+		fi
+		if [ -f ${bak_hostapd_file} ]; then
+			cp -f ${bak_hostapd_file} ${hostapd_file}
+		fi
+		if [ -f ${bak_hosts_file} ]; then
+			cp -f ${bak_hosts_file} ${hosts_file}
+		fi		
+		if [ -f ${bak_mobileap_cfg_file} ]; then
+			cp -f ${bak_mobileap_cfg_file} ${mobileap_cfg_file}
+		fi
+		if [ -f ${bak_webs_file} ]; then
+			cp -f ${bak_webs_file} ${webs_file}
+		fi
+		if [ -f ${bak_webs_lan_file} ]; then
+			cp -f ${bak_webs_lan_file} ${webs_lan_file}
+		fi
+		#start add by min.xue for led status(beeline) restore to default setting when factory reset 2015-06-18		
+		if [ -f ${bak_webs_led_file} ]; then
+			cp -f ${bak_webs_led_file} ${webs_led_file}
+		fi
+		#end add by min.xue for led status(beeline) restore to default setting when factory reset 2015-06-18	
+		#start add by wei.huang.sz for active_sim(beeline) restore to default setting when factory reset 2015-04-29		
+		if [ -f ${bak_active_sim_file} ]; then
+			cp -f ${bak_active_sim_file} ${active_sim_file}
+		fi
+		#start add by wei.huang.sz for active_sim(beeline) restore to default setting when factory reset 2015-04-29	
+		
+		#start add by wei.huang.sz for auto_pin_flag(alde) restore to default setting when factory reset 2015-04-29		
+		if [ -f ${bak_auto_pin_flag_file} ]; then
+			cp -f ${bak_auto_pin_flag_file} ${auto_pin_flag_file}
+		fi
+		#start add by wei.huang.sz for auto_pin_flag(alde) restore to default setting when factory reset 2015-04-29	
+		
+		#start add by zxb for sdshare restore to default setting when factory reset 2015-01-15 
+		if [ -f ${bak_sd_file} ]; then
+			echo 2 > /usr/local/samba/lib/sd_back.conf
+		fi
+		#end add by zxb for sdshare restore to default setting when factory reset 2015-01-15
+		
+		if [ -f ${usage_history_file} ]; then
+			rm -f ${usage_history_file}
+		fi
+		if [ -f ${device_pushinfo_file} ]; then
+			rm -f ${device_pushinfo_file}
+		fi
+		if [ -d ${create_directory} ]; then
+		  rm -rf ${create_directory}
+		fi
+	  ;;
+	*)
+	 echo "errer!"
+	 ;;
+esac

@@ -1,0 +1,236 @@
+<div id="devicePage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2><a href="#connection/connectionStatus.html"><span class="arrow back-icon"></span>${ids_menu_connectDevice}</a></h2>
+    </div>
+    <div class="user-title" id="linkUserList">
+        <h3>${ids_menu_connectDevice}&nbsp;(<span id="spnconn_listNum"></span>)</h3>
+        <span class="glyphicon-referesh edit-icon"></span>
+    </div>
+    <div class="item-device-content scroll-pane jspScrollable">
+        <div id="UserListscrollContainer">
+            <div id="scrollContent">
+                <ul id="connectedUserList" class="user-list"></ul>
+                <div class="user-title" id="linkUserList">
+                    <h3>${ids_title_blockDevice}&nbsp;(<span class="nb" id="spnblock_listNum"></span>)</h3>
+                </div>
+                <ul id="blockedUserList" class="user-list"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "connectedDevice";
+/* -------------------------------------------------------------------------
+	 class - airbox connectedDevice
+     ----------------------------------------------------------------------------- */
+AIRBOX.connectedDevice = (function() {
+    var s = {
+            $content: $("article#connection"),
+            $linkUserList: $("article#connection #linkUserList"),
+            $referesh: $("article#connection .glyphicon-referesh"),
+            LIST_TYPE: "",
+			connectedList: [],
+			blockedList: []
+        },
+        cs = {};
+
+    function init(options) {
+        $.extend(s, options);
+        cs = AIRBOX.core.settings;
+        _initStatus();
+        _connectedUserList();
+        _blockedUserList();
+		_initConnListEvents();
+		_initUnBlockbutton();
+        _initScroll();
+        _initoverScroll();
+    };
+
+    function _initStatus() {        
+        s.$referesh.on(cs.clickEvent, function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            page.reloadMain();
+        });
+    }
+
+    function _initScroll() {
+        $('.scroll-pane', s.$content).jScrollPane();
+    };
+
+    function _initoverScroll() {
+
+        $('.scroll-pane', s.$content).on(cs.overEvent, function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            _initScroll();
+        });
+    };
+
+    function _connectedUserList() {
+        s.LIST_TYPE = "connected";
+        s.connectedList = SDK.ConnectionDevices.GetConnectedDeviceList().ConnectedList;
+		var connectedNum = 0;
+		if(s.connectedList){
+			connectedNum = s.connectedList.length;
+		}
+		$("#spnconn_listNum").html(connectedNum);
+        _makeDeviceListStr(s.connectedList, s.LIST_TYPE);
+    };
+
+    function _blockedUserList() { 
+        s.LIST_TYPE = "blocked";
+        s.blockedList = SDK.ConnectionDevices.GetBlockDeviceList().BlockList;
+        _makeDeviceListStr(s.blockedList, s.LIST_TYPE);
+		$("#spnblock_listNum").html(s.blockedList.length);
+    };
+
+    function _makeDeviceListStr(infoObj, listType) { /***need to add usertype icon control,need to add hostname editable content xueqin.jin***/
+	
+        var itemHtmlStr = "";
+		var itemHtmlStr1 = '<div class="l"><span class="icon glyphicon-pc"></span></div><div class="m"><div class="DeviceName"><span class="text-content">%1</span><span class="glyphicon-edit edit-icon"></span><input class="edit-content" type="text" value="%1" maxLength="32"><span class="glyphicon-save edit-icon"></span></div><div class="IPAddress">IP:%3</div><div class="MacAddress">MAC:%2</div></div>';
+        if (listType == "connected") {
+            var itemTable = $("#connectedUserList");			
+			var itemHtmlTpl = '<li class="user-info" value="%4">'+ itemHtmlStr1 +'<div class="r"><button class="btnNormal btn-block">'+ sys.getRes("ids_btn_block")+ '</button></div></li>';
+		
+        }
+        if (listType == "blocked") {
+            var itemTable = $("#blockedUserList");
+            var itemHtmlTpl = '<li class="user-info" value="%4"><div class="l"><span class="icon glyphicon-pc"></span></div><div class="m"><div class="DeviceName">%1</div><div class="IPAddress">MAC:%2</div></div><div class="r"><button class="btnNormal btn-unblock" value="%4">'+ sys.getRes("ids_btn_unblock")+ '</button></div></li>';
+        }
+        if (infoObj != "") {
+            for (var e in infoObj) {
+                itemHtmlStr += addDirItem(itemHtmlTpl, infoObj[e], listType);
+            }
+        }
+
+        function addDirItem(htmlTpl, obj, listType) {
+		
+		    if (listType == "connected" && obj.ConnectMode == CONNDEVICE_USB_DEVICE){
+			      htmlTpl = '<li class="user-info" value="%4">'+ itemHtmlStr1 +'<div class="r"><button class="btnNormal btn-disable">'+ sys.getRes("ids_btn_block")+ '</button></div></li>';
+			}
+			if (listType == "connected" && obj.DeviceType == CONNDEVICE_LOGINED_DEVICE){	    
+			      htmlTpl = '<li class="user-info user-admin" value="%4">'+ itemHtmlStr1 +'</li>';
+			}
+		
+            var hostName = $.trim(obj.DeviceName);
+            hostName = (hostName == "" || hostName == null) ? sys.getRes("ids_sim_unknown") : hostName;
+            return $.isPlainObject(obj) ? formatHtmlStr(htmlTpl, hostName, obj.MacAddress, obj.IPAddress, obj.id) : "";
+        }
+
+        itemTable.html("").append(itemHtmlStr);
+    };
+	
+	function _initConnListEvents(){
+	    $("#connectedUserList li", s.$content).each(function(i) {
+			/***click block event**/
+            $(".btn-block", this).on(cs.clickEvent, {
+                index: i
+            }, function(event) { 
+			    var id = $(this).parent().parent().val();
+			    var obj = selectedObj(s.connectedList,id);    
+                _blockEvent(obj.DeviceName,obj.MacAddress);
+            });
+			
+			/***click edit event**/
+			$(".glyphicon-edit", this).on(cs.clickEvent, {
+                index: i
+            }, function(event) { 
+			    var $el = $(this).parent();
+				$el.find(".edit-content,.glyphicon-save").css("display","block");
+				$el.find(".text-content,.glyphicon-edit").css("display","none");			   
+            });
+			
+			/***click save event**/
+			$(".glyphicon-save", this).on(cs.clickEvent, {
+                index: i
+            }, function(event) { 			  
+			    var id = $(this).parent().parent().parent().val();
+			    var obj = selectedObj(s.connectedList,id);
+				var DeviceName = $(this).parent().find(".edit-content").val();
+				_saveEvent(DeviceName,obj.MacAddress,CONNDEVICE_SAVE_CONNECTED_NAME);  
+            });			
+        });
+	}
+	
+	function selectedObj(list,id){
+		var obj;
+		$.each(list,function(i,v){
+			if(v.id ==id){
+				obj = v;
+			}
+		}) 
+		return obj;        
+	}
+
+	function _initUnBlockbutton(){
+	        $("#blockedUserList li", s.$content).each(function(i) {
+            $(".btn-unblock", this).on(cs.clickEvent, {
+                index: i
+            }, function(event) {
+               var id = $(this).val();
+			   var obj = selectedObj(s.blockedList,id); 				            
+               _unblockEvent(obj.DeviceName,obj.MacAddress);
+            });
+        });
+	}
+	
+	function _saveEvent(DeviceName,MacAddress,DeviceType){
+	    if(DeviceName == ""){
+		   sys.alert("ids_wan_inputDeviceName");
+		   return;
+		}
+		if( DeviceName != "" && !check_input_char(DeviceName) ){
+			sys.alert("ids_profile_userNameRule");
+			return;
+		}
+		var result = SDK.ConnectionDevices.SetDeviceName(DeviceName,MacAddress,DeviceType);
+		if (result == API_RESULT_SUCCESS) {
+			sys.alert("ids_success", function() {
+				page.reloadMain();
+			})
+		} else {
+			sys.alert("ids_error");
+		}
+	}
+	
+    function _blockEvent(DeviceName,MacAddress){
+        var FirewallList=SDK.Firewall.GetMacFilterSettings();
+        if(FirewallList.filter_policy == MAC_FILTER_STATE_ALLOW){
+            sys.alert("ids_wan_cannotBlock");
+            return false;
+        }else if (FirewallList.MacDenyList.length == MAC_FILTER_STATE_DENYMAX) {
+            sys.alert("ids_wan_Block");
+            return false;
+        }
+		var result = SDK.ConnectionDevices.SetConnectedDeviceBlock(DeviceName,MacAddress);
+		if (result == API_RESULT_SUCCESS) {
+			sys.alert("ids_success", function() {
+				page.reloadMain();
+			})
+		} else {
+			sys.alert("ids_error");
+		}
+	}
+	
+	function _unblockEvent(DeviceName,MacAddress){	    
+		var result = SDK.ConnectionDevices.SetDeviceUnlock(DeviceName,MacAddress);
+		if (result == API_RESULT_SUCCESS) {
+			sys.alert("ids_success", function() {
+				page.reloadMain();
+			})
+		} else {
+			sys.alert("ids_error");
+		}        
+	}
+    return {
+        init: init,
+        initScroll: _initScroll
+    };
+}())
+AIRBOX.connectedDevice.init();
+</script>

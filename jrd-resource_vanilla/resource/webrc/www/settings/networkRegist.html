@@ -1,0 +1,79 @@
+<script> currentMenu=2; </script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "networkRegist";
+
+var getNetworkRegisterResultInterval = null;
+var registerState = SDK.Network.GetNetworkRegisterState().regist_state;
+
+$(document).ready(function() {
+    $("#btnApply").setBtnDisabled();
+    showResult(registerState);
+});
+
+function turnTo() {
+    page.changePage("settings/networkSelection.html?rand=" + Math.random());
+}
+
+function showResult(state) {
+    var registerStateStr;
+    var btnApplyId = "#btnApply";
+    var spnRegResultId = "#spnRegResult";
+    switch (state) {
+        case NW_REG_STAT_REGISTRATING:
+            registerStateStr = sys.getRes("ids_net_registing");
+            startGetResult();
+            break;
+        case NW_REG_STAT_SUCCESS:
+            registerStateStr = sys.getRes("ids_success");
+            stopGetResult();
+            $(btnApplyId).removeBtnDisabled();
+            break;
+        case NW_REG_STAT_FAIL:
+            registerStateStr = sys.getRes("ids_fail");
+            stopGetResult();
+            $(btnApplyId).removeBtnDisabled();
+            break;
+        default:
+            registerStateStr = sys.getRes("ids_fail");
+            stopGetResult();
+            $(btnApplyId).removeBtnDisabled();
+    }
+    $(spnRegResultId).html(registerStateStr);
+}
+
+function startGetResult() {
+    if (getNetworkRegisterResultInterval != null) {
+        stopGetResult();
+    }
+    getNetworkRegisterResultInterval = setInterval(function() {
+        /*SDK.Network.GetAsyncNetworkRegisterState(function(data) {
+            showResult(data.State);
+        })*/
+        SDK.requestJsonRpcAsync("GetNetworkRegisterState", null, "2.1", function(data) {
+            showResult(data.regist_state);
+        });
+    }, 6000);
+
+}
+
+function stopGetResult() {
+    clearInterval(getNetworkRegisterResultInterval);
+}
+</script>
+</head>
+<div id="networkRegist" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_networkMode}</a>
+        </h3>
+        <div style="margin:50px auto; text-align:center">
+            <span id="spnRegResult"></span>
+        </div>
+        <div class="btn-wrap">
+            <button type="button" class="btnNormal" id="btnApply" onClick="turnTo();">${ids_btn_continue}</button>
+        </div>
+    </div>
+</div>

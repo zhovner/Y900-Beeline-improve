@@ -1,0 +1,4 @@
+name:Hong Kong SmarTone-Vodafone
+apn:internet
+dial:*99*1,1#
+protocol:2

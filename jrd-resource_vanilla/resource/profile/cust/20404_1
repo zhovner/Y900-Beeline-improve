@@ -1,0 +1,6 @@
+protocol:2
+name:Netherlands Vodafone Office
+apn:office.vodafone.nl
+user:vodafone
+psw:vodafone
+dial:*99#

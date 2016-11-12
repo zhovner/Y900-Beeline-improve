@@ -1,0 +1,98 @@
+<div class="form-body">
+    <form id="mapBasicForm">
+        <div class="form-title" trans="port_map"></div>
+        <div class="content">
+            <div class="row-fluid" style="padding-left: 20px;line-height: 25px; margin-top: 5px;">
+                <label class="" trans="port_map_setting" style="color: #8F8F8F;"></label>
+                <div class="">
+                    <input type="radio" name="mapGrp" id="mapEnable" data-bind="checked: portMapEnable" value="1"/>
+                    <label for="mapEnable" trans="enable"></label>
+                </div>
+                <div>
+                    <input type="radio" name="mapGrp" id="mapDisable" data-bind="checked: portMapEnable" value="0"/>
+                    <label for="mapDisable" trans="disable"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans="apply"/>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="port_map_note_info"></li>
+            </ul>
+        </div>
+    </form>
+    <div data-bind="visible: oriPortMapEnable() == '1' && portMapEnable() == '1' ">
+        <form id="portMapForm">
+            <div class="form-title" trans="port_map_setting"></div>
+            <div class="content2" style="padding-left: 20px;">
+                <div class="row-fluid">
+                    <div class="content span6" style="padding: 0px;">
+                        <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="txtSourcePort" trans="source_port" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtSourcePort" id="txtSourcePort" data-bind="value: sourcePort" class="required" maxlength="5"/>
+                                <label id="sourcePortExamLabel">(1~65000)</label>
+                                <span style="display: block;">&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="txtDestPort" trans="dest_port" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtDestPort" id="txtDestPort" data-bind="value: destPort" class="required" maxlength="5"/>
+                                <label id="destPortExamLabel">(1~65000)</label>
+                            </div>
+                        </div>
+                        <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="txtComment" trans="comment" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtComment" id="txtComment" data-bind="value: comment" class="required" maxlength="31"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content span6" style="padding: 0px;">
+                        <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="txtDestIpAddress" trans="dest_ip_address" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <input type="text" name="txtDestIpAddress" id="txtDestIpAddress" data-bind="value: destIpAddress" class="required" maxlength="15"/>
+                                <span style="display: block;" trans="ipExam" id="ipExamLabel"></span>
+                            </div>
+                        </div>
+                        <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                            <label class="" for="protocol" trans="protocol" style="color: #8F8F8F;"></label>
+                            <div class="">
+                                <select id="protocol" transid="protocol" data-bind="options: modes, value: selectedMode, optionsText: transOption('protocol'), optionsValue: 'value'"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-buttons">
+                <input type="submit" class="btn-1 " trans="apply"/>
+            </div>
+            <div class="form-note">
+                <div class="notes-title">&nbsp;</div>
+                <ul class="notes-content">
+                    <li trans="port_map_note_port"></li>
+                    <li trans="port_map_note_dest_ip_address"></li>
+                    <li trans="port_map_note_protocol"></li>
+                    <li trans="port_map_note_comment"></li>
+                    <li trans="rule_max_note"></li>
+                </ul>
+            </div>
+        </form>
+        <form id="portMapListForm">
+            <div class="form-title" trans="port_map_list"></div>
+            <div class="content" style="padding-left: 20px;">
+                <div>
+                    <div id="portMaps" class="fixTableScroll" data-bind="simpleGrid: gridTemplate"></div>
+                </div>
+            </div>
+            <div class="form-buttons">
+                <input type="submit" class="btn-1 " trans="delete" data-bind="enable: gridTemplate.checkedCount() > 0"/>
+            </div>
+        </form>
+    </div>
+</div>

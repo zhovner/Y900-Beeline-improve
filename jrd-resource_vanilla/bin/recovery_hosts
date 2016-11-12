@@ -1,0 +1,29 @@
+#! /bin/sh
+#
+# for recovery hosts after upgrade
+
+hosts_path="/etc/hosts"
+bak_hosts_path="/cache/backup_conf/temp/temp_hosts"
+mobileap_cfg_path="/etc/mobileap_cfg.xml"
+host_name="ee.mobilebroadband"
+
+if [ -f ${mobileap_cfg_path} ]; then
+    hosts_ip_addr=$(grep 'APIPAddr' ${mobileap_cfg_path} | cut -d '>' -f 2 | cut -d '<' -f 1)
+fi
+
+
+echo hosts_ip_addr=${hosts_ip_addr}
+echo hosts_path=${hosts_path}
+echo mobileap_cfg_path=${mobileap_cfg_path}
+
+if [ -f ${hosts_path} ]; then
+    rm -f ${hosts_path}
+fi
+
+touch ${hosts_path}
+chmod 777 ${hosts_path}
+
+echo "127.0.0.1  localhost.localdomain  localhost" > ${hosts_path}
+echo ${hosts_ip_addr}"  "$host_name >> ${hosts_path}
+
+cp -f ${hosts_path} ${bak_hosts_path}

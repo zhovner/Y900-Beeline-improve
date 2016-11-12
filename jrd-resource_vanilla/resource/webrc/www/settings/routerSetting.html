@@ -1,0 +1,225 @@
+<div id="routerPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_advanced}</a>
+        </h3>
+        <div class="scroll-pane jspScrollable">
+        <div class="settings-con">
+            <div class="router">
+                <ul class="ipt-wrap">
+                    <li>
+                        <label class="text">${ids_ipAddress:}</label>
+                        <input id="gateway_ip" type="text" class="iptText" maxlength="15">
+                    </li>
+                    <li>
+                        <label class="text">${ids_subnetMask:}</label>
+                        <input id="subnet_ip" type="text" class="iptText" maxlength="15">
+                    </li>
+                    <li>
+                        <label class="text">${ids_router_dhcpServer:}</label>
+                        <label class="vertical"><input name="dhcp_server" id="dhcpserver_1" type="radio" value="1"> ${ids_enable}&nbsp;&nbsp;</label>
+                        <label class="vertical"><input name="dhcp_server" id="dhcpserver_2" type="radio" value="0"> ${ids_disable}</label></li>
+                    <li>
+                        <label class="text">${ids_router_startIP:}</label>
+                        <input id="start_ip" type="text" class="ipt" maxlength="15">
+                    </li>
+                    <li>
+                        <label class="text">${ids_router_endIP:}</label>
+                        <input id="end_ip" type="text" class="ipt" maxlength="15">
+                    </li>
+                    <li>
+                        <label class="text">${ids_router_leaseTime:}</label>
+                        <select id="lease_time" type="text" class="select">
+                            <option value="1">1 ${ids_hour}</option>
+                            <option value="6">6 ${ids_hours}</option>
+                            <option value="12">12 ${ids_hours}</option>
+                            <option value="24">24 ${ids_hours}</option>
+                        </select>
+                    </li>
+                </ul>
+
+                <div class="btn-wrap">
+                    <!-- <button class="btnNormal" id="btnApply">${ids_btn_apply}</button>
+                    <button class="btnNormal" id="btnCancel">${ids_btn_cancel}</button>
+                     -->
+                    <input type="button" id="btnApply" class="btnNormal" value="${ids_btn_apply}" />
+                    <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                </div>
+            </div>
+            <h4>${ids_title_macFilter}</h4>
+            <p class="des">${ids_security_macFilterDescription}</p>
+            <p class="mac-link"><a href="#settings/macFilterSetting.html" class="linkPage changePageLink">${ids_title_macFilter}</a>
+            </p>
+        </div>
+     </div>   
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "routerSetting";
+var routerSetting = SDK.LAN.GetLanSettings();
+var dhcpServer = routerSetting.DHCPServerStatus;
+var gatewayIP = routerSetting.IPv4IPAddress;
+var startIP = routerSetting.StartIPAddress;
+var endIP = routerSetting.EndIPAddress;
+var submetIP = routerSetting.SubnetMask;
+var leaseTime = routerSetting.DHCPLeaseTime;
+var macAddress = routerSetting.macAddress;
+
+$(document).ready(function() {      	
+    initScroll($("article#settings"));      
+    formload();
+    $(".btn-wrap input[type='button']").setBtnDisabled();
+    $("#btnCancel").click(page.reloadMain);
+    $("#btnApply").click(function() {
+        $(".iptText").removeClass("errorIpt");
+        $(".rule").remove();
+        submitPage();
+    });
+    $("input[name='dhcp_server']").change(function() {
+        setValue($(this).val());
+        $(".iptText").removeClass("errorIpt");
+        $(".rule").remove();
+    })
+    $("#start_ip,#end_ip").bind("focusin", function() {
+        $(".iptText").removeClass("errorIpt");
+        $(".rule").remove();
+    });
+    $(".item-content select,.item-content input").bind("change input keyup keydown paste", function() {
+        $(".btn-wrap input[type='button']").removeBtnDisabled()
+    });
+});
+
+function formload() {
+    $("#gateway_ip").val(gatewayIP);
+    $("#subnet_ip").val(submetIP);
+    $("#dhcp_server").val(dhcpServer);
+    $("#start_ip").val(startIP);
+    $("#end_ip").val(endIP);
+    $("#lease_time").val(leaseTime);
+    setValue(dhcpServer);
+}
+
+function setValue(dhcpServer) {
+    if (dhcpServer == 1) {
+        $("#dhcpserver_1").attr("checked", true);
+        $("#start_ip,#end_ip,#lease_time").attr("disabled", false);
+
+    } else if (dhcpServer == 0) {
+        $("#dhcpserver_2").attr("checked", true);
+        $("#start_ip,#end_ip,#lease_time").attr("disabled", true);
+    }
+}
+
+function submitPage() {
+    var dhcp_en;
+    var gateway_ip = $("#gateway_ip");
+    var subnet_ip = $("#subnet_ip");
+    var start_ip = $("#start_ip");
+    var end_ip = $("#end_ip");
+    var lease_time = $("#lease_time");
+    // var host_name=$("#host_name");
+
+    var szLanIpAddrApply = $.trim(gateway_ip.val());
+    var szLanSubnetMaskApply = $.trim(subnet_ip.val());
+    var szDHCPStartIPAddrApply = $.trim(start_ip.val());
+    var szDHCPEndIPAddrApply = $.trim(end_ip.val());
+    var idhcpleaseTimeApply = lease_time.val();
+    idhcpleaseTimeApply = parseInt(idhcpleaseTimeApply);
+    //var lan_host_name= $.trim(host_name.val());
+
+    if (szLanIpAddrApply == "") {
+        gateway_ip.showRule("ids_router_ipAddrEmpty");
+        return false;
+    }
+    if (!isValidIpAddress(szLanIpAddrApply)) {
+        gateway_ip.showRule("ids_router_ipAddrInvalid")
+        return false;
+    }
+    if (szLanSubnetMaskApply == "") {
+        subnet_ip.showRule("ids_router_subnetEmpty");
+        return false;
+    }
+    if (!isValidSubnetMask(szLanSubnetMaskApply)) {
+        subnet_ip.showRule("ids_router_subnetInvalid");
+        return false;
+    }
+    if (!is_broadcast_or_network_address(szLanIpAddrApply, szLanSubnetMaskApply)) {
+        gateway_ip.showRule("ids_router_ipAddrInvalid");
+        return false;
+    }
+    if ($("input[name='dhcp_server']:checked").val() == "1") {
+        dhcp_en = 1;
+        if (szDHCPStartIPAddrApply == "") {
+            start_ip.showRule("ids_router_startIpEmpty");
+            return false;
+        }
+        if (szDHCPEndIPAddrApply == "") {
+            end_ip.showRule("ids_router_endIpEmpty");
+            return false;
+        }
+        if ((!isValidIpAddress(szDHCPStartIPAddrApply)) || (szLanIpAddrApply == szDHCPStartIPAddrApply)) {
+            start_ip.showRule("ids_router_startIpInvalid");
+            return false;
+        }
+        if (!is_broadcast_or_network_address(szDHCPStartIPAddrApply, szLanSubnetMaskApply)) {
+            start_ip.showRule("ids_router_startIpInvalid");
+            return false;
+        }
+        if ((!isValidIpAddress(szDHCPEndIPAddrApply)) || (szLanIpAddrApply == szDHCPEndIPAddrApply)) {
+            end_ip.showRule("ids_router_endIpInvalid");
+            return false;
+        }
+        if (!is_broadcast_or_network_address(szDHCPEndIPAddrApply, szLanSubnetMaskApply)) {
+            end_ip.showRule("ids_router_endIpInvalid");
+            return false;
+        }
+        if (!IsSameSubnetAddrs(szDHCPStartIPAddrApply, szLanIpAddrApply, szLanSubnetMaskApply)) {
+            start_ip.showRule("ids_router_startSameSubnet");
+            return false;
+        }
+        if (!IsSameSubnetAddrs(szDHCPEndIPAddrApply, szLanIpAddrApply, szLanSubnetMaskApply)) {
+            end_ip.showRule("ids_router_endSameSubnet");
+            return false;
+        }
+		if (!IsAvailableIpPool(szLanIpAddrApply, szDHCPStartIPAddrApply, szDHCPEndIPAddrApply)) {
+			end_ip.showRule("ids_router_ipRule");
+			return false;
+		}
+
+        var ipStart = szDHCPStartIPAddrApply.split(".");
+        var ipEnd = szDHCPEndIPAddrApply.split(".");
+        if(parseInt(ipEnd[3]) <= parseInt(ipStart[3])){
+            end_ip.showRule("ids_router_endGeaterStart");
+            return false;
+        }
+    } else {
+        dhcp_en = 0;
+    }
+    sys.confirm("ids_router_restartWarn", function() {
+		var dHCPServerStatus = dhcp_en;
+		var iPv4IPAddress = szLanIpAddrApply
+		var startIPAddress = szDHCPStartIPAddrApply
+		var endIPAddress = szDHCPEndIPAddrApply
+		var subnetMask = szLanSubnetMaskApply
+		var dHCPLeaseTime = idhcpleaseTimeApply
+		var macAddress = macAddress;
+		
+        $("#btnApply,#btnCancel").setBtnDisabled();
+		var result = SDK.LAN.SetLanSettings(iPv4IPAddress, subnetMask, dHCPServerStatus, startIPAddress, endIPAddress, dHCPLeaseTime, macAddress);       
+		if (result == API_RESULT_SUCCESS) {
+			sys.alert("ids_success", function() {
+				page.reloadMain();
+			});
+		} else {
+			sys.alert("ids_fail")
+		}
+        
+    })
+}
+</script>

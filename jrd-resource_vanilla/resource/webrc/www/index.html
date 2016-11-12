@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8" />
+<title></title>
+<link type="text/css" href="./css/common.css" rel="stylesheet" />
+<link type="text/css" href="./css/chosen.css" rel="stylesheet" />
+<link href="favicon.ico" rel="shortcut icon" />
+<meta name="viewport" initial-scale="1.0" />
+
+<!-- link href="css/slideshow.css" rel="stylesheet" / -->
+<!--[if lt IE 9]>
+	   <script type="text/javascript" src="js/lib/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div id='msgOverlay'>
+		<div><span  id='msgDiv'></span></div>
+	</div>
+	<div id="mainBody-fluid">
+	    <div id='topStatus' class="row-fluid">
+			<div id='lang'>
+            <div id="langLogoBar" class="row-fluid langborder" style="position: relative;">
+                <div style="margin-top: 30px; *+margin-top:10px; width:500px;height: 70px; float: left;">
+                    <div id="weblogo" style="display: none">
+                        <img class="paddingleft5" id="titleImg"/>
+                        <span class="verticalalign" id="webui_title" trans="main_header" style="font-size:25px;"></span>
+                    </div>
+                    <div id="top_menu" style="display: none;">
+                        <a class="floatLeft marginRight" href="#home"><img src="images/back.png"> </a>                        
+                        <div class="floatLeft" id = "dropdownMain">
+                            <ul class="nav nav-pills" id="langMenu">
+                                <li class="dropdown" id="menu10">
+                                 <button id="top_menu_link" class="dropdown-toggle btn" data-toggle="dropdown"  href="#menu10">
+                                     <span  data-bind="text: currentMenu,attr:{trans: currentTrans}"></span><img class="paddingbottom5 marginleft10" src="images/drop_down_arrow.png">
+                                 </button>
+                                <ul id="menu_link" data-bind="foreach: mainMenu" class="dropdown-menu" style="*+position: relative;" >
+                                    <li data-bind='click: function(){$root.menuClickHandler(hash)}'>
+                                        <a data-bind="attr:{href: hash, trans:hash.substring(1)}"></a>
+                                    </li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+				</div>
+                <div class="floatright" style="position: absolute; right: 0px; top: 68px;">
+                    <span id="logout"
+                          style="display:none;background: none repeat scroll 0% 0% rgb(0, 0, 0); color: rgb(255, 255, 255); padding: 3px 8px;"
+                          data-bind="visible:showLogout()">
+                                                <a id="logoutlink" class="logout" trans="logout" href="javascript:void(0)"
+                                                   data-bind="click:logout"></a></span>
+                </div>
+                <div class="floatright"  id="language" style="margin-top: 0px; position: absolute; right: 0px; padding-top: 30px;" >
+                    <ul class="nav nav-pills">
+                        <li class="dropdown" id="menu4" style="width: 80px;">
+                            <button  data-toggle="dropdown" class="dropdown-toggle btn"  href="#menu4" style="width:80px;font-size: 14px; background: #FFB612; padding: 2px 1px;">
+                                <span id="lanDiv" data-bind="attr:{trans:currentLan}"></span><img src="images/icon_language.png" style="margin-left: 5px;">
+                            </button>
+                            <ul class="dropdown-menu" style="line-height: 25px; width: auto; font-size: 12px;">
+                                <li data-bind="click: function(){langChangeHandler('ru')}"><a>Русский</a></li>
+                                <li data-bind="click: function(){langChangeHandler('en')}"><a>English</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div id="statusBar" class=" side-right margintop8" >
+                    <div style="display: block; clear: both; width: 100%;">
+                        <div class="floatright">
+                            <span class="statusItem" title="ota_title" i18n="true" id="OTA"
+                                  data-bind="visible:OTAStatus" style="display: none">
+                                <a onClick="return showOTAAlert();">
+                                    <img src="/images/update.gif"/>
+                                </a>
+                            </span>
+                            <span class="statusItem" title="roaming_status" i18n="true" id="roamingStatus" data-bind="visible: roamingStatus() == 'R'" style="display: none;"><img src="/images/roaming.png" style="padding-bottom: 6px;"/></span>
+
+                            <span class="statusItem" title="sms_unread_count" i18n="true" id="sms_unread_count" data-bind="visible: smsUnreadCount() > 0 || showSmsDeleteConfirm()" style="display: none;">
+                                <a onClick="return gotoSmsList();" href="javascript: void(0)">
+                                    <img data-bind="visible: smsUnreadCount() > 0 && !showSmsDeleteConfirm()" class="paddingbottom6" src="/images/sms_unread.png" style="display: none;"/>
+                                    <img data-bind="visible: showSmsDeleteConfirm()" class="paddingbottom6" src="/images/sms_full.gif" style="display: none;"/>
+                                    <span data-bind="visible: smsUnreadCount() > 0, text: smsUnreadCount" class="smsUnreadCount"></span>
+                                </a>
+                            </span>
+                            <span class="statusItem" title="sim_status" i18n="true" id="statusItemSimStatus"><img id="simStatusDiv" data-bind="attr: {src: simStatus}" class="paddingbottom6" /></span>
+                            <span class="statusItem" title="wifi_status" i18n="true" id="wifi_status" data-bind="visible: hasWifi"><img class="paddingbottom6" id="wifi_status_img" data-bind="attr: {src: wifiStatusImg}"/></span>
+                            <span class="statusItem" title="battery_level" i18n="true" data-bind="visible: hasBattery" id="batteryStatus"><img  class="paddingbottom6" id="batteryCharging" data-bind="attr: {src: batteryPers}"/><span data-bind="text:batteryCapacity"></span></span>
+                            <span style="width: 80px; display: inline-block;">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div style="display: block; float: right; width: 100%;">
+						<span class="statusItem" title="network_provider2" i18n="true" id="operator" data-bind="text: networkOperator"></span>
+                        <span class="statusItem" title="network_type" i18n="true" id="networkType" data-bind="text: networkType"></span>
+                        <span class="statusItem hide" title="connection_status" i18n="true" id="connection_status"><i class="icon_connection" data-bind="attr:{'class': connectionCssClass}">&nbsp;</i></span>
+                        <span class="statusItem" title="signal_strength" i18n="true" id="signal_strength"><i class="signal" data-bind="attr:{'class': signalCssClass}">&nbsp;</i></span>
+                        <span style="width: 60px; display: inline-block;">&nbsp;</span>
+                    </div>
+				</div>
+            </div>
+            <div class="row-fluid marginbottom5" style="display: none;">
+                <div id="themeContainer" class="span12 side-right" >
+                    <span id="themeSection" style="display: none;">
+						<span class="colorBlock default" data-bind="css: {active: currentTheme() == 'style'}, click: function(data, event) { themeClickHandler(data, event, 'style') }">&nbsp;</span>
+						<!-- span class="colorBlock blue" data-bind="css: {active: currentTheme() == 'blue'}, click: function(data, event) { themeClickHandler(data, event, 'blue') }">&nbsp;</span-->
+						<span class="colorBlock mac" data-bind="css: {active: currentTheme() == 'mac'}, click: function(data, event) { themeClickHandler(data, event, 'mac') }">&nbsp;</span>
+						<link data-bind="attr: {href: themeHref}" rel="stylesheet" id="customTheme" type="text/css"/>
+					</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div id="mainContainer" class="row-fluid">
+            <div id='left' class="span3" data-bind='visible: secondMenu().length > 0'>
+                <ul id="leftmenu" data-bind="foreach: {data: secondMenu }">
+                    <li data-bind="attr: {'class': 'menu-two-level ' + hash.substring(1)},click:function(){$root.menuClickHandler(hash);}">
+                    	<a data-bind='attr: {trans: hash.substring(1)}' href="void(0)"></a>
+                    </li>
+                </ul>
+                <form id="frmHome">
+                    <div class="row-fluid" id="currentData">
+                            <!--Modify by fengtian.wang-->
+                            <!--Disconnected-->
+                            <div class="discon_wrap" id = "discon_wrap_id2" style="display:none;">
+                                <div class="connect_internet" data-bind="click:$root.connectHandler2" trans="connect_internet"></div>
+                                <div class="auto_con">
+                                <div class = "auto_connect_button2" data-bind="click: $root.setConnectModeHandler2">
+                                    <p id = "autoConnBtn2" class="checkbox floatleft margintop5 checkboxToggle" data-bind="css:{'checkbox_selected':isAutoConnect2()=='auto_dial'}" manualControl="true">
+                                        <input type="checkbox" id="autoConnectCheckbox2" value="on" data-bind="checked:isAutoConnect2()=='auto_dial'" />
+                                    </p>
+                                    <label for="isAllowedRoaming" trans="auto_connect" class="update_inline floatleft lineheight25"></label>
+                                  </div>
+                                </div>
+                            </div>
+                            <!--connected-->
+                            <div class="con_wrap"  id = "con_wrap_id2" data-bind="click:$root.connectHandler2">
+                                <div class="row-fluid">
+                                    <label trans="connected_time"></label>
+                                    <label id="tdConnectedTime" data-bind="text: $root.connected_Time"></label>
+                                </div>
+                                <div class="row-fluid">
+                                    <label trans="flux_down"></label>
+                                    <label class="" id="tdDownSpeed" data-bind='text: $root.down_Speed'></label>
+                                </div>
+                                <div class="row-fluid">
+                                    <label trans="flux_up"></label>
+                                    <label class="" id="tdUpSpeed" data-bind='text: $root.up_Speed'></label>
+                                </div>
+                                <div class="disconnect_internet" trans="disconnect_internet"></div>
+                            </div>
+                            <!--end-->
+                             <!--connecting-->
+                            <div class="con_wrap"  id = "coning_wrap_id2" style="display:none;">
+                                <div class="connecting_internet"  trans="connecting"></div>
+                                <div class="auto_con">
+                                    <div class = "auto_connect_button2" data-bind="click: $root.cancelConnectHandler2">
+                                            <label trans="cancel" class="update_inline floatleft lineheight25"></label>
+                                    </div>
+                                </div>
+                            </div>
+							<!--Disconnecting-->
+                            <div class="con_wrap"  id = "disconing_wrap_id2" style="display:none;">
+                                <div class="connecting_internet"  trans="disconnecting"></div>
+                                <div style="height:20px"></div>
+                            </div>
+                    </div>
+                </form>
+            </div>
+            <div class="span9 paddingnone" id="container_span9" >
+                <div id="thirdMenu"  data-bind='visible: thirdMenu().length > 0' style="display: none;">
+                    <ul class="nav nav-pills">
+                        <li class="dropdown" data-bind='visible: thirdMenu().length > 0'>
+                            <button class="dropdown-toggle btn" data-toggle="dropdown">
+                                <span id="currentStatus"></span><b class="caret" data-bind='visible: thirdMenu().length > 1'></b>
+                            </button>
+                            <ul class="dropdown-menu" data-bind="foreach:thirdMenu" >
+                                <li><a data-bind="click:function(){$root.thirdMenuClickHandler($data.hash)}" ><span data-bind= "attr:{trans:$data.hash.substring(1)}"></span><em data-bind= "attr:{id:$data.hash.substring(1)}" class="menu_current" trans= 'current_menu_str' style="display:none"></em></a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div id='container' ></div>
+            </div>
+        </div>
+    </div>
+    <div id='footer' class="side-center">
+        <span trans='copyright'></span>
+    </div>
+</div>
+<div id='loading'>
+    <div class='header'><span id="loadMsg"></span></div>
+    <br/>
+
+    <div style='text-align: center'>
+        <img id="loadingImg"/>
+        <span id="loadingText"  trans="restoreText" style="display: none; padding: 0px 15px; text-align: left;">Процедура сброса займет несколько минут. Обновите эту страницу или откройте интерфейс управления снова через 2-3 минуты.</span>
+        <div id="loading_container"></div>
+    </div>
+</div>
+
+<div id='progress'>
+    <div class='header'><span id="barMsg"></span></div>
+     <br/>
+     <div class="progress-content">
+         <div class="progress-bar-container">
+             <div id="bar" class="progress-bar"></div>
+             <div id="barValue" class="progress-bar-value"></div>
+         </div>
+         <div id="progress_container" class="progress-prompt"></div>
+     </div>
+ </div>
+<!-- confirm content -->
+<div id='confirm'>
+    <div class='header'><span id="popTitle"></span></div>
+    <div class='icon'><img id='confirmImg' style="display:none "/></div>
+    <div class='message'></div>
+    <div class='promptDiv hide'><input name="promptInput" id="promptInput" type="text" maxlength="25" class="width190"/><br/>
+        <label class="promptErrorLabel colorRed"></label></div>
+    <div class='buttons'>
+        <input type="button" class="btn-1 simplemodal-close" id='okbtn' trans='ok'/>
+        <input type="button" class="btn-1 " id='operatebtn' trans='open_balance_beeline'/>
+        <input type="button" class="btn-1 " id='yesbtn' trans='yes'/>
+        <input type="button" class="btn-1 simplemodal-close" id='nobtn' trans='no'/>
+    </div>
+</div>
+    <div id='confirm3'>
+        <div class='header'><span id="popTitle3"></span></div>
+        <div class='icon'><img id='confirmImg3' style="display:none "/></div>
+        <div class='message'></div>
+        <div class='promptDiv hide'><input name="promptInput" id="promptInput3" type="text" maxlength="25" class="width190"/><br/>
+            <label class="promptErrorLabel colorRed"></label></div>
+        <div class='buttons'>
+            <input type="button" class="btn-1 simplemodal-close" id='okbtn3' trans='ok'/>
+            <input type="button" class="btn-1 " id='yesbtn3' trans='ok'/>
+            <input type="button" class="btn-1 simplemodal-close" id='nobtn3' trans='cancel'/>
+        </div>
+    </div>
+<div id='confirm2'>
+        <div class='header'><span id="popTitle2"></span></div>
+        <table>
+            <tr>
+                <td class='message' style="vertical-align: middle;text-align:center;height: 120px;padding:0px 10px 8px">
+                </td>
+            </tr>
+       </table>
+ </div>
+<div id="buttom-bubble">
+</div>
+<script type="text/x-jquery-tmpl" id="newMessagePopTmpl">
+    <div class="bubbleItem ${report}" id="${mark}">
+        <h3>
+			<span trans="${titleTrans}">${title}</span> ${name} <a href="javascript:void(0);" data-targetid="${mark}" class="bubbleCloseBtn"></a>
+		</h3>
+        <div class="bubbleContainer">
+            <div class="bubbleContent">${content}</div>
+            <div class="bubbleDatetime">${datetime}</div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript" data-main="js/main" src="js/lib/require/require-jquery-min.js"></script>
+</body>
+</html>

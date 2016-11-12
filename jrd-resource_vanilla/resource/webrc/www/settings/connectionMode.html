@@ -1,0 +1,121 @@
+<div id="connectionModePage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/settings.html" class="changeLink">${ids_title_connectMode}</a></h3>
+        <div class="settings-con">
+            <ul class="ipt-wrap">
+                <li>
+                    <label class="text">${ids_title_connectMode:}</label>
+                    <select id="selectConnectMode" name="selectConnectMode" class="select">
+                        <option value="0">${ids_manual}</option>
+                        <option value="1">${ids_automatic}</option>
+                    </select>
+                </li>
+                <li id="roamingTd" style="display:none">
+                    <input type="checkbox" id="chkRoamAuto" />&nbsp;${ids_wan_roamingAutoConnect}
+                </li>
+                <li>
+                    <label class="text">${ids_wan_connectIPMode:}</label>
+                    <select id="selectConnectIPMode" name="selectConnectIPMode" class="select">
+                        <option value="0">IPV4</option>
+                        <option value="2">IPV6</option>
+                        <option value="3">IPV4/IPV6</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="btn-wrap">
+                <input type="button" id="btnSave" class="btnNormal" value="${ids_btn_save}" />
+                <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 2;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "connectionMode";
+var IS_AUTO_ROAM_DISABLE = 0;
+var IS_AUTO_ROAM_ENABLE = 1;
+
+$(function($){
+    InitConnenctionMode();
+})
+
+function InitConnenctionMode(){
+    var $btns = $("#btnSave,#btnCancel");
+    $btns.setBtnDisabled();
+
+    var connectionStateInfo = SDK.Connection.GetConnectionState();
+    var connectionState = connectionStateInfo.ConnectionStatus;
+    
+    var simInfo = SDK.SIM.GetSimStatus();
+    var simCardState = simInfo.SIMState;
+    var pinState = simInfo.PinState;
+   
+    
+    var connectSettingsInfo = SDK.Connection.GetConnectionSettings();
+    var connectMode = connectSettingsInfo.ConnectMode;
+    var isAutoRoam = connectSettingsInfo.RoamingConnect;
+    var pdpType = connectSettingsInfo.PdpType;
+    var $selectConnectMode = $("#selectConnectMode");
+    var $chkRoamAuto = $("#chkRoamAuto");
+    var $selectConnectIPMode = $("#selectConnectIPMode");
+
+    $selectConnectMode.val(connectMode).on("change",function(){
+        initMode($(this).val());
+    });
+    initMode(connectMode);
+
+    $chkRoamAuto.attr("checked", isAutoRoam == IS_AUTO_ROAM_ENABLE);
+    //$selectConnectIPMode.val(pdpType).attr("disabled", connectionState != MACRO_PPP_DISCONNECTED);
+    
+    initPage(simCardState,pinState);
+    $selectConnectIPMode.val(pdpType).attr("disabled", connectionState != MACRO_PPP_DISCONNECTED);
+
+    $("#btnSave").click(setWanConnectModeEvent);
+    $("#btnCancel").click(page.reloadMain);
+    $("#selectConnectIPMode,#selectConnectMode,#chkRoamAuto").on("change", function() {
+        $btns.removeBtnDisabled();
+    });
+}
+
+function initMode(val){
+    $("#roamingTd").css("display", val == 0?"none":"");
+}
+function initPage(simCardState,pinState) {
+
+    var realState = getSimCardState(simCardState, pinState);
+
+    switch (realState) {
+        case "normal":
+        	$("#selectConnectIPMode").prop("disabled",false);	   
+            break;
+        case "noCard":
+        case "pinReq":
+        case "pukReq":
+        case "simLock":
+		case "simIniting":
+        case "invalid":
+        default:
+			$("#selectConnectIPMode").prop("disabled",true);
+            break;
+    }
+}
+
+function setWanConnectModeEvent() {
+    var connectMode = parseInt($("#selectConnectMode").val()),
+        roamingConnect = $("#chkRoamAuto").attr("checked") ? IS_AUTO_ROAM_ENABLE : IS_AUTO_ROAM_DISABLE;   
+        ipMode = parseInt($("#selectConnectIPMode").val());
+        
+    var result = SDK.Connection.SetConnectionSettings(ipMode, roamingConnect, connectMode);
+
+    sys.alert(result == API_RESULT_SUCCESS?"ids_success":"ids_fail", function() {
+        InitConnenctionMode();
+    })
+}
+
+</script>

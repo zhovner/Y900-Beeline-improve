@@ -1,0 +1,6 @@
+protocol:2
+name:Netherlands vodafone
+apn:live.vodafone.com
+user:vodafone
+psw:vodafone
+dial:*99#

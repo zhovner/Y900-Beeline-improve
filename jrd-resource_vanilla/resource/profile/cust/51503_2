@@ -1,0 +1,6 @@
+name:SMART GPRS
+apn:SMART1
+protocol:0
+user:blank
+psw:blank
+dial:*99#

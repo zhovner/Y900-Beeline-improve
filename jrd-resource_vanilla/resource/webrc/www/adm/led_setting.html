@@ -1,0 +1,22 @@
+<form id='ledSettingForm'>
+    <div class="form-title" trans='led_setting'></div>
+    <div class="content" style="padding-left: 20px;">
+        <div class="row-fluid" style="line-height: 25px;">
+            <div style="display: none;">
+                <input type="radio" name="ledShowType" id="ledShowType0" data-bind="checked: showType" value="0" />
+                <label for="ledShowType0" trans="led_show_always"></label>
+            </div>
+            <div>
+                <input type="radio" name="ledShowType" id="ledShowType1" data-bind="checked: showType" value="1" />
+                <label for="ledShowType1" trans="led_on_press"></label>
+            </div>
+            <div>
+                <input type="radio" name="ledShowType" id="ledShowType2" data-bind="checked: showType" value="2" />
+                <label for="ledShowType2" trans="led_no_show"></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-buttons">
+        <input type="submit" class="btn-1 " trans="apply" />
+    </div>
+</form>

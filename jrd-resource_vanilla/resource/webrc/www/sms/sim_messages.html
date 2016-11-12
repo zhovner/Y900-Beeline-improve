@@ -1,0 +1,99 @@
+<div id="simMsglist-main">
+    <div class="form-title" style="width: 400px;float: left"><!--<span trans="Messages"></span> <span id="smsCapability"></span>-->
+
+        <ul class="nav nav-pills">
+            <li class="dropdown" id="menu2">
+                <button data-toggle="dropdown" class="dropdown-toggle btn"  href="#menu2">
+                    <span trans="subsection_menu"></span><b class="caret"></b>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a><span trans = "sim_messages"></span><em class="menu_current" id = "sim_messages" trans= 'current_menu_str'></em></a></li>
+                    <li><a href ="#device_messages" trans="Messages"></a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <div style="float: right;">
+        <ul class="nav nav-pills">
+            <li class="dropdown" id="menu3">
+                <button id="add_new"  href="#menu3"  data-toggle="dropdown" style="border: none; background: none; font-size: 12px;" class="width60 dropdown-toggle btn">
+                    <div class="btn-new"></div>
+                    <span trans='actions'></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li  onclick="deleteSelectedSimMsgClickHandler()"><a trans = "delete"></a></li>
+                    <li onclick="choseSimUsersDeleteSelectClickHandler()"><a trans = "select_all"></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <form id="simMsgListForm">
+        <div class="form-title" trans='sim_messages' style="padding-left: 20px;"></div>
+        <div class="simMsgList-btns smslist-btns" style="display: none;">
+            <div class="floatleft paddingright15">
+                <p id="simMsgList-checkAll" target="simMsgList_container" class="checkbox checkboxToggle floatleft marginTop8">
+                    <input id="checkbox-all" type="checkbox" />
+                </p>
+            </div>
+            <div>
+                <input type="button" id="simMsgList-delete" onclick="deleteSelectedSimMsgClickHandler()" class="btn-1  disabled" disabled="disabled" trans="delete"/>
+            </div>
+        </div>
+        <div class="width100p overflow-only-y">
+            <div class="jspContainer width100p height100p" id="simMsgList_container" style="height: 510px; overflow-x: hidden; overflow-y: auto;"></div>
+        </div>
+    </form>
+</div>
+
+<script type="text/x-jquery-tmpl" id="simMsgListTmpl">
+    {{each(i, sms) data }}
+    <div class="height115 width100p smslist-item simMsgList-item-class-${id}" id="simMsgList-item-${itemId}">
+        <table class="width100p height100p">
+            <tbody>
+            <tr>
+                <td class="vMiddle width20">&nbsp;
+                    <!--<div class="smslist-item-checkbox">
+                        <p class="checkbox" id="${id}">
+                            <input type="checkbox" target="simMsgList-checkAll" name="msgId" id="checkbox${id}" value="${id}" number="${number}" />
+                        </p>
+                    </div>-->
+                </td>
+                <td class="height30 vBottom">
+                    {{if name.length == 0}}
+                    <div class="smslist-item-name floatleft txtBold"><span>${number}</span></div>
+                    {{else}}
+                    <div class="smslist-item-name floatleft txtBold"><span>${name}/${number}</span></div>
+                    {{/if}}
+                </td>
+                <td class="vMiddle width20">
+                    <div class="smslist-item-checkbox">
+                        <p class="checkbox" id="${id}">
+                            <input type="checkbox" target="simMsgList-checkAll" name="msgId" id="checkbox${id}" value="${id}" number="${number}" />
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr class="margintop8">
+                <td class="vMiddle width20">&nbsp;</td>
+                <td class="font10px lh20px">
+                    <div class="smslist-item-msg cursorhand" title="${content}">
+                        <pre class="lh20px">${content}</pre>
+                    </div>
+                </td>
+            </tr>
+            <tr class="margintop10">
+                <td class="vMiddle width20">&nbsp;</td>
+                <td class="height30 clock-time" style="float:right;">
+                    <div class="margintop10 height30 floatleft marginright5 ${tag==2||tag==3?'hide':''}">
+                        <span class="clock-icon floatleft marginright5"></span>
+                        <span class="clock-time">${time}</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    {{/each}}
+</script>

@@ -1,0 +1,272 @@
+<div id="tr069Page" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_more}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title">
+			<a href="#more/more.html" class="changeLink">${ids_title_tr069}</a>
+		</h3>
+        <div class="scroll-pane jspScrollable">
+            <div class="settings-con">
+                <h4>${ids_tr069_client}</h4>
+                <p class="desInfo">${ids_tr069_tips}</p>
+                <ul class="ipt-wrap1">
+                    <li>
+                        <label class="text">${ids_tr069_inform:}</label>
+                        <div class="wifiradio">
+                            <label class="vertical">
+                                <input type="radio" name="infoState" value="1"> ${ids_enable}</label>
+                            <label class="vertical">
+                                <input type="radio" name="infoState" value="0"> ${ids_disable}</label>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="text" for="">${ids_tr069_informInterval:}</label>
+                        <input type="text" id="informInterval" class="ipt" maxlength="20" />
+                    </li>
+                    <li>
+                        <label class="text" for="">${ids_tr069_acsUrl:}</label>
+                        <input type="text" id="acsUrl" class="ipt" maxlength="125" />
+                    </li>
+                    <li>
+                        <label id="acsUrlRule" class="warn-text">${ids_tr069_acsUrlRule}</label>
+                        <!-- <label class="text" for="">&nbsp;</label> 
+						 <label id="acsUrlRule" class="ipt">${ids_tr069_acsUrlRule}</label> -->
+
+                    </li>
+                    <li>
+                        <label class="text" for="">${ids_tr069_acsUsername:}</label>
+                        <input type="text" id="acsUserName" class="ipt" maxlength="20" />
+                    </li>
+                    <li>
+                        <label class="text" for="">${ids_tr069_acsPw:}</label>
+                        <input type="password" id="acsPwd" class="ipt" maxlength="20" />
+                    </li>
+                    <li>
+                        <label class="text" for="">&nbsp;</label>
+                        <div class="wifiradio">
+                            <input type="checkbox" id="chkRqAuth" />&nbsp;${ids_tr069_connRqAuth}
+                        </div>
+                    </li>
+
+                    <li class="connRqInfo" style="display: none;">
+                        <label class="text" for="">${ids_tr069_connRqUsername:}</label>
+                        <input type="text" id="conRqUserName" class="ipt" maxlength="20" />
+                    </li>
+                    <li class="connRqInfo" style="display: none;">
+                        <label class="text" for="">${ids_tr069_connRqPw:}</label>
+                        <input type="password" id="conRqPwd" class="ipt" maxlength="20" />
+                    </li>
+                </ul>
+                <div class="btn-wrap">
+                    <input type="button" id="btnSave" class="btnNormal" value="${ids_btn_save}" />
+                    <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 5;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "tr069";
+$(function($) {
+    initScroll($("article#more"));
+    $("#mainBox .btnNormal").setBtnDisabled();
+});
+
+var TR069_INFO_STATE_ENABLE = 1;
+var TR069_INFO_STATE_DISABLED = 0;
+var TR069_CONN_RQ_AUTH_ENABLE = 1;
+var TR069_CONN_RQ_AUTH_DISABLED = 0;
+
+var infoState, infoInterval, acsUrl, acsUserName, acsPassword, conRqAuth, conRqUsername, conRqPwd;
+
+$(document).ready(function() {
+    initPageUi();
+});
+
+function initPageUi() {
+    initData();
+    initEvent();
+}
+
+function initData() {
+    var TR069Data = SDK.TR069.GetClientConfiguration();
+    infoState = parseInt(TR069Data.Inform);
+    infoInterval = TR069Data.InformInterval;
+    acsUrl = TR069Data.AcsUrl;
+    acsUserName = TR069Data.AcsUserName;
+    acsPassword = TR069Data.AcsUserPassword;
+    conRqAuth = parseInt(TR069Data.ConReqAuthent);
+    conRqUsername = TR069Data.ConReqUserName;
+    conRqPwd = TR069Data.ConReqUserPassword;
+    if (infoState == TR069_INFO_STATE_ENABLE) {
+        $("input:radio[value=1]").prop("checked", true);
+    } else {
+        $("input:radio[value=0]").prop("checked", true);
+        disableForm(true);
+    }
+    if (conRqAuth == TR069_CONN_RQ_AUTH_ENABLE) {
+        $(".item-more .item-content .connRqInfo").show();
+    }
+    $("#informInterval").val(infoInterval);
+    $("#acsUrl").val(acsUrl);
+    $("#acsUserName").val(acsUserName);
+    $("#acsPwd").val(acsPassword);
+    $("#chkRqAuth").attr("checked", conRqAuth == TR069_CONN_RQ_AUTH_ENABLE ? true : false);
+    $("#conRqUserName").val(conRqUsername);
+    $("#conRqPwd").val(conRqPwd);
+
+}
+
+function initEvent() {
+    $("#btnCancel,#btnSave").setBtnDisabled();
+    $("input[name='infoState']").change(function() {
+        if ($("input[name='infoState']:checked").val() == TR069_INFO_STATE_ENABLE) {
+            disableForm(false);
+        } else {
+            disableForm(true);
+        }
+    });
+    $("#chkRqAuth").on("change click", function() {
+        that = $(this);
+        if (that.is(":checked")) {
+            $(".item-more .item-content .connRqInfo").show();
+        } else {
+            $(".item-more .item-content .connRqInfo").hide();
+        }
+    })
+    $(".item-more .item-content .ipt-wrap1 input").bind("input change keyup keydown paste focus", function() {
+        $("#btnCancel,#btnSave").removeBtnDisabled();
+    })
+    $("#btnSave").click(function() {
+        clickEvent();
+    });
+    $("#btnCancel").click(page.reloadMain);
+}
+
+function clickEvent() {
+    $("#btnCancel,#btnSave").setBtnDisabled();
+    var TR069Settings = getParams();
+    var checkParamsRsult = checkParams();
+    if (checkParamsRsult == false) {
+        $("#btnCancel,#btnSave").removeBtnDisabled();
+        return;
+    }
+    var result = SDK.TR069.SetClientConfiguration(TR069Settings);
+    if (result == API_RESULT_SUCCESS) {
+        sys.alert("ids_success", function() {
+            page.reloadMain();
+        })
+    } else {
+        sys.alert("ids_fail", function() {
+            page.reloadMain();
+        })
+    }
+
+    function getParams() {
+        var params = {
+            "Inform": parseInt($("input[name='infoState']:checked").val())
+        }
+        if (params.Inform == 1) {
+            var paramsOther = {
+                "InformInterval": $("#informInterval").val(),
+                "AcsUrl": $("#acsUrl").val(),
+                "AcsUserName": $("#acsUserName").val(),
+                "AcsUserPassword": $("#acsPwd").val(),
+                "ConReqAuthent": $("#chkRqAuth").is(":checked") ? 1 : 0
+            }
+            $.extend(params, paramsOther)
+            var paramsConnInfo = {};
+            if (params.ConReqAuthent == 1) {
+                paramsConnInfo = {
+                    "ConReqUserName": $("#conRqUserName").val(),
+                    "ConReqUserPassword": $("#conRqPwd").val()
+                }
+                $.extend(params, paramsConnInfo);
+            } else {
+                paramsConnInfo = {
+                    "ConReqUserName": conRqUsername,
+                    "ConReqUserPassword": conRqPwd
+                }
+            }
+            $.extend(params, paramsConnInfo);
+        } else {
+            var paramsOther = {
+                "InformInterval": infoInterval,
+                "AcsUrl": acsUrl,
+                "AcsUserName": acsUserName,
+                "AcsUserPassword": acsPassword,
+                "ConReqAuthent": conRqAuth,
+                "ConReqUserName": conRqUsername,
+                "ConReqUserPassword": conRqPwd
+            }
+            $.extend(params, paramsOther)
+        }
+        return params;
+    }
+
+    function checkParams() {
+        var checkResult = true;
+        if (null == TR069Settings.InformInterval || TR069Settings.InformInterval == "") {
+            sys.alert("ids_tr069_inputInformInterval");
+            checkResult = false;
+            return checkResult;
+        }
+        if (TR069Settings.InformInterval != "" && !isNumber(TR069Settings.InformInterval)) {
+            sys.alert("ids_tr069_informIntervalRule");
+            checkResult = false;
+            return checkResult;
+        }
+        TR069Settings.InformInterval = parseInt(TR069Settings.InformInterval);
+        if (TR069Settings.InformInterval < 0 || TR069Settings.InformInterval > 2678400) {
+            sys.alert("ids_tr069_informIntervalRule");
+            checkResult = false;
+            return checkResult;
+        }
+
+        if (TR069Settings.AcsUrl == "") {
+            sys.alert("ids_tr069_inputAcsUrl");
+            checkResult = false;
+            return checkResult;
+        }
+        //var regHttp = /^(https?|http):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/;
+        var regHttp = new RegExp("((^http)|(^https)):\/\/(\\w)+\.(\\w)+");
+        if (!regHttp.test(TR069Settings.AcsUrl)) {
+            sys.alert("ids_tr069_acsUrlRule");
+            checkResult = false;
+            return checkResult;
+        }
+        if (TR069Settings.AcsUserName == "" && TR069Settings.Inform == 1) {
+            sys.alert("ids_tr069_inputAcsUserName");
+            checkResult = false;
+            return checkResult;
+        }
+        if (TR069Settings.AcsUserPassword == "" && TR069Settings.Inform == 1) {
+            sys.alert("ids_tr069_inputAcsPassword");
+            checkResult = false;
+            return checkResult;
+        }
+        if (TR069Settings.ConReqUserName == "" && TR069Settings.ConReqAuthent == 1 && TR069Settings.Inform == 1) {
+            sys.alert("ids_tr069_inputConReqUserName");
+            checkResult = false;
+            return checkResult;
+        }
+        if (TR069Settings.ConReqUserPassword == "" && TR069Settings.ConReqAuthent == 1 && TR069Settings.Inform == 1) {
+            sys.alert("ids_tr069_inputConReqPassword");
+            checkResult = false;
+            return checkResult;
+        }
+
+        return checkResult;
+    }
+
+}
+
+function disableForm(boolean) {
+    $("#informInterval,#acsUrl,#acsUserName,#acsPwd,#chkRqAuth,#conRqUserName,#conRqPwd").attr("disabled", boolean);
+}
+</script>

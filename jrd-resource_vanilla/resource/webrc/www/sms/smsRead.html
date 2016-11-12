@@ -1,0 +1,297 @@
+<div id="smsReadPage" class="jsTemplate">
+    <div class="sms-read connectShow">
+	    <div class="item-hd clearfix">
+            <h2>
+            <a href="#sms/smsList.html">
+                <span class="arrow back-icon"></span><span class="contact-number"></span>
+            </a>
+        </h2>
+	    </div>
+        <div id="smsContent">
+            <div id="scrollContainer">
+                <div class="scroll-pane jspScrollable">
+                    <div>
+                        <div id="scrollContent">
+                            <ul id="ContentListTable"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="MessageLoadingBkg"></div>
+                <div id="MessageLoading"></div>
+            </div>
+	    </div>
+        <div class="talk-word">
+            <div class="text1" id="smsCharCount" style="float: right;margin-right: 10px;"></div>
+            <div style="float: left;">
+                <textarea class="messages emotion" value="" id="messageContent" style="float: left;"></textarea>
+                <div id="btnSent" class="talk-send"><span class="sms-icon icon-send"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="statusContent" id="simCardStatus"></div>
+</div>
+
+<script>
+currentMenu = 2;
+pageName = "smsRead";
+var currContactId = parseInt(getUrlPara("contact_id"));
+var currListType = getUrlPara("list");
+var doAction = getUrlPara("doAction");
+var singSms = "", smsNumber = "", smsContent = "" ,draftId;
+var sms_store, currentCount, leftCount;
+var numbersArr = [];
+var SMS_UCS2_MAX_SIZE = 670; //70*10
+var SMS_7BIT_MAX_SIZE = 1530; //153*10
+var newSmsCount = 0;
+var G_SmsCounts = 0;
+var G_numCounts = 0;
+var counts = 0;
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/smsWrite.js"></script>
+<script>
+/* -------------------------------------------------------------------------
+     class - airbox message read
+     ----------------------------------------------------------------------------- */
+AIRBOX.smsRead = (function() {
+    var s = {
+            $content: $("article#sms"),
+            $smsContent: $("#smsContent"),
+            $list: $("article#sms div.list"),
+            $reply: $(".reply"),
+            phoneNumList: [],
+            unReadNum: 0,
+            loadedPageNum: 0,
+            totalPage: 0
+        },
+        lnboxList = new Array();
+    cs = {};
+
+    function init(options) {
+        $.extend(s, options);
+        cs = AIRBOX.core.settings;
+        _initStatus();
+    };
+
+    function _initStatus() {
+        showSmsCardState(simCardState, pinState,simlockState,function() {
+			smsNumber = SDK.SMS.GetSMSContentList(0, currContactId).PhoneNumber;
+            _initContentList(currContactId);
+			sms_store = SDK.SMS.GetSMSStorageState();
+	        currentCount = sms_store.TUseCount;
+	        leftCount = sms_store.LeftCount;
+			_initMessageContent();
+            _initScroll();
+            _initClickReply();
+			_clickSmsIcon();
+			_hoverTitle();
+        });		
+    }
+
+    function _initoverScroll() {
+
+        $('.scroll-pane', s.$content).on(cs.overEvent, function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            //_initScroll();                    
+        });
+    };
+
+    function _initContentList(contactId) {
+        $("#ContentListTable").html(""); 
+		contentListInfo = SDK.SMS.GetSMSContentList(0, contactId); 
+		if(contentListInfo.PhoneNumber.length == 0&&$("#messageContent").val()==""){
+			page.changePage("sms/smsList.html")
+		}   
+        s.totalPage = contentListInfo.TotalPageCount; 
+		var currlnboxList =[]; 		
+		for(var i = 0; i < s.totalPage; i++){
+		    currlnboxList = SDK.SMS.GetSMSContentList(i + 1, contactId).SMSContentList;
+			$.merge(lnboxList, currlnboxList);     
+		}	
+        lnboxList = lnboxList.reverse();    
+        showItem(lnboxList);
+        showPhoneNumber();
+
+        $("#sms_not_read").html(s.unReadTotalNum);
+        _initDeleteButtons();
+    };
+
+    function showPhoneNumber() {
+        var phoneNumStr = "";
+        if (smsNumber.length == 0) {
+            str2 = "";
+        } else {
+            for (i = 0; i < smsNumber.length - 1; i++) {
+                phoneNumStr = phoneNumStr + smsNumber[i] + ";";
+            }
+            phoneNumStr = phoneNumStr + smsNumber[smsNumber.length - 1];
+            $(".contact-number").html(phoneNumStr);
+        }
+    }
+
+    function showItem(smslist) {
+        if (smslist != null) {
+            for (var e in smslist) {
+                var connectlnbox = smslist[e];
+                if (connectlnbox != "") {
+                    _addItem(connectlnbox);
+                }
+            }
+        }
+    }
+
+    function _addItem(itemvalue) {
+        var _sms_id = itemvalue.SMSId,
+            _sms_time = fomatTime(itemvalue.SMSTime),
+            _sms_content = itemvalue.SMSContent.HTMLEncode(),
+            _sms_type = itemvalue.SMSType;
+			
+			_sms_content = _sms_content.replace(/\n/g,"<br />");
+
+        var smsTypeHtml = "";
+        if (_sms_type == SMS_LIST_SMS_TYPE_SENT_FAILED) {
+            smsTypeHtml = "<span class=\"sms-icon icon-fail\"></span>";
+        }
+        var itemTable = $("#ContentListTable");
+        var itemStr = "";
+        var smsMevalue = /^[2,3,6]$/;
+        isSmsMe = smsMevalue.test(_sms_type) ? "\"sms-boxme\"" : "\"sms-box\"";
+        if (_sms_type == SMS_LIST_SMS_TYPE_DRAFT) {	
+			draftId = _sms_id;    
+		    smsContent = _sms_content;
+		}else{
+            if(_sms_type == SMS_LIST_SMS_TYPE_REPORT){
+                itemStr += "<h3>"+sys.getRes("ids_sms_delivered")+"</h3>";
+            }else{
+                itemStr += "<h3>" + _sms_content + "</h3>";
+                itemStr += "<span class=\"sms-icon trash\"></span><span class=\"sms-icon reply\"></span>";
+            }
+			
+			itemStr += "<span class=sms-time>" + _sms_time + "</span>" + smsTypeHtml;
+			itemTable.append("<li class=" + isSmsMe + "value=" + _sms_id + "><div class=\"sms-textbg\">&nbsp;</div><div class=\"sms-text\">" + itemStr + "</div></li>");
+		}
+        
+    }
+
+    function _initScroll() {
+        if (lnboxList.length + "=" + $("#ContentListTable li").length) {
+            _hideLoading();
+        }
+
+        var api;
+        trig = true;
+
+        var pane = $('.scroll-pane', s.$content);
+        pane.jScrollPane();
+		var jspapi = pane.data('jsp');
+		jspapi.scrollToBottom();
+    };
+
+
+	
+    function loadnext() {
+        if (s.loadedPageNum < s.totalPage) {
+            _showLoading();
+            _initContentList(currContactId);
+            _initScroll();
+        }
+
+        setTimeout(function() {
+            trig = true;
+        }, 1000);
+    }
+
+    function _showLoading() {
+        $("#MessageLoadingBkg,#MessageLoading").css("display", "block");
+    }
+
+    function _hideLoading() {
+        $("#MessageLoadingBkg,#MessageLoading").css("display", "none");
+    }
+
+    function _initDeleteButtons() {
+        $("#ContentListTable li", s.$content).each(function(i) {
+            $(".trash", this).on(cs.clickEvent, {
+                index: i
+            }, function(event) {
+                $el = $(this).parent().parent("li");
+                AIRBOX.smsList.deleteEvent(SMS_DELETE_FLAG_Content, currContactId, parseInt($el.val()),function(){
+				    _initRead();
+				});
+            });
+        });
+    };
+
+    function _initClickReply() {
+        $("#scrollContent li", s.$content).each(function(i) {
+            $(".reply", this).on(cs.clickEvent, function(event) {
+                $el = $(this).parent(".sms-text");
+                var _sms_id = $el.parent("li").val();
+                var replyPage = "#sms/smsWrite.html?&doAction=forward&sms_id=" + _sms_id;
+                page.changePage(replyPage);
+            });
+        });
+    };
+
+	function _initMessageContent() {
+	    doActionFun(doAction);
+	    $("#btnSent").click(function() {
+	        startQueueEvent("send");
+	    })
+	    $(".back-icon").click(function() {
+	        startQueueEvent("save",currContactId,draftId);
+	    })
+	    showNumCount();
+	    listenCharCount();
+	    $("#messageContent").bind("input change keyup keydown paste", function() {
+	        listenCharCount()
+	    })
+	};
+	
+	function _clickSmsIcon(){
+		$.each($(".icon-fail"),function(i,obj){
+			var $this = $(obj);
+			$this.on("click",function(){ 
+				var clickId = $this.parent().parent("li").attr("value");
+				var smsHCont = $this.siblings("h3").html();
+				var smsCont = smsHCont.HTMLDecode();
+				//SDK.SMS.DeleteSMS(SMS_DELETE_FLAG_Content,currContactId,clickId);
+				startQueueEvent("repeat",currContactId,clickId,smsCont,function(){
+				    _initRead();
+				});
+			});
+		});
+	};
+	function _hoverTitle(){
+		var titleSpan = $(".contact-number");
+		var titleVal = titleSpan.text();
+		titleSpan.hover(function(){
+			titleSpan.attr("title",titleVal);
+		},function(){
+			titleSpan.removeAttr("title");
+		});
+	};
+	
+    function _initRead(){
+		s.loadedPageNum = 0;
+		sms_store = SDK.SMS.GetSMSStorageState();
+	    currentCount = sms_store.TUseCount;
+	    leftCount = sms_store.LeftCount;
+		lnboxList = new Array();
+		_initContentList(currContactId);
+		_initScroll();
+		_initClickReply();
+		_clickSmsIcon();
+	}
+	
+    return {
+        init: init,
+        initScrol: _initScroll,
+        initContentList: _initContentList,
+		initRead:_initRead
+    };
+}())
+
+AIRBOX.smsRead.init();
+</script>

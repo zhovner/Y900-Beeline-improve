@@ -1,0 +1,92 @@
+﻿<div class="form-body">
+    <div class="content" style="padding-left: 20px;">
+    <form id="frmUSSD">
+        <ul class="nav nav-pills">
+            <li class="dropdown">
+                <button data-toggle="dropdown" class="dropdown-toggle btn">
+                    <span id="currentCart"  trans="balance_menu" ></span><b class="caret"></b>
+                </button>
+                <ul class="dropdown-menu" id="menu1">
+                    <li data-bind="click:function(){subMenuClickHandler('myBalance')}"><a><span trans="My_balance">My balance</span><em class="menu_current" id = "balanceCheck" trans= 'current_menu_str'></em></a></li>
+                    <li data-bind="click:function(){subMenuClickHandler('number')}"><a><span trans="My_number">My number</span><em class="menu_current" id = "mynumber" trans= 'current_menu_str' style="display:none"></em></a></li>
+                    <li data-bind="click:function(){subMenuClickHandler('top')}"><a><span trans="Top_Up">Top-Up</span><em class="menu_current" id = "topup" trans= 'current_menu_str' style="display:none"></em></a></li>
+                    <li data-bind="click:function(){subMenuClickHandler('money')}"><a><span trans="Give_me_money" >Give me money</span><em class="menu_current" id = "money_menu" trans= 'current_menu_str' style="display:none;"></em></a></li>
+                    <li data-bind="click:function(){subMenuClickHandler('balance')}"><a><span trans="Initial_balance_activation">Initial balance activation</span><em class="menu_current" id = "initbalance" trans= 'current_menu_str' style="display:none"></em></a></li>
+                </ul>
+            </li>
+        </ul>
+        <div id="buttonFlag" style="line-height: 20px;">
+            <div id="balance" style="display: none; margin-top: 20px;">
+                <div class="form-title" trans='Initial_balance_activation' style="padding-left: 0px;"></div>
+                <div trans="balance_txt">If you installed USB-modem "Beeline" for the first time and you want to connect to the Internet, then it is necessary to activate your initial balance. To activate initial balance now click <b>"Activate"</b> button.</div>
+                <div class="form-buttons" style="margin-top: 20px;">
+                    <input trans="Activate" type="button" class="btn-1" value="Activate" data-bind="click:function(){sendToNet('*101*1111#')}"/>
+                </div>
+            </div>
+            <div id="top" style="display: none; margin-top: 20px;">
+                <div class="form-title" trans='Top_Up' style="padding-left: 0px;"></div>
+                <div trans="Top_Up_txt">To activate recharge card for your account and top-up your balance, enter card secret code (no spaces) and click "Activate" button.</div>
+                <div class="row-fluid" style="margin-top: 10px;">
+                    <label class="span4" trans="Secret_code" id="secret_code">Secret code</label>
+                    <div class="span8" style="margin-left: -25px;">
+                        <input id="secretCode"  type="text" maxlength="64" data-bind="value:USSDSend,valueUpdate:'afterkeydown'"> <input trans="Activate" type="button" class="btn-1" value="Activate" data-bind="disable:USSDSend().length<=0,css:{disabled:USSDSend().length<=0},click:function(){sendToNet('secretCode')}">
+                    </div>
+                </div>
+            </div>
+            <div id="money" style="display: none; margin-top: 20px;">
+                <div class="form-title" trans='Give_me_money' style="padding-left: 0px;"></div>
+                <div trans="Give_me_money_txt">This service allows you to top up your account balance with assistance of Beeline's subscriber. To do so, enter phone number of the subscriber, who you want to ask to top up your account balance, and click <b>"Request"</b> button.</div>
+
+                <div trans="Give_me_money_txt_two"><p>Phone number can be entered in any format, e.g.:</p>
+                <b>9034124060, 89034124060, 79034124060, +79034124060</b></div>
+                <div class="row-fluid" style="margin-top: 10px;">
+                    <label class="span5" trans="Subscriber_phone" id="subscriber_phone">Subscriber phone</label>
+                    <div class="span7" style="margin-left: -25px;">
+                        <input id="subscriberPhone" type="text" maxlength="64" data-bind="value:USSDSend,valueUpdate:'afterkeydown'"> <input trans="Request" type="button" class="btn-1" value="Request" data-bind="disable:USSDSend().length<=0,css:{disabled:USSDSend().length<=0},click:function(){sendToNet('phoneNumber')}">
+                    </div>
+                </div>
+            </div>
+            <div id="number" style="display: none; margin-top: 20px;">
+                <div class="form-title" trans='My_number' style="padding-left: 0px;"></div>
+                <div trans="myNumber_txt">To get the your number click "Get my number" button.</div>
+                <div class="form-buttons" style="margin-top: 20px;">
+                    <input trans="Get_my_number" type="button" class="btn-1" value="Get my number" data-bind="click:function(){sendToNet('*110*10#')}"/>
+                </div>
+            </div>
+            <div id="myBalance" style="display: none; margin-top: 20px;">
+           		<div class="form-title" trans='My_balance' style="padding-left: 0px;"></div>
+                <div trans="myBalance_txt">To check your account balance, click "Check balance" button.</div>
+                <div class="form-buttons" style="margin-top: 20px;">
+                    <input trans="app_check_balance" type="button" class="btn-1" value="Get my number" data-bind="click:function(){sendToNet('*102#')}"/>
+                </div>
+            </div>
+        </div>
+        <div id="USSD_reply_div" data-bind="visible: USSDLocation()==1" style="line-height: 20px;">
+            <!--<div class="form-title" trans='ussd_contents' style="padding-left: 0px;"></div>-->
+            <div class="content" style="padding-left: 20px;">
+                <div class="row-fluid">
+                    <label class="" trans="ussd_contents" style="color: #a6a6a6;margin-left: 5px;"></label>
+                    <div class="">
+                      <!--  <textarea name="USSD_Content" id="USSD_Content" cols="60" readonly="readonly"  style="border:none; color: #000;font-weight: bold"></textarea>-->
+                        <pre name="USSD_Content" id="USSD_Content" style="margin-left: 6px;border:none; color: #000;font-weight: bold;word-break: break-all;word-wrap: break-word;"></pre>
+                    </div>
+                </div>
+                <div class="form-buttons" >
+                    <input type="button" trans='ussd_cancel' class="btn-1" data-bind="click:noReplyCancel"/>
+                </div>
+               <!-- <div id="ussd_action" data-bind="visible: ussd_action()!=0">
+                    <div class="row-fluid">
+                        <label class="span3 side-right" trans="ussd_reply_to" style="width: 130px;"></label>
+                        <div class="span9" style="width: 350px;">
+                            <input type="text" name="USSD_reply" id="USSD_reply" size="20" data-bind="value:USSDReply">
+                        </div>
+                    </div>
+                    <div class="form-buttons">
+                        <input type="button" trans='ussd_reply' data-bind="click:replyToNet" class="btn-1"/>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

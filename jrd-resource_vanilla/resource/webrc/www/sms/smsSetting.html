@@ -1,0 +1,94 @@
+<div id="smsSettingPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>
+            <a href="#sms/smsList.html">
+                <span class="arrow back-icon"></span>${ids_menu_smsSettings}
+            </a>
+        </h2>
+    </div>
+    <div class="item-content">
+        <div id="hasSmsCard">
+            <div class="smsSetting form-horizontal">
+                <ul class="ipt-wrap">
+                    <li>
+                        <label class="text">${ids_sms_saveMode:}</label>                     
+                            <label class="vertical"><input type="radio" checked name="storeFlag" id="automatic" value="1"> ${ids_sms_saveDevice}&nbsp;</label>
+                            <label class="vertical"><input type="radio" name="storeFlag" id="manual" value="0"> ${ids_sms_saveSimCard}</label>                      
+                    </li>
+                    <li>
+                        <label class="text">${ids_sms_report:}</label>                       
+                            <label class="vertical"><input type="radio" checked name="smsReportFlag" value="1"
+                             id="automatic"> ${ids_enable}&nbsp;</label>
+                            <label class="vertical"><input type="radio" name="smsReportFlag" value="0" id="manual"> ${ids_disable}</label>
+                    </li>
+                    <li>
+                        <label class="text">${ids_sms_centerNum:}</label>
+                        <span id="smsCenter"></span>
+                    </li>
+                </ul>
+                <div class="btn-wrap">
+                    <!-- <button class="btnNormal" id="btnSave">${ids_btn_save}</button>
+                    <button class="btnNormal" id="btnCancel">${ids_btn_cancel}</button> -->
+
+                    <input type="button" id="btnSave" class="btnNormal" value="${ids_btn_save}" />
+                    <input type="button" id="btnCancel" class="btnNormal" value="${ids_btn_cancel}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+    currentMenu = 2;
+    pageName = "smsSetting";
+    </script>
+    <script src="/js/childCommon.js"></script>
+    <script>
+    var sms_set = SDK.SMS.GetSMSSettings();
+    var smsCenter = sms_set.SMSCenter;
+    var storeFlag = sms_set.StoreFlag;
+    var smsReportFlag = sms_set.SMSReportFlag;
+
+    $(document).ready(function() {
+        initSmsSettings();
+    });
+
+    function initSmsSettings() {
+        var $btn = $("article.active .btnNormal");
+        $btn.setBtnDisabled();
+        $("input[name='smsReportFlag'],input[name='storeFlag']").change(function() {
+            $btn.removeBtnDisabled();
+        });
+
+        showsmsCenter(smsCenter);
+        showRadio('storeFlag', storeFlag);
+        showRadio('smsReportFlag', smsReportFlag);
+        $("#btnSave").click(saveEvent);
+        $("#btnCancel").click(page.reloadMain);
+    }
+
+    function showRadio(radioName, Flag) {
+        $("input[name='" + radioName + "'][value='" + Flag + "']").attr("checked", true);
+    }
+
+    function showsmsCenter(smsCenter) {
+        $("#smsCenter").html(smsCenter);
+    }
+
+    function saveEvent() {
+        $("#btnSave").setBtnDisabled();
+        storeFlag = parseInt($("input[name='storeFlag']:checked").val());
+        smsReportFlag = parseInt($("input[name='smsReportFlag']:checked").val())
+        smsCenter = smsCenter.split("+")[1]; //if api SetSMSSettings is right,delete this line;
+        var result = SDK.SMS.SetSMSSettings(smsReportFlag, storeFlag, smsCenter);
+
+        if (result == API_RESULT_SUCCESS) {
+            sys.alert("ids_success", function() {
+                page.reloadMain();
+            });
+        } else {
+            sys.alert("ids_fail");
+            page.reloadMain()
+        }
+
+    }
+    </script>

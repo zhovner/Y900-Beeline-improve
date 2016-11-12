@@ -1,0 +1,312 @@
+<script type="text/x-jquery-tmpl" id="smsMeTmpl">
+    <div id="talk-item-${id}" class="talk-item talk-b">
+        <div class="layout grid-talk">
+            <div class="col-main">
+                <div class="info-talk">
+                    {{if tag == 3}}
+                    <div class="msg_container msg_fail" style="word-break:normal;">
+                        <s class="arrow"></s>
+                        <div class="J_content"><pre>{{html dealContent(content, id)}}</pre></div>
+                        <div class="time paddingtop10">
+                            <div class="smslist-item-time floatright paddingTop4 paddingright10">${time}</div>
+                            <div class="hiddenButton">
+                                <div class="smslist-item-repeat cursorhand floatright marginRight6 paddingright10" onclick="forwardClickHandler('${id}')">
+                                    <span class="sms-forward-icon paddingright10"></span>
+                                </div>
+                                <div class="smslist-item-delete paddingright10 floatright cursorhand  marginRight6" target="${number}" onclick="deleteSingleItemClickHandler('${id}')">
+                                    <span class="trash-icon cursorhand  paddingright10"></span>
+                                </div>
+                            </div>
+                            {{if tag == 3}}
+                            <div class="smslist-item-resend cursorhand floatright marginRight6" target="${target}" onclick="resendClickHandler('${id}')">
+                                <span class="sms-resend-icon cursorhand paddingright10 marginbottom5"></span>
+                            </div>
+                            {{/if}}
+                            <div class="floatright marginRight6 paddingTop4 error paddingright10">${errorText}</div>
+                            {{if targetName}}
+                            <div class="floatright marginRight6 paddingTop4 paddingright10">To: ${targetName}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+
+                    {{else}}
+                    <div class="msg_container msg" style="word-break:normal;">
+                        <s class="arrow"></s>
+                        <div class="J_content"><pre>{{html dealContent(content, id)}}</pre></div>
+
+                        <div class="time paddingtop10">
+                            <div class="smslist-item-time floatright paddingTop4 paddingright10">${time}</div>
+                            <div class="hiddenButton">
+                                <div class="smslist-item-repeat cursorhand floatright marginRight6 paddingright10" onclick="forwardClickHandler('${id}')">
+                                    <span class="sms-forward-icon paddingright10"></span>
+                                </div>
+                                <div class="smslist-item-delete paddingright10 floatright cursorhand  marginRight6" target="${number}" onclick="deleteSingleItemClickHandler('${id}')">
+                                    <span class="trash-icon cursorhand  paddingright10"></span>
+                                </div>
+                            </div>
+                            {{if tag == 3}}
+                            <div class="smslist-item-resend cursorhand floatright marginRight6" target="${target}" onclick="resendClickHandler('${id}')">
+                                <span class="sms-resend-icon cursorhand paddingright10 marginbottom5"></span>
+                            </div>
+                            {{/if}}
+                            <div class="floatright marginRight6 paddingTop4 error paddingright10">${errorText}</div>
+                            {{if targetName}}
+                            <div class="floatright marginRight6 paddingTop4 paddingright10">To: ${targetName}</div>
+                            {{/if}}
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-jquery-tmpl" id="smsOtherTmpl">
+<div id="talk-item-${id}" class="talk-item talk-a">
+	<div class="layout grid-talkf">
+		<div class="col-main">
+			<div class="info-talk">
+				<div class="msg_container msg"  style="word-break:normal;">
+					<s class="arrow"></s>
+					<div class="J_content"><pre>{{html dealContent(content)}}</pre></div>
+                    <div class="time paddingtop10">
+                        <div class="smslist-item-time floatright paddingleft10 marginRight6 paddingTop4">${time}</div>
+                        <div class="hiddenButton">
+                            <div class="smslist-item-repeat paddingleft10 cursorhand floatright" onclick="forwardClickHandler('${id}')">
+                                <span class="sms-forward-icon floatright paddingleft10"></span>
+                            </div>
+                            <div class="smslist-item-delete cursorhand floatright  marginRight6" target="${number}" onclick="deleteSingleItemClickHandler('${id}')">
+                                <span class="trash-icon smslist-item-delete cursorhand"></span>
+                            </div>
+                        </div>
+                        <div class="floatright paddingTop4 error">
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+<script type="text/x-jquery-tmpl" id="addPhonebookTmpl">
+<div class="tagPopup">
+	<div id="innerTagPopup" class="popup tag-popup">
+		<div class="popup-wrapper">
+			<p class="tag-popup-close">
+				<a href="javascript:hidePopup();"></a>
+			</p>
+			<form id="quickSaveContactForm">
+				<p><span trans="name"></span><i class='colorRed'>&nbsp;*</i></p><p><input type="text" name="name" id="name" value="" maxlength="22" class="required"/></p>
+				<p><span trans="send_numbers"></span><i class='colorRed'>&nbsp;*</i></p><p><input type="text" name="number" id="number" value="${number}" maxlength="20" class="required"/></p>
+				<p class="textRight"><input type="submit" class="btn-1 " trans="save"/></p>
+			</form>
+		</div>
+	</div>
+</div>
+</script>
+<div id="smsChatRoom">
+	<div id="chosenUser">
+		<div id="chosenUserList">
+			<select id="chosenUserSelect" multiple class="chzn-select-deselect"></select>
+
+	    </div>
+    </div>
+    <div id="chosenUser1" class="hide form-title">
+        <span trans ="chatWith"></span>
+        <span id="chatwith"></span>
+    </div>
+	<div id="chatpanel">
+		<div class="clear-container">
+			<div id="chatlist">
+				
+			</div>
+		</div>
+	</div>
+	<div id="inputpanel">
+        <span trans="Messages2" style="font-size: 14px;">Message:</span>
+		<div class="chatform">
+			<div class="chattextinput">
+				<textarea id="chat-input" trans="chat_input_placehoder"></textarea>
+			</div>
+			<div class="chatfun">
+                <div class="row-fluid">
+                    <div id="toolbar" class="ext span7">
+                        <span style="font-size: 14px;"><em id="inputcount">(0/765)</em> <em id="inputItemCount">(1/5)</em></span>
+                        <span class="error" id="sendSmsErrorLi" data-action="sendimage"></span>
+                    </div>
+                    <div class="btn span5 side-right">
+                        <span><input id="btn-send" type="button" class="btn-1 " onclick="sendSmsClickHandler()" trans="send"/></span>
+                        <span><input id="btn-back" type="button" class="btn-1 " onclick="chatCancelClickHandler()" trans="back"/></span>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/x-jquery-tmpl" id="smsListTmpl">
+	{{each(i, sms) data }}
+        {{if hasDraft && groupId != ''}}
+        <div class="height115 width100p smslist-item" id="smslist-item-${groupId}">
+            <table class="width100p height100p">
+                <tbody>
+                <tr>
+                    <td style="" class="vMiddle width20">&nbsp;
+                        <!--<div _tmplitem="1"  class="smslist-item-checkbox">
+                            <p _tmplitem="1"  class="checkbox" id="89">
+                                <input _tmplitem="1"  type="checkbox" target="smslist-checkAll" name="smsid" id="checkbox89" value="89" number="13839392200"  />
+                            </p>
+                        </div>-->
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="width:600px;">
+                                    <div class="smslist-item-name  side-left txtBold  cursorhand" onclick="draftSmsItemClickHandler('${groupId}')" title="${draftShowNameTitle}">
+                                        <div class="smslist-item-name-draftShowName"><span>${draftShowName}</span></div>
+                                        <div class="smslist-item-total-count smslist-item-total-count-style">(${totalCount})</div>
+                                    </div>
+                                </td>
+                                <td style="width:200px;">
+                                    <div class="smslist-item-checkbox" style="float:right;">
+                                        <p class="checkbox" id="${id}">
+                                            <input type="checkbox" target="smslist-checkAll" name="smsid" id="checkbox${id}" value="${id}" groupid="${groupId}" />
+                                        </p>
+                                    </div>
+                                    <div  class="smslist-item-draft-flag floatright paddingright10  side-right colorRed" trans="draft"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="margintop8">
+                    <td class="vMiddle width20">&nbsp;</td>
+                    <td class="font10px lh20px" onclick="draftSmsItemClickHandler('${groupId}')">
+                        <div class="smslist-item-msg cursorhand">
+                            <pre class="lh20px">${content}</pre>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="margintop10">
+                    <td class="vMiddle width20">&nbsp;</td>
+                    <td class="height30 clock-time">
+                        <div class="margintop10 height30 floatleft marginright5">
+                            <span class="clock-icon floatleft marginright5"></span>
+                            <span class="clock-time">${latestTime}</span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+        <div class="height115 width100p smslist-item" id="smslist-item-${itemId}">
+            <table class="width100p height100p">
+                <tbody>
+                    <tr><td class="vMiddle width20" style="">&nbsp;
+                        <!--<div class="smslist-item-checkbox">
+                            <p class="checkbox" id="${id}">
+                                <input type="checkbox" target="smslist-checkAll" name="smsid" id="checkbox${id}" value="${id}" number="${number}" ${checked?"checked=checked":""} />
+                            </p>
+                        </div>-->
+                    </td>
+                        <td>
+                            {{if name.length == 0}}
+                            <div class="smslist-item-name floatleft txtBold cursorhand" onclick="smsItemClickHandler('${number}')"><span>${number}</span></div>
+                            <div style="float:left;" class="smslist-item-total-count floatleft txtBold" onclick="smsItemClickHandler('${number}')">(${totalCount})</div>
+                            <div class="floatleft cursorhand paddingtop10" id="listNumber${itemId}" style="line-height: 35px; width:30px;margin-left: 4px;"><span class="sms-add-contact-icon" onclick="openPhoneBook(null, '${number}')"></span></div>
+                            <div class="smslist-item-new-count cursorhand floatright ${newCount > 0?'':'hide'}" onclick="smsItemClickHandler('${number}')"><span>${newCount}</span></div>
+                            {{else}}
+                            <div class="smslist-item-name floatleft txtBold cursorhand" onclick="smsItemClickHandler('${number}')"><span>${name}/${number}</span></div><div class="smslist-item-total-count floatleft txtBold" onclick="smsItemClickHandler('${number}')">(${totalCount})</div><div class="smslist-item-new-count cursorhand floatright ${newCount > 0?'':'hide'}" onclick="smsItemClickHandler('${number}')"><span>${newCount}</span></div>
+                            {{/if}}
+                            <div class="smslist-item-draft-flag paddingright10 floatright colorRed ${hasDraft?'':'hide'}"><span trans="draft"></span></div>
+                        </td>
+                        <td class="vMiddle width20">
+                            <div class="smslist-item-checkbox">
+                                <p class="checkbox" id="${id}">
+                                    <input type="checkbox" target="smslist-checkAll" name="smsid" id="checkbox${id}" value="${id}" number="${number}" ${checked?"checked=checked":""} />
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="margintop8">
+                        <td class="vMiddle width20">&nbsp;</td>
+                        <td class="font10px lh20px" onclick="smsItemClickHandler('${number}')">
+                            <div class="smslist-item-msg cursorhand">
+                                <pre class="lh20px ${newCount > 0?'txtBold':''}">${latestSms}</pre>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="margintop10">
+                        <td class="vMiddle width20">&nbsp;</td>
+                        <td class="height30 clock-time" style="float:right;">
+                            <div class="smslist-item-repeat margintop10 cursorhand floatleft marginright30" style="display:none;">
+                                <span class="sms-forward-icon floatleft" onclick="forwardClickHandler(${latestId})"></span>
+                            </div>
+                            <div class="smslist-item-delete margintop10 height30 cursorhand floatleft marginright30"  style="display:none;">
+                                <span class="trash-icon floatleft" onclick="deletePhoneMessageClickHandler('${number}')"></span>
+                            </div>
+                            <div class="margintop10 height30 floatleft marginright5">
+                                <span class="clock-icon floatleft marginright5"></span>
+                                <span class="clock-time">${latestTime}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {{/if}}
+	{{/each}}
+</script>
+<div id="smslist-main">
+    <div class="form-title" style="width: 400px;float: left"><!--<span trans="Messages"></span> <span id="smsCapability"></span>-->
+
+        <ul class="nav nav-pills">
+            <li class="dropdown" id="menu2">
+                <button data-toggle="dropdown" class="dropdown-toggle btn"  href="#menu2">
+                    <span trans="subsection_menu"></span><b class="caret"></b>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a><span trans="Messages"></span><em class="menu_current" id = "device_messages" trans= 'current_menu_str'></em></a></li>
+                    <li onclick="goSimMessage()"><a trans = "sim_messages"></a></li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <div style="float: right;">
+        <ul class="nav nav-pills">
+            <li class="dropdown" id="menu3">
+                <button id="add_new"  href="#menu3"  data-toggle="dropdown" style="border: none; background: none; font-size: 12px;" class="width60 dropdown-toggle btn">
+                    <div class="btn-new"></div>
+                    <span trans='actions'></span>
+                </button>
+                <ul class="dropdown-menu" style="font-size: 14px;">
+                    <li onclick="newMessageClickHandler()"><a trans="new"></a></li>
+                    <li  onclick="deleteSelectClickHandler()"><a trans = "delete"></a></li>
+                    <li id="choseLi" onclick="choseUsersDeleteSelectClickHandler()"><a trans = "select_all"></a></li>
+                    <li id="disChoseLi" onclick="disChoseUsersDeleteSelectClickHandler()" style="display: none"><a trans = "Deselect_all"></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    
+	<form id="smsListForm">
+		<div class="form-title" trans='Messages' style="padding-left: 20px;"></div>
+        <div class="smslist-btns" style="display: none;">
+			<div class="floatleft paddingright15">
+				<p id="smslist-checkAll" target="smslist_container" class="checkbox checkboxToggle floatleft marginTop8">
+					<input id="checkbox-all" type="checkbox" />
+				</p>
+			</div>
+			<div>
+				<input type="button" id="smslist-new-sms" onclick="newMessageClickHandler()" class="btn-1 " trans="new"/>
+				<input type="button" id="smslist-delete" onclick="deleteSelectClickHandler()" class="btn-1  disabled" disabled="disabled" trans="delete"/>				
+				<input type="button" id="smslist-refresh" onclick="refreshClickHandler()" class="btn-1 " trans="refresh"/>
+			</div>
+		</div>
+		<div id="device-message" class="width100p overflow-only-y">
+			<div class="jspContainer width100p height100p" id="smslist_container" style="height: 395px; overflow-x: hidden; overflow-y: auto;"></div>
+		</div>
+	</form>
+</div>

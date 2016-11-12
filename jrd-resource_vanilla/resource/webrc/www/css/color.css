@@ -1,0 +1,254 @@
+/*HEADER*/
+.status-wrap .status-bar{
+    background: #1dc2e9;
+}
+.status-wrap .wifi-wrap .count{
+    color: #1dc2e9;
+}
+header li.navigation a {
+    color: #26c7ed;
+}
+header ul.navigation li.lng.navigation{
+  border-right: 1px solid #26c7ed;
+}
+header div.dropdown li a:hover, header div.dropdown li a:focus,header div.TopMenuLan li a:hover, header div.TopMenuLan li a:focus {
+    color: #26c7ed;
+    background: #fff;
+}
+#popinLng div.mobile-lng-popin ul li a.on {
+    color: #26c7ed;
+}
+.y-lng{
+    border-right:1px solid #26c7ed;
+}
+/*MODULE BACKGROUND*/
+.blue {
+    background: #26c7ed;
+}
+.red {
+    background: #df5555;
+}
+.orange {
+    background: #e98a3d;
+}
+.pink {
+    background: #fd92b8;
+}
+.green {
+    background: #b8d558;
+}
+.yellow {
+    background: #ffe53d;
+}
+/*MODULE TITLE*/
+.blue .item-hd {
+    background: #00b6e1;
+}
+.red .item-hd {
+    background: #ce4343;
+}
+.orange .item-hd {
+    background: #e98a3d;
+}
+.pink .item-hd {
+    background: #ef80a8;
+}
+.green .item-hd {
+    background: #abc948;
+}
+.yellow .item-hd {
+    background: #f1d628;
+}
+
+.green .item-content {
+    background: #abc948;
+}
+/*INDEX*/
+.blue.conStatus:hover {
+    background: #3eb6d3;
+}
+.red.usages:hover {
+    background: #cc6565;
+}
+.pink.sms:hover, .pink.sms-noSD:hover {
+    background: #efa4bf;
+}
+.green.settings:hover, .green.settings-noSD:hover {
+    background: #aec467;
+}
+.orange.more:hover {
+    background: #d58c51;
+}
+.yellow.sharing:hover {
+    background: #e5d254;
+}
+.glyphicon-usages {
+    background: url(../images/icon_usage.png) no-repeat center;
+	background-size: contain;
+}
+.glyphicon-more {
+    background: url(../images/icon_more.png) no-repeat center;
+	background-size: contain;
+}
+.glyphicon-sms {
+    background: url(../images/icon_sms.png) no-repeat center;
+	background-size: contain;
+}
+.glyphicon-settings {
+    background: url(../images/icon_settings.png) no-repeat center;
+	background-size: contain;
+}
+.glyphicon-sharing {
+    background: url(../images/icon_sharing.png) no-repeat center;
+	background-size: contain;
+}
+
+.glyphicon-sms-new{
+    color: #efa4bf;
+}
+.green .item-content {
+    background: #abc948;
+}
+/*Login*/
+.login_wrap .glyphicon-admin{
+    background-color: #0089cf;
+}
+.popin input[type=button]{
+    background: #0089cf;
+    color: #fff;
+}
+.popin input[type=button]:hover, .popin input[type=button]:focus, .popin input[type=button]:active, .popin a.bt:hover, .popin a.bt:active, .popin a.bt:focus {
+    background: #0089cf;
+}
+/*POP PIN*/
+.popin h2{
+    color: #0089cf;
+}
+/*CONNECTION*/
+.item-connection .state .roaming{
+    color: #26c7ed;
+}
+.item-connection .infos li.icons{
+    border-right:1px solid #03bbe7;
+}
+.item-connection .infos li.txt{
+    border-left:1px solid #51d3f2;
+}
+.item-connection .solidline{
+    border-top: 1px solid #51d3f2;
+    border-bottom: 1px solid #03bbe7;
+}
+.item-connection .scroll-pane ul li { 
+    border-top: 1px solid #51d3f2;
+    border-bottom: 1px solid #03bbe7;
+}
+/*SETTINGS*/
+.item-settings .settings-list{
+    border-bottom: 1px solid #c3dc70;
+}
+.settings-list li a, .item-settings .title a{
+    background-color: #b8d558;
+    border-bottom: 1px solid #afcd4d;
+    border-top: 1px solid #c3dc70;
+}
+.settings-list li a:hover,.item-settings .title a:hover{
+    background-color: #c6dd79;
+}
+.item-settings .title {
+    box-shadow: 1px 1px 0 0 #a7c936;
+}
+/*USAGE*/
+.mini-menu-list li:hover{
+    background: #eaeaea;
+}
+.item-usage .solidline {
+    border-bottom: 1px solid #E45F5F;
+    border-top: 1px solid #CE4545;
+    margin: 10px 0;
+}
+.item-usage .international .roaming{
+    color: #df5555;
+}
+.item-usage .ipt-wrap li p {
+	color:#d1e92d;
+}
+/*SMS*/
+.item-sms .sms-list .scroll-pane li{
+    border-bottom: 1px solid #fe9cbf;
+    border-top: 1px solid #fc87af;
+}
+.item-sms .scroll-pane span.date{
+    color: #FFDDE9;
+}
+.talk-word {
+    background: #fd9bbe;
+}
+/*MORE*/
+.more-list li a,.item-more .item-content h3 a{
+    background-color: #f5984d;
+    border-top: 1px solid #f8a561;
+    border-bottom: 1px solid #f69a50;
+}
+.item-more .more-list{
+    border-bottom: 1px solid #faa057;
+}
+.more-list a:hover, .item-more .item-content h3 a:hover{
+    background-color: #f69a50;
+}
+.item-more .item-content h3 a{
+    box-shadow: 1px 1px 0 0 #f8a561;
+}
+/*FOOTER*/
+.footer{
+    background: #26aef4;
+}
+/*NEXT & PRE*/
+/* #content article.activePre, #content article.activeNext{ 
+  filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+  -webkit-filter: grayscale(100%);
+} */
+
+/*SWITCH BUTTON*/
+a.btnSlide{
+    background: #8EE0F4;
+}
+/*WARNING COLOR*/
+.rule {
+	color: #f00;
+}
+.error{
+	color: #f00;
+}
+.warnColor{
+	color: #f00;
+}
+/*firefox juchi*/
+ 
+@-moz-document url-prefix(){
+	#content .red.activePre,#content .green.activePre,#content .orange.activePre,#content .blue.activePre,#content  .pink.activePre,
+	#content .yellow.activePre { 
+		border-top:1px solid #f0f0f0; 
+		border-bottom:1px solid #f0f0f0;
+	}
+	#content .red.activeNext,#content .green.activeNext,#content .orange.activeNext,#content .blue.activeNext,#content  .pink.activeNext,
+	#content .yellow.activeNext {
+		border-top:1px solid #f0f0f0; 
+		border-bottom:1px solid #f0f0f0;
+	}
+	.green .item-content{
+		text-shadow: 1px 0px 0px #E1E4D9;
+	}
+	.orange .item-content{
+		text-shadow:1px 0px 0px #ECD4C1;
+	}
+	.blue .item-content{
+		text-shadow:1px 0px 0px #D5ECF2;
+	}
+	.pink #smsContent{
+		text-shadow:1px 0px 0px #F0CBCB;
+	}
+	.red .item-content{
+		text-shadow:1px 0px 0px #EACBCB;
+	}
+
+}

@@ -1,0 +1,229 @@
+<div class="row-fluid floatleft" id="div-connection">
+    <div class="span3 paddingtop20 paddingbottom20 hide">
+        <form id="frmHome">
+            <div class="row-fluid">
+                <div class="span12 table paddingtop20 paddingbottom20">
+                    <div class="row-fluid side-center marginbottom10">
+                        <img id="imgState" data-bind="attr:{src: imagePath }" />
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="current_flux" class="span7 side-right"></label>
+                        <label class="span5" id="tdCurrentFlux" data-bind='text: current_Flux'></label>
+                    </div>
+                    <!-- div class="row-fluid">
+                        <label trans="total_flux" class="span7 side-right"></label>
+                        <label class="span5" id="tdTotalFlux" data-bind='text: total_Flux'></label>
+                    </div -->
+                    <div class="row-fluid">
+                        <label trans="connected_time" class="span7 side-right"></label>
+                        <label class="span5" id="tdConnectedTime" data-bind='text: connected_Time'></label>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="flux_up" class="span7 side-right"></label>
+                        <label class="span5" id="tdUpSpeed" data-bind='text: up_Speed'></label>
+                    </div>
+                    <div class="row-fluid">
+                        <label trans="flux_down" class="span7 side-right"></label>
+                        <label class="span5" id="tdDownSpeed" data-bind='text: down_Speed'></label>
+                    </div>
+                    <div class="row-fluid side-center margintop20 marginbottom30">
+                        <input type="submit" class="btn-1 btn_connect" data-bind='enable:canConnect(),css:{"disabled":!canConnect()},attr:{trans:transText}, value: connectStatusText,click: connectHandler' />
+                    </div>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+    <div id="div-station" class="span9 form-body hide" data-bind="visible: false">
+        <div class="form-title" trans="station_info"></div>
+        <div class="content">
+            <div class="ko-grid-container marginnone">
+                <table cellPadding="0" cellSpacing="0" id="tabStation" class="ko-grid colorHoverTable marginnone">
+                    <thead>
+                        <tr>
+                            <th trans="station_number"></th>
+                            <th trans="host_name"></th>
+                            <th trans="mac_address"></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:deviceInfo">
+                        <tr data-bind="css:{odd:$index()%2==1, even:$index()%2==0}">
+                            <td data-bind="text:hostName==''?'&nbsp;':$index()+1"></td>
+                            <td data-bind="text:hostName"></td>
+                            <td data-bind="text:macAddress"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="home_note"></li>
+            </ul>
+        </div>
+    </div>
+    <div id="div-homeimg" class="span9 marginTop15 paddingtop15" data-bind="visible: !hasWifi()">
+        <img src="images/home.png" alt="">
+    </div>
+    <!--metro-->
+    <div class="metro">
+        <div id="tile-sms1" class="tile app_height wide bg-color-blue" style="display: none">
+            <div class="images-wrapper marginTop76" style="height: 138px;">
+                <img src="images/message.png" style="display: none;">
+
+                <div>
+                    <div style="height: 70px;">
+                        <!--<img class="floatleft" style="padding: 10px;" src="images/default_head_portrait.png">-->
+                        <span class="floatleft" style="margin-left: 15px; font-size: 14px;">
+                            <p id="pbmName"></p>
+                            <p id="pbmNameHide" style="display: none"></p>
+                            <p data-bind="text:lastSmsTime"></p>
+                        </span>
+                    </div>
+                    <div id="newSmsDatil">
+                        <div id="home_sms" class="home_sms">
+                            <div class="home_sms_tomessage">
+                                <div data-bind="text:lastSmsContent" style="padding: 0 10px; line-height: 20px; height: 40px; display: block"></div>
+                                <div style="height: 18px;">
+                                    <img class="floatright" src="images/sms_read.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tile app wide" style=" background: #d0c8ba; margin: 7px 0px 0px 0px;">
+                <div class="images-wrapper marginTop76" style="height: 138px;" data-bind="click:function(){goToHerf('sms')}">
+                    <img src="images/message1.png">
+                </div>
+                <span class="app-label" trans='app_message'></span>
+                <span class="app-count" data-bind="text: capabilitySMS"></span>
+            </div>
+        </div>
+
+        <div id="tile-sms" class="tile app_height wide bg-color-blue" data-bind="click:function(){goToHerf('sms')}">
+            <div style="margin-top: 76px;" data-bind="click:function(){goToHerf('sms')}">
+                <img src="images/message1.png">
+            </div>
+            <span class="app-label" trans='app_message'></span>
+            <span class="app-count" data-bind="text: capabilitySMS"></span>
+        </div>
+        <div class="tile app bg-color-orange connect-wrap">
+            <div class="images-wrapper">
+                <!--<img id="imgState" data-bind="attr:{src: imagePath }"
+                     style="display: inline-block; height: 100%; position: absolute; left: 0;">-->
+                <!--Modify by fengtian.wang-->
+                <!--Disconnected-->
+                <div class="discon_wrap" id = "discon_wrap_id" data-bind="click: connectHandler">
+                	<div class="auto_connect">
+                    <div class = "auto_connect_button " data-bind="click: setConnectModeHandler" id = "setConnMode">
+                  	<p id="autoConnBtn" class="checkbox floatleft margintop5 checkboxToggle" data-bind="css:{'checkbox_selected':isAutoConnect()=='auto_dial'}" manualControl="true">
+                        <input type="checkbox" id="autoConnectCheckbox" value="1" data-bind="checked:isAutoConnect()=='auto_dial'"/> </p>
+                	<label for="isAllowedRoaming" trans="auto_connect" class="update_inline floatleft lineheight25"></label>
+                    </div>
+                    </div>
+                    <div class="disconnect_status"  trans="connect_internet"></div>
+                </div>
+                <!--Connected-->
+                <div class="con_wrap" id = "con_wrap_id" data-bind="click: connectHandler" style="display:none">
+                    <div class="connect_status"  trans="disconnect_internet"></div>
+                    <div class="connect_info">
+                        <div class="row-fluid">
+                            <span class="span5 side-left" trans="connected_time"></span>
+                            <span class="span4 side-left" data-bind='text: connected_Time'></span>
+                        </div>
+                        <div class="row-fluid">
+                            <span class="span5 side-left" trans="flux_down"></span>
+                            <span class="span6 side-left" data-bind='text: down_Speed'></span>
+                        </div>
+                        <div class="row-fluid">
+                            <span class="span5 side-left" trans="flux_up"></span>
+                            <span class="span6 side-left" data-bind='text: up_Speed'></span>
+                        </div>
+                    </div>
+                </div>
+                 <!--Connecting-->
+                <div class="coning_wrap" id = "coning_wrap_id" style="display:none">                  
+                    <div class="connecting_status">
+                        <img src="images/connecting.gif" alt="">&nbsp;<label trans="connecting" class="left:10px;"></label> 
+                    </div>
+                                        
+                    <div class="connect_info">
+                        <div style="height:30px"></div>
+                        <div class = "auto_connect_button " data-bind="click: cancelConnectHandler">  
+                        	<label trans="cancel" class="update_inline floatleft lineheight25"></label>
+                        </div>
+                    </div>
+                    
+                   <!-- <div class="connect_info">
+                      <div data-bind="click:cancelConnectHandler"  trans="cancel"></div>
+                   </div>-->
+                </div>
+                <!--Disonnecting-->
+                <div class="coning_wrap" id = "disconing_wrap_id" style="display:none">                  
+                    <div class="connecting_status">
+                        <img src="images/connecting.gif" alt="">&nbsp;<label trans="disconnecting" class="left:10px;"></label>
+                    </div>
+                    <div class="connect_info"></div>
+                </div>
+            </div>
+            <span id="connectStatusByBut" class="app-label" data-bind="text: connectStatusText" style="display:none"></span>
+            <span class="app-count" style="display:none"></span><!--end-->
+        </div>
+        <div class="tile app wide bg-color-blue" data-bind="click:function(){goToHerf('account')}">
+            <div class="images-wrapper marginTop76">
+                <img src="images/myAccount.png">
+            </div>
+            <span class="app-label" trans='myAccount'></span>
+            <span class="app-count"></span>
+        </div>
+        <div class="tile app bg-color-orange" onclick="showBalance();" href="javascript: void(0)">
+            <div class="images-wrapper">
+                <div>
+                    <img id="balanceImg" src="images/check_balance.png">
+                    <span id="balance" class="cus_balance">
+                        <p class="cus_closeBalance">Your current balance 100 RUB</p>
+                    </span>
+                </div>
+            </div>
+            <span class="app-label" trans='app_check_balance'></span>
+            <span class="app-count"></span>
+        </div>
+        <div class="tile app wide bg-color-blue" data-bind="click:function(){goToHerf('setting')}">
+            <div class="images-wrapper marginTop76">
+                <img src="images/settings.png">
+            </div>
+            <span class="app-label" trans='setting'></span>
+            <span class="app-count"></span>
+        </div>
+
+        <div class="tile app wide bg-color-blue" data-bind="click:function(){goToHerf('cantacts')}">
+            <div class="images-wrapper marginTop76">
+                <img src="images/contacts.png">
+            </div>
+            <span class="app-label" trans='app_contacts'></span>
+            <span class="app-count" data-bind="text:pbmNum">247</span>
+        </div>
+        <div class="tile app wide bg-color-orange" data-bind="click:function(){goToHerf('Manage_Services')}">
+            <div class="images-wrapper">
+                <img src="images/account.png">
+            </div>
+            <span class="app-label" trans='app_account_balance' style="font-size:16px;"></span>
+        </div>
+        <div class="tile app wide bg-color-orange" data-bind="click:function(){goToHerf('wifiInfo')}">
+            <div class="images-wrapper">
+                <img src="images/wifi_info.png">
+            </div>
+            <span class="app-label" trans='wifi_info'></span>
+        </div>
+        <div class="tile app wide bg-color-blue" data-bind="click:function(){goToHerf('help')}">
+            <div class="images-wrapper marginTop76">
+                <img src="images/module_help.png">
+            </div>
+            <span class="app-label" trans='app_help'></span>
+            <span class="app-count"></span>
+        </div>
+    </div>
+</div>

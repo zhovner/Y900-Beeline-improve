@@ -1,0 +1,266 @@
+<div id="macFilterPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_settings}</h2>
+    </div>
+    <div class="item-content">
+        <h3 class="title"><a href="#settings/routerSetting.html" class="changeLink">${ids_title_advanced}</a>
+        </h3>
+        <div class="scroll-pane jspScrollable">
+            <div class="settings-con">
+                <ul class="ipt-wrap">
+                    <li>
+                        <label class="text">${ids_title_macFilter:}</label>
+                        <select name="filterflag" id="filterflag" onchange="uiShowMacList(parseInt($(this).val()));monitorApplyBtn()" class="select">
+                            <option value="0">${ids_disable}</option>
+                            <option value="1">${ids_allow}</option>
+                            <option value="2">${ids_deny}</option>
+                        </select>
+                    </li>
+                </ul>
+                <div id="macListBox" style="display:none">
+                    <h4>${ids_security_addMacAddress}</h4>
+                    <ul class="ipt-wrap mac-ipt-wrap">
+                        <li>
+                            <input id="mac_ip1" type="text" maxlength="2" class="ipt15">
+                            <input id="mac_ip2" type="text" maxlength="2" class="ipt15">
+                            <input id="mac_ip3" type="text" maxlength="2" class="ipt15">
+                            <input id="mac_ip4" type="text" maxlength="2" class="ipt15">
+                            <input id="mac_ip5" type="text" maxlength="2" class="ipt15">
+                            <input id="mac_ip6" type="text" maxlength="2" class="ipt15">
+                            <input type="button" id="btnAdd" onclick="AddMacAddress();" class="btnNormal" value="${ids_btn_add}" />
+                        </li>
+                        <li class="rule hidden" id="macRlue"></li>
+                    </ul>
+                    <div class="mac-list-wrap clearfix">
+                        <ul class="mac-list">
+
+                        </ul>
+                        <input type="button" id="btnDelete" class="btnNormal" onclick="DeleteMacAddress();" value="${ids_btn_delete}" />
+                    </div>
+                    <div class="container">
+                        <p class="error" id="warning"></p>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <input type="button" id="btnApply" class="btnNormal" onclick="uiSetMacFilter()" value="${ids_btn_apply}" />
+                    <input type="button" id="btnCancel" class="btnNormal" onclick="uiInitMacFilterPage()" value="${ids_btn_cancel}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 5;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "macFilterSetting";
+
+var initMacFilterSettings = null;
+var initFilterPolicy = MAC_FILTER_STATE_DISABLE;
+var initAllowList = [];
+var initDenyList = [];
+
+var MAX_MacNumber = 10;
+
+$(function(){
+    initScroll($("article#settings")); 
+    uiInitMacFilterPage();
+    $("input[id^='mac_ip']").off().on("change keyup keydown paste",function(){
+        $("#btnCancel").removeBtnDisabled();
+    });
+});
+
+function uiInitMacFilterPage(){
+    $("#btnApply,#btnCancel").setBtnDisabled();
+    $("input[id^='mac_ip']").val("");
+    initMacFilterSettings = SDK.Firewall.GetMacFilterSettings();
+    initFilterPolicy = initMacFilterSettings.filter_policy;
+    initAllowList = initMacFilterSettings.MacAllowList;
+    initDenyList = initMacFilterSettings.MacDenyList;
+    $("#filterflag").val(initFilterPolicy);
+    uiShowMacList(initFilterPolicy);
+}
+
+function uiShowMacList(type){
+    var $macListBox = $("#macListBox");
+    switch (type){
+        case MAC_FILTER_STATE_ALLOW:
+            showMacList(initAllowList);
+            $macListBox.fadeIn(200);
+            break;
+        case MAC_FILTER_STATE_DENY:
+            showMacList(initDenyList);
+            $macListBox.fadeIn(200);
+            break;
+        default:
+            $macListBox.fadeOut(200);
+    }
+}
+
+
+function showMacList(list) {
+    var str = "";
+    $.each(list, function(i, n) {
+        if (n != "") {
+            str += '<li><span>' + n + '</span><input type="checkbox" name="macCheck" value="" /></li>';
+        }
+    });
+    $(".mac-list").html(str);
+    monitorMacList();
+    $(".mac-list input[type='checkbox']").die().live("change", function() {
+        monitorMacList();
+        $("#btnCancel").removeBtnDisabled();
+    });
+}
+
+function monitorMacList(){
+    var $macAddr = $(".mac-list input[type='checkbox']");
+    var $macAddrChecked = $(".mac-list input[type='checkbox']:checked");
+
+    var $macInput = $("input[id^='mac_ip']");
+    var $btnAdd = $("#btnAdd");
+    var $btnDelete = $("#btnDelete");
+    
+    $macInput.attr("disabled", $macAddr.length==MAX_MacNumber);
+    if($macAddr.length==MAX_MacNumber){
+        $btnAdd.setBtnDisabled();
+    }else{        
+        $btnAdd.removeBtnDisabled();
+    }
+
+    if($macAddrChecked.length==0){
+        $btnDelete.setBtnDisabled();
+    }else{
+        $btnDelete.removeBtnDisabled();
+    }
+    
+}
+
+function monitorApplyBtn(){
+    var $btnApply = $("#btnApply");
+    var macState = parseInt($("#filterflag").val());
+    if((macState == MAC_FILTER_STATE_ALLOW)&& $(".mac-list li").size()==0){
+       $btnApply.setBtnDisabled();
+    }else{
+        $btnApply.removeBtnDisabled();
+    }
+    $("#btnCancel").removeBtnDisabled();
+}
+
+function AddMacAddress() {
+    var newMacAddressArr = [];
+    var newMacAddress = "";
+    var $macAddressInput = $("input[id^='mac_ip']");
+    var currentMacList = [];
+
+    $(".mac-list li span").each(function(i) {
+        currentMacList.push($(this).text());
+    });
+
+    $macAddressInput.each(function(){
+        newMacAddressArr.push($(this).val());
+    })
+    newMacAddress = newMacAddressArr.join(":");
+    if(!isValidMacAddress(newMacAddress)){
+        sys.alert("ids_security_macAddrInvalid");
+        return false;
+    }
+
+    if($.inArray(newMacAddress, currentMacList) != -1){
+        sys.alert("ids_security_macAddrNameWarn");
+        return false;
+    }
+
+    $(".mac-list").append('<li><span>' + newMacAddress + '</span><input type="checkbox" name="macCheck" value="" /></li>');
+    $macAddressInput.val("");
+    monitorMacList();
+    monitorApplyBtn();
+}
+
+function DeleteMacAddress() {
+    $(".mac-list input[type='checkbox']").each(function() {
+        if ($(this).attr("checked")) {
+            $(this).parent().remove();
+        }
+    });
+    monitorMacList();
+    monitorApplyBtn();
+}
+
+function isValidMacAddress(address) {
+    var c = '';
+    var i = 0,
+        j = 0;
+    var OddVals = new Array("1", "3", "5", "7", "9", "b", "d", "f");
+
+    if (address == 'ff:ff:ff:ff:ff:ff') {
+        return false;
+    }
+
+    addrParts = address.split(':');
+    if (addrParts.length != 6) {
+        return false;
+    }
+    for (i = 0; i < 6; i++) {
+        if (addrParts[i].length != 2) {
+            return false;
+        }
+
+        for (j = 0; j < addrParts[i].length; j++) {
+            c = addrParts[i].toLowerCase().charAt(j);
+            if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f')) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    c = addrParts[0].toLowerCase().charAt(1);
+
+    for (i = 0; i < OddVals.length; i++) {
+        if (c == OddVals[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function uiSetMacFilter(){
+    var wifiState = SDK.Wlan.GetWlanState().State;
+    if (wifiState == MACRO_WLAN_DISABLED) {
+        sys.alert("ids_wifi_cannotSet");
+        return;
+    } else if (wifiState == MACRO_WLAN_WPS) {
+        sys.alert("ids_wifi_wpsActiveWarn");
+        return false;
+    }
+
+    var macState = parseInt($("#filterflag").val());
+    var macAllowList = initAllowList,macDenyList = initDenyList;
+    var setMacList = [];
+    $(".mac-list li span").each(function(i) {
+        setMacList.push($(this).text());
+    }); 
+
+    if(macState == MAC_FILTER_STATE_ALLOW){
+        macAllowList = setMacList;
+    }else if(macState == MAC_FILTER_STATE_DENY){
+        macDenyList = setMacList;
+    }
+
+    sys.confirm("ids_wifi_disconWarning", function() {
+        $("#btnApply").setBtnDisabled();
+        var result = SDK.Firewall.SetMacFilterSettings(macState,macAllowList,macDenyList);
+        sys.alert(result == API_RESULT_SUCCESS?"ids_success":"ids_fail", function() {
+            page.startLoading();
+            setTimeout(function(){
+                page.stopLoading();
+                page.reloadMain();
+            }, 4000);
+        });
+    })
+}
+</script>

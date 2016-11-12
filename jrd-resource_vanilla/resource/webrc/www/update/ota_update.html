@@ -1,0 +1,51 @@
+﻿<form id="frmOTAUpdate">
+    <div class="form-body">
+        <!--<div class="form-title2" trans='ota_update_setting'></div>-->
+        <div class="form-title" trans='update_management'></div>
+        <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans="ota_auto_update_switch" style="color: #8F8F8F; line-height: 25px;"></label>
+
+                <div class="">
+                    <label id="otaStatus" data-bind='attr:{trans:updateMode() == 0 ?"disable" : "enable" }'></label>
+                    <img style="cursor: pointer" data-bind="attr: {src: updateMode() == 0? 'images/sms_off.png' : 'images/sms_on.png'},click:changeImag" />
+                </div>
+            </div>
+            <div class="row-fluid" data-bind="visible: updateMode()=='1'" style="line-height: 25px;">
+                <label class="" trans="ota_update_interval_day" for="selInterValDay" style="color: #8F8F8F; line-height: 25px;"></label>
+
+                <div class="">
+                    <select id="selInterValDay" name="selInterValDay" data-bind="value: updateIntervalDay">
+                        <option value="1" trans="ota_update_every_day"></option>
+                        <option value="7" trans="ota_update_7_day"></option>
+                        <option value="15" trans="ota_update_15_day"></option>
+                        <option value="30" trans="ota_update_30_day"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="row-fluid" data-bind="visible: updateMode()=='1'">
+                <div class="span12" style="margin-top: 10px;">
+                    <p class="checkbox floatleft"
+                       data-bind="css:{'checkbox_selected': allowRoamingUpdate()=='1'}, click: clickAllowRoamingUpdate"
+                       manualControl="true">
+                        <input type="checkbox" id="chkUpdateRoamPermission" name="chkUpdateRoamPermission" value="1"
+                               data-bind="checked:allowRoamingUpdate()=='1'"/>
+                    </p>
+                    <label trans="ota_update_roaming_remind" class="update_inline floatleft lineheight25" style="width: 500px; margin-top: -5px;"></label>
+                </div>
+            </div>
+
+            <div class="form-buttons">
+                <input id="btnApply" type="submit" class="btn-1 " trans="apply"/>
+            </div>
+        </div>
+       <!-- <div class="form-title2" trans='ota_update_manual'></div>-->
+        <div class="content" style="padding-left: 20px;">
+            <span class="" trans="ota_check_new_version_desc"></span>
+        </div>
+        <div class="form-buttons">
+            <input id="btnCheckNewVersion" type="button" class="btn-1 " trans="ota_check_new_version"
+                   data-bind="click:checkNewVersion"/>
+        </div>
+    </div>
+</form>

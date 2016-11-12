@@ -1,0 +1,237 @@
+<div id="usageSettingsPage" class="jsTemplate">
+
+    <div class="item-hd clearfix">
+        <h2>
+            <a href="#usage/usageHistory.html">
+                <span class="arrow back-icon"></span>${ids_menu_usageSetting}
+            </a>
+        </h2>
+    </div>
+    <div class="item-content">
+        <h4>${ids_menu_usage}</h4>
+        <ul class="ipt-wrap">
+            <li>
+                <label class="text">${ids_usage_billingDay:}</label>
+                <input type="text" name="billingDay" id="start_billingDay" value="" class="ipt" maxLength="2" />${ids_usage_day}
+            </li>
+            <li class="clearfix">
+                <label class="text" style="float:left; margin-top:5px;">${ids_usage_monthlyDataPlan:}</label>
+                <input type="text" name="monthlyDataPlan" id="start_monthlyDataPlan" value="" class="ipt" maxLength="4" style="float:left; margin-top:5px;" />
+                <select id="Usage_sec_mode" class="select" style="height:20px; float:left; margin-top:5px; margin-left:2px;">
+                    <option value="0" selected="selected">MB</option>
+                    <option value="1">GB</option>
+                </select>
+            </li>
+            <li style="margin-bottom:0px">
+                <label class="text">${ids_usage_dataConsumption:}</label>
+                <span id="start_dataConsumption" class="remainTime"></span>
+            </li>
+        </ul>
+        <h4 style="margin-top:1px">${ids_usage_autoDisconnected}
+            <input type="checkbox" name="pinInit" id="chkAutoDisconnected" value="" class="switch">
+        </h4>
+        <p>${ids_usage_dataUsageReach}</p>
+        <div class="solidline"></div>
+        <h4>
+            ${ids_usage_timeLimit}
+            <input type="checkbox" name="chkTimeLimit" id="chkTimeLimit" value="" class="switch">
+        </h4>
+
+        <ul class="ipt-wrap">
+            <li>
+                <label class="text">${ids_usage_setTimeLimit}:</label>
+                <input type="text" name="starTime" id="star_time" value="" class="ipt" maxLength="5">
+                <span>${ids_usage_minutesTimes}</span>
+            </li>
+            <li>
+                <label class="text">${ids_usage_timePassed}:</label>
+                <span id="start_timePassed" class="remainTime"></span>
+            </li>
+        </ul>
+        <div class="solidline"></div>
+        <div class="btn-wrap" style="margin-top:19px">
+            <!-- <button class="btnNormal" id="btnSetUsage" name="">${ids_btn_save}</button>
+            <button class="btnNormal" id="btnsetCancel" name="initCancel">${ids_btn_cancel}</button> -->
+
+            <input type="button" id="btnSetUsage" class="btnNormal" value="${ids_btn_save}" />
+            <input type="button" id="btnsetCancel" class="btnNormal" value="${ids_btn_cancel}" />
+        </div>
+    </div>
+</div>
+<script>
+currentMenu = 1;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "usageSettings";
+/* -------------------------------------------------------------------------
+     class - airbox usage
+     ----------------------------------------------------------------------------- */
+var usageSettingsInfo = SDK.Statistics.GetUsageSettings();
+// var home = usageSettingsInfo.BillingDay;
+
+
+var billingday = usageSettingsInfo.BillingDay;
+
+var monthlyDataPlan = usageSettingsInfo.MonthlyPlan;
+var TimeLimitFlag = usageSettingsInfo.TimeLimitFlag;
+var settimelimit = usageSettingsInfo.Settimelimit;
+var UsedTimes = usageSettingsInfo.UsedTimes;
+var AutoDisconnFlag = usageSettingsInfo.AutoDisconnFlag;
+var UsedData = usageSettingsInfo.UsedData;
+var Unit = usageSettingsInfo.Unit;
+var isAutoUsage = usageSettingsInfo.TimeLimitTimes;
+var IS_AUTO_Usage_ENABLE = 1;
+$(document).ready(function() {
+    init();
+});
+
+function init() {
+    _initStatus();
+};
+$(document).ready(function() {
+    $("article.active input[type='button']").setBtnDisabled();
+    $("article.active select,article.active input").bind("change keydown keyup input paste", function() {
+        $("article.active input[type='button']").removeBtnDisabled()
+    })
+    $("#btnSetCancel").click(page.reloadMain);
+    $("#chkTimeLimit").bind("change", initStarTime).val(TimeLimitFlag).prop("checked", TimeLimitFlag == 1 ? true : false);
+
+    function initStarTime() {
+        if ($("#chkTimeLimit").attr("checked")) {
+            $("#star_time").attr("disabled", false);
+            $("#chkTimeLimit").val("1");
+
+        } else {
+            $("#star_time").attr("disabled", true);
+            $("#chkTimeLimit").val("0");
+        }
+
+    }
+    initStarTime();
+    $("#chkAutoDisconnected").bind("change", initStarTime1).val(AutoDisconnFlag).prop("checked", AutoDisconnFlag == 1 ? true : false);
+
+    function initStarTime1() {
+        if ($("#chkAutoDisconnected").attr("checked")) {
+            $("#chkAutoDisconnected").val("1");
+        } else {
+            $("#chkAutoDisconnected").val("0");
+        }
+    }
+
+})
+
+function _initStatus() {
+    var $start_billingDay = $("#start_billingDay");
+
+
+
+    var $start_monthlyDataPlan = $("#start_monthlyDataPlan");
+
+    var $Usage_sec_mode = $("#Usage_sec_mode");
+
+    if (Unit == 0) {
+        monthlyDataPlan = monthlyDataPlan / 1024 / 1024;
+    } else if (Unit == 1) {
+        monthlyDataPlan = monthlyDataPlan / 1024 / 1024 / 1024;
+    }
+
+    //     var billingday1=billingday/12/3600;		alert(billingday1);
+
+
+    var $start_dataConsumption = $("#start_dataConsumption");
+    var $chkTimeLimit = $("#chkTimeLimit");
+    var $star_time = $("#star_time");
+    var $start_timePassed = $("#start_timePassed");
+    var $chkAutoDisconnected = $("#chkAutoDisconnected");
+    $start_billingDay.val(usageSettingsInfo.BillingDay);
+    //   $start_billingDay.val(billingday);
+    $start_monthlyDataPlan.val(monthlyDataPlan);
+    $Usage_sec_mode.val(usageSettingsInfo.Unit);
+    $("#start_dataConsumption").html(sys.covertNum(UsedData));
+    $chkTimeLimit.val(usageSettingsInfo.TimeLimitFlag);
+    $star_time.val(usageSettingsInfo.TimeLimitTimes);
+    $start_timePassed.html(getTimePassed(60 * usageSettingsInfo.UsedTimes));
+    $chkAutoDisconnected.val(usageSettingsInfo.AutoDisconnFlag);
+    $chkAutoDisconnected.attr("checked", isAutoUsage == IS_AUTO_ROAM_ENABLE ? true : false);
+    $("#chkAutoDisconnected").bind("change", function() {
+        $("#btnSave,#btnCancel").removeBtnDisabled();
+    });
+    $chkTimeLimit.attr("checked", isAutoUsage == IS_AUTO_ROAM_ENABLE ? true : false);
+
+}
+
+//  save and cancel function
+$(document).ready(function() {
+    $("#btnSetUsage").on("click", function(event) {
+        event.preventDefault();
+        setUseageEvent();
+    }); /*add event to save button*/
+    $("#btnsetCancel").click(page.reloadMain);
+})
+
+function setUseageEvent() {
+    var startdataConsumption = $("#start_dataConsumption").val();
+    var startime = $("#star_time").val();
+    var startmonthlyDataPlan = $("#start_monthlyDataPlan").val();
+    var startbillingDay = $("#start_billingDay").val();
+    var chkTimeLimit = $("#chkTimeLimit").val();
+    var chkAutoDisconnected = $("#chkAutoDisconnected").val();
+    var timepassed = $("#start_timePassed").val();
+    var Usagesec_mode = $("#Usage_sec_mode").val();
+    if ($.trim($("#start_billingDay").val()) < 1 || $.trim($("#start_billingDay").val()) == "" || $.trim($("#start_billingDay").val()) > 31 || !isNumber($.trim($("#start_billingDay").val()))) {
+        //$info.innerHTML = "";
+        $("#start_billingDay").showRule("ids_usage_billingTimeTips");
+        return;
+    }
+
+        if ($.trim($("#start_monthlyDataPlan").val()) < 1 || $.trim($("#start_monthlyDataPlan").val()) > 1024 || $.trim($("#start_monthlyDataPlan").val()) == "" || !isNumber($.trim($("#start_monthlyDataPlan").val()))) {
+            //$info.innerHTML = "";
+            $("#start_monthlyDataPlan").showRule("ids_usage_mothlyDataTips");
+            return;
+        }
+
+    if ($.trim($("#star_time").val()) < 1 || $.trim($("#star_time").val()) > 43200 || $.trim($("#star_time").val()) == "" || !isNumber($.trim($("#star_time").val()))) {
+        //$info.innerHTML = "";
+        $("#star_time").showRule("ids_usage_startTimeTips");
+        return;
+    }
+
+
+    if ($("#Usage_sec_mode").val() == "0") {
+        startmonthlyDataPlan = startmonthlyDataPlan * 1024 * 1024;
+    } else if ($("#Usage_sec_mode").val() == "1") {
+        startmonthlyDataPlan = startmonthlyDataPlan * 1024 * 1024 * 1024;
+    }
+
+    // startbillingDay = startbillingDay*12*3600;  
+    //	 var startbillingDay=startbillingDay1*12*3600;  alert(startbillingDay);  
+
+    var params = {
+        "BillingDay": Number(startbillingDay),
+        "MonthlyPlan": Number(startmonthlyDataPlan),
+        "UsedData": Number(startdataConsumption),
+        "TimeLimitFlag": Number(chkTimeLimit),
+        "TimeLimitTimes": Number(startime),
+        "UsedTimes": Number(timepassed),
+        "AutoDisconnFlag": Number(chkAutoDisconnected),
+        "Unit": Number(Usagesec_mode)
+
+    };
+
+
+    var result = SDK.Statistics.SetUsageSettings(params);
+    switch (result) {
+        case 0:
+            sys.alert("ids_success", function() {
+                page.reloadMain();
+            })
+            break;
+        default:
+            sys.alert("ids_fail", function() {
+                page.reloadMain();
+            })
+    }
+
+}
+</script>

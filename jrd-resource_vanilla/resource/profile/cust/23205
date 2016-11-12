@@ -1,0 +1,6 @@
+name:Orange Web
+apn:orange.web
+protocol:1
+user:web
+psw:web
+dial:*99#

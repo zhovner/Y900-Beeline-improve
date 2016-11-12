@@ -1,0 +1,98 @@
+<div id="smsWritePage" class="jsTemplate">
+    <div class="sms-read connectShow">
+	    <div class="item-hd clearfix">
+	        <h2> 
+			    <a href="#sms/smsList.html" class="arrow back-icon"></a> 
+		        <div id="chosenUser">
+		            <div id="chosenUserList">
+		                <select id="chosenUserSelect" multiple class="chzn-select-deselect" style="display:none;"></select>
+		            </div>
+		        </div>           
+	        </h2>
+	    </div>
+        <input name="phoneNumbers" id="phoneNumbers" type="text" class="phone-numbers" placeholder="Receiver" style="display:none;">
+        <div class="talk-word">
+            <div class="text1" id="smsCharCount" style="float: right;margin-right: 10px;"></div>
+            <div style="float: left;">
+                <textarea class="messages emotion" value="" id="messageContent" style="float: left;"></textarea>
+                <div id="btnSent" class="talk-send"><span class="sms-icon icon-send"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="statusContent" id="simCardStatus"></div>
+</div>
+
+<script>
+currentMenu = 2;
+pageName = "smsWrite";
+var currSmsId = parseInt(getUrlPara("sms_id"));
+var currListType = getUrlPara("list");
+var doAction = getUrlPara("doAction");
+var singSms = "", smsNumber = "", smsContent = "";
+var sms_store, currentCount, leftCount;
+var numbersArr = [];
+var SMS_UCS2_MAX_SIZE = 670; //70*10
+var SMS_7BIT_MAX_SIZE = 1530; //153*10
+var newSmsCount = 0;
+var G_SmsCounts = 0;
+var G_numCounts = 0;
+var counts = 0;
+
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/smsWrite.js"></script>
+<script>
+/* -------------------------------------------------------------------------
+     class - airbox message Write
+     ----------------------------------------------------------------------------- */
+AIRBOX.smsWrite = (function() {
+    var s = {
+            $content: $("article#sms"),
+            $smsContent: $("#smsContent")
+        },
+    cs = {};
+
+    function init(options) {
+        $.extend(s, options);
+        cs = AIRBOX.core.settings;
+        _initStatus();
+		$("#content").on("click",function(event){});
+    };
+    function _initStatus() {
+        showSmsCardState(simCardState, pinState,simlockState,function() {
+		    listenLogout.start();
+		    _initMessageContent();
+			_initContactSelect();
+        });		
+    }
+
+	function _initMessageContent() {
+	    sms_store = SDK.SMS.GetSMSStorageState();
+	    currentCount = sms_store.TUseCount;
+	    leftCount = sms_store.LeftCount;
+	    if (!isNaN(currSmsId)) {
+	        singSms = SDK.SMS.GetSingleSMS(currSmsId);	        
+	        smsContent = singSms.SMSContent;	        
+	    }
+	    doActionFun(doAction);
+	    $("#btnSent").click(function() {
+	        startQueueEvent("send");
+	    })
+	    $(".back-icon").click(function() {
+	        startQueueEvent("save");
+	    })
+	    showNumCount();
+	    listenCharCount();
+	    $("#messageContent").bind("input change keyup keydown paste", function() {
+	        listenCharCount()
+	    })
+	}
+
+	
+    return {
+        init: init
+    };
+}())
+
+AIRBOX.smsWrite.init();
+</script>

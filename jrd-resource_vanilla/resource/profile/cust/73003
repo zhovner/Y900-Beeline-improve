@@ -1,0 +1,6 @@
+name:CLARO Postpago
+apn:bam.clarochile.cl
+user:clarochile
+psw:clarochile
+dial:*99#
+protocol:1

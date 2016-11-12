@@ -1,0 +1,57 @@
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+sta_time=28, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=45, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=39, msg_id=15, sta_mac=98:01:a7:8e:00:00
+sta_time=1308, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=39, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=222, msg_id=15, sta_mac=98:01:a7:8e:00:00
+sta_time=7825, msg_id=16, sta_mac=98:01:a7:8e:00:00
+sta_time=7842, msg_id=15, sta_mac=98:01:a7:8e:00:00
+sta_time=7857, msg_id=16, sta_mac=98:01:a7:8e:65:00
+sta_time=7871, msg_id=15, sta_mac=98:01:a7:8e:65:00
+==wlan init==
+sta_time=133, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+==wlan init==
+sta_time=43, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=225, msg_id=15, sta_mac=98:01:a7:8e:00:00
+sta_time=364, msg_id=16, sta_mac=98:01:a7:8e:65:00
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+sta_time=1817, core_app:wlan_turn_off
+sta_time=1822, core_app:wlan_turn_off
+sta_time=2426, core_app:wlan_turn_on
+==wlan init==
+==wlan init==
+sta_time=40, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=28, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=23, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+sta_time=1816, core_app:wlan_turn_off
+sta_time=1819, core_app:wlan_turn_off
+sta_time=2350, core_app:wlan_turn_on
+sta_time=2356, msg_id=15, sta_mac=98:01:a7:8e:00:00
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+==wlan init==
+sta_time=1815, core_app:wlan_turn_off
+sta_time=1818, core_app:wlan_turn_off
+sta_time=2796, core_app:wlan_turn_on
+sta_time=2807, msg_id=15, sta_mac=98:01:a7:8e:00:00

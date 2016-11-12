@@ -1,0 +1,184 @@
+<div id="usageHtyPage" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_usage}</h2>
+        <div class="mini-menu-wrap connectShow">
+            <span class="mini-menu">${ids_menu_settings}</span>
+            <span class="mini-menu-arrow hide"></span>
+            <ul class="mini-menu-list hide">
+                <li>
+                    <a href="#usage/usageSettings.html" class="linkPage changePageLink">${ids_menu_usageSetting}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" id="reset">${ids_usage_clear}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="item-content">
+        <div class="national connectShow">
+            <h3>
+            <span class="l">${ids_usage_home}</span>
+            <span id="usage_limit_icon" class="usage-icon icon-warning"></span>
+            </h3>
+            <div class="result">                
+                <span id="home_total_usage" style="float:left;"></span>
+                <span id="max_usage_sets" style="float:right;">&nbsp; ${ids_usage_of} &nbsp;<span id="max_usage"></span></span>
+            </div>
+            <div class="bar">
+                <div class="progress" data-percent="71"></div>
+            </div>
+        </div>
+
+        <div class="national connectShow">
+            <ul class="dashboard">
+                <li class="bottom">
+                    <span class="icon">
+                        <span class="hide">${ids_icon_downloaded}</span>
+                    </span>
+                    <p id="home_curr_download"></p>
+                </li>
+                <li class="top">
+                    <span class="icon">
+                        <span class="hide">${ids_icon_uploaded}</span>
+                    </span>
+                    <p id="home_curr_upload"></p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="solidline connectShow"></div>
+
+        <div class="international connectShow">
+            <h3 class="r">${ids_usage_roaming}
+                <span class="roaming hidden">R</span>
+                <span id="roam_total_usage" class="result"></span>
+            </h3> 
+            <ul class="dashboard">
+                <li class="bottom">
+                    <span class="icon">
+                        <span class="hide">${ids_icon_downloaded}</span>
+                    </span>
+                    <p id="roam_curr_download"></p>
+                </li>
+                <li class="top">
+                    <span class="icon">
+                        <span class="hide">${ids_icon_uploaded}</span>
+                    </span>
+                    <p id="roam_curr_upload"></p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="solidline connectShow"></div>
+
+        <div class="national connectShow">
+            <h3 class="r">
+            <span class="l">${ids_usage_duration}</span>
+            <span id ="time_limit_icon" class="usage-icon icon-warning"></span>
+            </h3>
+            <div class="result">                
+                <span id="total_times"></span>
+            </div>
+            <ul class="dashboard">
+                <li class="bottom chrono">
+                    <span class="icon">
+                        <span class="hide">${ids_icon_downloaded}</span>
+                    </span>
+                    <p id="curr_times"></p>
+                </li>
+            </ul>
+        </div>
+        <div class="statusContent" id="simCardStatus"></div>
+    </div>
+</div>
+<script>
+currentMenu = 1;
+</script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName = "usageHistory";
+/* -------------------------------------------------------------------------
+     class - airbox usage
+     ----------------------------------------------------------------------------- */
+AIRBOX.usage = (function() {
+    var s = {
+            $content: $("article#usage"),
+            BAR_WIDTH: 263,
+            BAR_SPEED: 600
+        },
+        cs = {};
+
+    function init(options) {
+        $.extend(s, options);
+        cs = AIRBOX.core.settings;
+        _initStatus();
+        _initReset();
+        _initClientArea();
+        _miniMenuControl();
+    };
+
+    function _initStatus() {
+		usageSettingInfo = SDK.Statistics.GetUsageSettings();
+		timeLimitTimes = usageSettingInfo.TimeLimitTimes;
+        showSmsCardState(simCardState, pinState,simlockState);
+		defaultPage.refreshImgStatus();
+    }
+
+
+    function _initReset() {
+        $("#reset", s.$content)
+            .on(cs.clickEvent, function(event) {
+                event.preventDefault();
+                sys.confirm("ids_usage_clearHistory", function() {
+                    _reset();
+                })
+            });
+    };
+
+    function _reset() {
+        $("#btnClearHistory").setBtnDisabled();
+        var clearTime = getSystemTime();
+        var result = SDK.Statistics.SetUsageRecordClear(clearTime);
+		if (result == API_RESULT_SUCCESS) {
+			sys.alert("ids_success", function() {
+			   page.reloadMain();
+			})                
+		} else {
+			sys.alert("ids_fail", function() {
+				$("#btnClearHistory").removeBtnDisabled();
+			})
+		}
+    }
+
+    function _initClientArea() {
+        var $area = $("div.area", s.$content),
+            l = s.$content.width() / 2 - $area.width() / 2;
+
+        $area.css({
+            left: l + "px"
+        });
+    };
+
+    return {
+        init: init
+    };
+
+    function _miniMenuControl() {
+        $(".item-usage .mini-menu").on(cs.overEvent, function(e) {
+            $(".item-usage .mini-menu-list, .item-usage .mini-menu-arrow").removeClass("hide");
+			$(document).one("click",function(e){
+				$(".mini-menu-list, .mini-menu-arrow").addClass('hide');
+			});
+			e = e || window.event;
+			if (e.stopPropagation) {e.stopPropagation();}
+			e.cancelBubble = true; 
+        });
+		 $("#reset").on(cs.clickEvent, function() {
+             $(".mini-menu-list, .mini-menu-arrow").addClass('hide');
+        });
+    }
+
+
+}())
+AIRBOX.usage.init();
+</script>

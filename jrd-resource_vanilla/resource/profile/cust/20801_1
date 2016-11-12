@@ -1,0 +1,6 @@
+name:Orange entreprises
+apn:orange-mib
+dial:*99#
+protocol:1
+user:orange
+psw:orange

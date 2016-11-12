@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<gui_resource>
+	<language>en</language>
+	<window name="desktop" type="0" coordinate_x="0" coordinate_y="0" width="128" height="32">
+		<area name="signal" type="0" coordinate_x="0" coordinate_y="0" width="18" height="12">
+			<resource id="0" size="128">signal_0.bmp</resource>
+			<resource id="1" size="128">signal_1.bmp</resource>
+			<resource id="2" size="128">signal_2.bmp</resource>
+			<resource id="3" size="128">signal_3.bmp</resource>
+			<resource id="4" size="128">signal_4.bmp</resource>
+			<resource id="5" size="128">signal_5.bmp</resource>
+		</area> 
+
+		<area name="net_mode" type="0" coordinate_x="21" coordinate_y="0" width="18" height="12">
+			<resource id="0" size="128">2G.bmp</resource>
+			<resource id="1" size="128">3G.bmp</resource>
+			<resource id="2" size="128">3G_plus.bmp</resource>
+			<resource id="3" size="128">4G.bmp</resource>
+			<resource id="4" size="128">h.bmp</resource>
+			<resource id="5" size="128">h_plus.bmp</resource>
+		</area> 
+		
+		<area name="battery" type="0" coordinate_x="110" coordinate_y="0" width="18" height="12">
+			<resource id="0" size="128">battery_0.bmp</resource>
+			<resource id="1" size="128">battery_25.bmp</resource>
+			<resource id="2" size="128">battery_50.bmp</resource>
+			<resource id="3" size="128">battery_75.bmp</resource>
+			<resource id="4" size="128">battery_100.bmp</resource>
+			<resource id="5" size="128">battery_low.bmp</resource>
+		</area> 
+		
+		<area name="wifi" type="0" coordinate_x="88" coordinate_y="0" width="18" height="14">
+			<resource id="0" size="128">wifi_close.bmp</resource>
+			<resource id="1" size="128">wifi.bmp</resource>
+			<resource id="2" size="128">wifi1.bmp</resource>
+			<resource id="3" size="128">wifi2.bmp</resource>
+			<resource id="4" size="128">wifi3.bmp</resource>
+			<resource id="5" size="128">wifi4.bmp</resource>
+			<resource id="6" size="128">wifi5.bmp</resource>
+			<resource id="7" size="128">wifi6.bmp</resource>
+			<resource id="8" size="128">wifi7.bmp</resource>
+			<resource id="9" size="128">wifi8.bmp</resource>
+			<resource id="10" size="128">wifi9.bmp</resource>
+			<resource id="11" size="128">wifi10.bmp</resource>
+			<resource id="12" size="128">wps.bmp</resource>
+			<resource id="13" size="128">wps_connect.bmp</resource>
+			<resource id="14" size="128">wps_disconnect.bmp</resource>
+		</area>
+		
+		<area name="sms" type="0" coordinate_x="72" coordinate_y="0" width="13" height="12">
+			<resource id="0" size="128">short_msg.bmp</resource>
+			<resource id="1" size="128">unread_msg.bmp</resource>
+			<resource id="2" size="128">msgfull.bmp</resource>
+		</area> 
+		
+		<area name="connection" type="0" coordinate_x="42" coordinate_y="0" width="16" height="12">
+			<resource id="0" size="128">INTERNET.bmp</resource>
+		</area> 
+		
+		<area name="roam" type="0" coordinate_x="61" coordinate_y="0" width="8" height="12">
+			<resource id="0" size="160">roaming.bmp</resource>
+		</area>
+		
+		<area name="dial_mode" type="0" coordinate_x="0" coordinate_y="16" width="18" height="15">
+			<resource id="0" size="160">dial_auto.bmp</resource>
+			<resource id="1" size="160">dial_manual.bmp</resource>
+		</area>
+		
+		<area name="tag" type="0" coordinate_x="0" coordinate_y="16" width="128" height="18">
+			<resource id="0" size="384">init.bmp</resource>
+			<resource id="1" size="384">search.bmp</resource>
+			<resource id="2" size="384">sim_busy.bmp</resource>
+			<resource id="3" size="384">sim_lock.bmp</resource>
+			<resource id="4" size="384">no_sim.bmp</resource>
+			<resource id="5" size="384">no_sim1.bmp</resource>
+			<resource id="6" size="384">no_sim2.bmp</resource>
+			<resource id="7" size="384">invld_sim.bmp</resource>
+			<resource id="8" size="384">pin.bmp</resource>
+			<resource id="9" size="384">pin2.bmp</resource>
+			<resource id="10" size="384">puk.bmp</resource>
+			<resource id="11" size="384">puk2.bmp</resource>
+			<resource id="12" size="384">rck_fbd.bmp</resource>
+			<resource id="13" size="384">no_sv.bmp</resource>
+			<resource id="14" size="384">lmt_sv.bmp</resource>
+			<resource id="15" size="384">no_data_sv.bmp</resource>
+			<resource id="16" size="384">unknown_nw.bmp</resource>
+			<resource id="17" size="384">connect.bmp</resource>
+			<resource id="18" size="384">disconn.bmp</resource>
+			<resource id="19" size="384">power_off.bmp</resource>
+		</area>	
+	</window>
+	<window name="notify" type="0" coordinate_x="0" coordinate_y="0" width="128" height="32">
+		<area name="big_battery" type="0" coordinate_x="32" coordinate_y="0" width="64" height="32">
+			<resource id="0" size="384">big_battery_0.bmp</resource>
+			<resource id="1" size="384">big_battery_25.bmp</resource>
+			<resource id="2" size="384">big_battery_50.bmp</resource>
+			<resource id="3" size="384">big_battery_75.bmp</resource>
+			<resource id="4" size="384">big_battery_100.bmp</resource>
+			<resource id="5" size="384">big_battery_low.bmp</resource>
+		</area>	
+	</window>
+</gui_resource>

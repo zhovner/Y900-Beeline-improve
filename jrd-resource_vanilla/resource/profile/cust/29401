@@ -1,0 +1,6 @@
+name:TM MK Internet
+apn:internet
+user:internet
+psw:t-mobile
+protocol:1
+dial:*99#

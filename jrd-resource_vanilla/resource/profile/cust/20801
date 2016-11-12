@@ -1,0 +1,6 @@
+name:Orange Internet
+apn:orange.fr
+dial:*99#
+protocol:1
+user:orange
+psw:orange

@@ -1,0 +1,83 @@
+<form id="frmLan">
+    <div class="form-body">
+        <div class="form-title" trans="router_setting"></div>
+        <div class="content2" style="padding-left: 20px;">
+            <div class="row-fluid">
+                <div class="content span6" style="padding:0px;">
+                    <div class="row-fluid" style="line-height: 25px;">
+                        <label class="" for="txtIpAddress" trans="ip_address2" style="color: #8F8F8F; line-height: 25px;"></label>
+                        <div class="">
+                            <input id="txtIpAddress" name="txtIpAddress" type="text" data-bind="value: ipAddress" class="required" maxlength="15" />
+                        </div>
+                    </div>
+                </div>
+                <div class="content span6" style="padding:0px;">
+                    <div class="row-fluid" style="line-height: 25px;">
+                        <label class="" for="txtSubnetMask" trans="subnet_mask" style="color: #8F8F8F; line-height: 25px;"></label>
+                        <div class="">
+                            <input id="txtSubnetMask" name="txtSubnetMask" type="text" data-bind="value: subnetMask" class="required" maxlength="15" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" data-bind="visible: true" style="line-height: 25px; margin-top: 5px;">
+                <div class="">
+                    <label class="" trans="mac_address" style="color: #8F8F8F;"></label>
+                </div>
+                <div class="">
+                    <input id="txtMacAddress" style="color: #000000;" type="text" data-bind="attr:{trans:macAddress}" />
+
+                </div>
+            </div>
+            <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                <label class="" trans="dhcp_server" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                    <input type="radio" name="dhcpServer" id="dhcpEnable" data-bind="checked: dhcpServer,click: dhcpServerHandler" value="1" />
+                    <label for="dhcpEnable" trans="enable"></label>
+                </div>
+                <div>
+                    <input type="radio" name="dhcpServer" id="dhcpDisable" data-bind="checked: dhcpServer,click: dhcpServerHandler" value="0" />
+                    <label for="dhcpDisable" trans="disable"></label>
+                </div>
+            </div>
+            <div class="content" data-bind='visible: dhcpServer() == "1"' style="padding:0px;">
+                <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                    <label class="" trans='dhcp_ip_pool' for="txtDhcpIpPoolStart" style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <input id='txtDhcpIpPoolStart' name="txtDhcpIpPoolStart" type="text" data-bind="value: dhcpStart" class="required rangeInput" maxlength="15" />-
+                        <input id='txtDhcpIpPoolEnd' name="txtDhcpIpPoolEnd" type="text" data-bind="value: dhcpEnd" class="required rangeInput" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row-fluid" style="line-height: 25px; margin-top: 5px;">
+                    <label class="" for="txtDhcpLease" trans="dhcp_lease" style="color: #8F8F8F; line-height: 25px;"></label>
+                    <div class="">
+                        <select id="txtDhcpLease" name="txtDhcpLease" type="text" data-bind="value: dhcpLease, optionsValue: 'value'">
+                            <option value="1">1</option>
+                            <option value="6">6</option>
+                            <option value="12">12</option>
+                            <option value="24">24</option>
+                        </select>
+                        <label trans="hours" id="leaseLabel"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans="apply" />
+            <input type="button" data-bind="click: clear" class="btn-1 " trans="cancel" />
+        </div>
+        <div class="form-note">
+            <div class="notes-title">&nbsp;</div>
+            <ul class="notes-content">
+                <li trans="lan_note_info"></li>
+                <li trans="lan_note_ip_address"></li>
+                <li trans="lan_note_subnet_mask"></li>
+                <li trans="lan_note_dhcp_server"></li>
+                <li trans="lan_note_dhcp_ip_pool"></li>
+                <li trans="lan_note_dhcp_lease_time"></li>
+                <li trans="lan_note"></li>
+            </ul>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,6 @@
+protocol:1
+name:Belgium BASE
+apn:gprs.base.be
+user:base
+psw:base
+dial:*99#

@@ -1,0 +1,11 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+
+printf "0196" > /usb_conf/win_switch_pid
+printf "0196" > /usb_conf/usb_init_pid
+printf "0196" > /usb_conf/mac_switch_pid
+printf "func5=1" > /usb_conf/usb_func5
+
+echo '{"RNDIS": "enabled"}'
+exit 0

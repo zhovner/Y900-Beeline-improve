@@ -1,0 +1,505 @@
+#! /bin/sh
+
+custom_info_file="/cache/backup_conf/custom_info"
+ap_wlan0_file="/jrd-resource/resource/wlan/ap_wlan0.conf"
+bak_ap_wlan0_file="/jrd-resource/resource/wlan/bak_ap_wlan0.conf"
+ap_wlan1_file="/jrd-resource/resource/wlan/ap_wlan1.conf"
+bak_ap_wlan1_file="/jrd-resource/resource/wlan/bak_ap_wlan1.conf"
+ap_wlan0_5g_file="/jrd-resource/resource/wlan/ap_wlan0_5g.conf"
+bak_ap_wlan0_5g_file="/jrd-resource/resource/wlan/bak_ap_wlan0_5g.conf"
+ap_wlan1_5g_file="/jrd-resource/resource/wlan/ap_wlan1_5g.conf"
+bak_ap_wlan1_5g_file="/jrd-resource/resource/wlan/bak_ap_wlan1_5g.conf"
+wlan1_hostapd_file="/etc/hostapd-wlan1.conf"
+bak_wlan1_hostapd_file="/etc/bak_hostapd-wlan1.conf"
+hostapd_file="/etc/hostapd.conf"
+bak_hostapd_file="/etc/bak_hostapd.conf"
+mobileap_cfg_file="/etc/mobileap_cfg.xml"
+bak_mobileap_cfg_file="/etc/bak_mobileap_cfg.xml"
+webs_file="/jrd-resource/resource/webs-cfg/webs.conf"
+bak_webs_file="/jrd-resource/resource/webs-cfg/bak_webs.conf"
+webs_lan_file="/jrd-resource/resource/webs-cfg/webs_lan.conf"
+bak_webs_lan_file="/jrd-resource/resource/webs-cfg/bak_webs_lan.conf"
+
+	if [ -f /cache/backup_conf/force_mode ]; then
+
+    if [ -f ${custom_info_file} ]; then
+				#restore wifi psw start
+					SECMODE=$(grep 'security_mode' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+					if [ $SECMODE != 'n' -a ${ap_wlan0_file} ]; then
+							sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${ap_wlan0_file}
+							if [ -f ${bak_ap_wlan0_file} ]; then
+							  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan0_file}
+							fi
+							if [ $SECMODE == '1' ]; then
+								WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${ap_wlan0_file}
+							  if [ -f ${bak_ap_wlan0_file} ]; then
+							    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan0_file}
+							  fi
+							  sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${ap_wlan0_file}
+							  if [ -f ${bak_ap_wlan0_file} ]; then
+							    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan0_file}
+							  fi
+							elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+								WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${ap_wlan0_file}
+							  if [ -f ${bak_ap_wlan0_file} ]; then
+							    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan0_file}
+							  fi
+							  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${ap_wlan0_file}
+							  if [ -f ${bak_ap_wlan0_file} ]; then
+							    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan0_file}
+							  fi
+							fi
+					fi
+					if [ $SECMODE != 'n' -a ${ap_wlan1_file} ]; then
+							sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${ap_wlan1_file}
+							if [ -f ${bak_ap_wlan1_file} ]; then
+							  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan1_file}
+							fi
+							if [ $SECMODE == '1' ]; then
+								WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${ap_wlan1_file}
+							  if [ -f ${bak_ap_wlan1_file} ]; then
+							    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan1_file}
+							  fi
+							  sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${ap_wlan1_file}
+							  if [ -f ${bak_ap_wlan1_file} ]; then
+							    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan1_file}
+							  fi
+							elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+								WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${ap_wlan1_file}
+							  if [ -f ${bak_ap_wlan1_file} ]; then
+							    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan1_file}
+							  fi
+							  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${ap_wlan1_file}
+							  if [ -f ${bak_ap_wlan1_file} ]; then
+							    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan1_file}
+							  fi
+							fi
+					fi
+					if [ $SECMODE != 'n' -a ${ap_wlan0_5g_file} ]; then
+							sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${ap_wlan0_5g_file}
+							if [ -f ${bak_ap_wlan0_5g_file} ]; then
+							  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan0_5g_file}
+							fi
+							if [ $SECMODE == '1' ]; then
+								WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${ap_wlan0_5g_file}
+							  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+							    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan0_5g_file}
+							  fi
+							  sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${ap_wlan0_5g_file}
+							  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+							    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan0_5g_file}
+							  fi
+							elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+								WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${ap_wlan0_5g_file}
+							  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+							    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan0_5g_file}
+							  fi
+							  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${ap_wlan0_5g_file}
+							  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+							    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan0_5g_file}
+							  fi
+							fi
+					fi
+					if [ $SECMODE != 'n' -a ${ap_wlan1_5g_file} ]; then
+							sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${ap_wlan1_5g_file}
+							if [ -f ${bak_ap_wlan1_5g_file} ]; then
+							  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan1_5g_file}
+							fi
+							if [ $SECMODE == '1' ]; then
+								WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${ap_wlan1_5g_file}
+							  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+							    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan1_5g_file}
+							  fi
+							  sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${ap_wlan1_5g_file}
+							  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+							    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan1_5g_file}
+							  fi
+							elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+								WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+								PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+							  sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${ap_wlan1_5g_file}
+							  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+							    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan1_5g_file}
+							  fi
+							  sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${ap_wlan1_5g_file}
+							  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+							    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan1_5g_file}
+							  fi
+							fi
+					fi
+				#restore wifi psw start
+
+				#restore dial mode start
+					AUTOCONNECT=$(grep 'AutoConnect' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+					ROAMING=$(grep 'Roaming' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+					if [ -f ${mobileap_cfg_file} ]; then
+							if [ $AUTOCONNECT != 'n' ]; then
+							  sed -i "s/AutoConnect>[0-9]/AutoConnect>$AUTOCONNECT/g" ${mobileap_cfg_file}
+								if [ -f ${bak_mobileap_cfg_file} ]; then
+								  sed -i "s/AutoConnect>[0-9]/AutoConnect>$AUTOCONNECT/g" ${bak_mobileap_cfg_file}
+								fi
+							fi
+							if [ $ROAMING != 'n' ]; then
+							  sed -i "s/Roaming>[0-9]/Roaming>$ROAMING/g" ${mobileap_cfg_file}
+								if [ -f ${bak_mobileap_cfg_file} ]; then
+								  sed -i "s/Roaming>[0-9]/Roaming>$ROAMING/g" ${bak_mobileap_cfg_file}
+								fi
+							fi
+					fi
+				#restore dial mode end
+
+				#restore language start
+					LANG_SET=$(grep 'language' ${custom_info_file} | cut -d '=' -f 2 | cut -c1-2)
+					LANGUAG_FLAG=$(echo $LANG_SET | cut -c1)
+					if [ $LANGUAG_FLAG != 'n' ]; then
+						if [ -f ${webs_lan_file} ]; then
+							sed -i "s/^language=.*/language=$LANG_SET/" ${webs_lan_file}
+						fi
+						if [ -f ${bak_webs_lan_file} ]; then
+							sed -i "s/^language=.*/language=$LANG_SET/" ${bak_webs_lan_file}
+						fi
+					fi
+				#restore language end
+						
+				#restore username start
+					USERNAME_SET=$(grep 'username' ${custom_info_file} | cut -d '=' -f 2)
+					USERNAME_FLAG=$(echo $USERNAME_SET | cut -c1)
+					if [ $USERNAME_FLAG != 'n' ]; then
+						if [ -f ${webs_file} ]; then
+							sed -i "s/^login_username=.*/login_username=$USERNAME_SET/" ${webs_file}
+						fi
+						if [ -f ${bak_webs_file} ]; then
+							sed -i "s/^login_username=.*/login_username=$USERNAME_SET/" ${bak_webs_file}
+						fi
+					fi
+				#restore username end
+		
+				#restore uipasswd start
+					UIPSD_SET=$(grep 'uipasswd' ${custom_info_file} | cut -d '=' -f 2)
+					UIPSD_FLAG=$(echo $UIPSD_SET | cut -c1)
+					if [ $UIPSD_FLAG != 'n' ]; then
+						if [ -f ${webs_file} ]; then
+								sed -i "s/^login_password=.*/login_password=$UIPSD_SET/" ${webs_file}
+						fi
+						if [ -f ${bak_webs_file} ]; then
+								sed -i "s/^login_password=.*/login_password=$UIPSD_SET/" ${bak_webs_file}
+						fi
+					fi
+				#restore uipasswd end
+						
+				#restore ssid start
+					SSID_SET=$(grep 'ssid' ${custom_info_file} | cut -d '=' -f 2)
+					SSID_FLAG=$(echo $SSID_SET | cut -c1)
+					if [ $SSID_FLAG != 'n' ]; then
+							if [ -f ${wlan1_hostapd_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${wlan1_hostapd_file}
+								if [ -f ${bak_wlan1_hostapd_file} ]; then
+								  sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_wlan1_hostapd_file}
+								fi
+							fi
+							if [ -f ${hostapd_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${hostapd_file}
+								if [ -f ${bak_hostapd_file} ]; then
+								  sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_hostapd_file}
+								fi
+							fi
+							if [ -f ${ap_wlan0_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${ap_wlan0_file}
+							fi
+							if [ -f ${bak_ap_wlan0_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_ap_wlan0_file}
+							fi
+							WLAN1_SSID=$SSID_SET"_guest"
+							if [ -f ${ap_wlan1_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN1_SSID/" ${ap_wlan1_file}
+							fi
+							if [ -f ${bak_ap_wlan1_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN1_SSID/" ${bak_ap_wlan1_file}
+							fi
+							#restore 5g ssid start
+							WLAN0_5G_SSID=$SSID_SET"_5G"
+							if [ -f ${ap_wlan0_5g_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN0_5G_SSID/" ${ap_wlan0_5g_file}
+							fi
+							if [ -f ${bak_ap_wlan0_5g_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN0_5G_SSID/" ${bak_ap_wlan0_5g_file}
+							fi
+							WLAN1_5G_SSID=$SSID_SET"_5G_guest"
+							if [ -f ${ap_wlan1_5g_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN1_5G_SSID/" ${ap_wlan1_5g_file}
+							fi
+							if [ -f ${bak_ap_wlan1_5g_file} ]; then
+								sed -i "s/^ssid=.*/ssid=$WLAN1_5G_SSID/" ${bak_ap_wlan1_5g_file}
+							fi
+							#restore 5g ssid end
+					fi
+				#restore ssid end
+
+				#restore usb func5 start
+					USB_SETTING=$(grep 'func5' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+					if [ $USB_SETTING != 'n' ]; then
+						if [ $USB_SETTING == '0' -o $USB_SETTING == '1' ]; then
+							. /jrd-resource/bin/usb_set $USB_SETTING
+						fi
+					fi
+				#restore usb func5 end
+
+				#restore mac addr start
+				MAC_ADDR=$(grep 'mac_addr' ${custom_info_file} | cut -d '=' -f 2)
+				MACADDR_FLAG=$(echo $MAC_ADDR | cut -c1)
+				if [ $MACADDR_FLAG != 'n' ]; then
+						echo $MAC_ADDR > /etc/softmac
+				fi
+				MAC_ADDR_WLAN1=$(grep 'mac_wlan1_addr' ${custom_info_file} | cut -d '=' -f 2)
+				MACADDR_WLAN1_FLAG=$(echo $MAC_ADDR_WLAN1 | cut -c1)
+				if [ $MACADDR_WLAN1_FLAG != 'n' ]; then
+						echo $MAC_ADDR_WLAN1 > /etc/softmac_wlan1
+				fi
+				#restore mac addr end
+				. backup_restore temp_delete
+    fi
+	#restore wifi calibration file in force_mode
+	if [ -f /cache/bdwlan20.bin ]; then
+		cp -f /cache/bdwlan20.bin /firmware/image/bdwlan20.bin
+	fi
+
+  else
+
+      if [ -f /etc/update_flag -o -f /usr/oem/update_flag -o -f /jrd-resource/bin/update_flag ]; then
+      
+        if [ -f ${custom_info_file} ]; then
+		  		#restore wifi psw start
+		  			SECMODE=$(grep 'security_mode' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+		  			if [ $SECMODE != 'n' -a ${ap_wlan0_file} ]; then
+		  					if [ -f ${bak_ap_wlan0_file} ]; then
+		  					  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan0_file}
+		  					fi
+		  					if [ $SECMODE == '1' ]; then
+		  						WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan0_file} ]; then
+		  					    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan0_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan0_file} ]; then
+		  					    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan0_file}
+		  					  fi
+		  					elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+		  						WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan0_file} ]; then
+		  					    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan0_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan0_file} ]; then
+		  					    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan0_file}
+		  					  fi
+		  					fi
+		  			fi
+		  			if [ $SECMODE != 'n' -a ${ap_wlan1_file} ]; then
+		  					if [ -f ${bak_ap_wlan1_file} ]; then
+		  					  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan1_file}
+		  					fi
+		  					if [ $SECMODE == '1' ]; then
+		  						WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan1_file} ]; then
+		  					    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan1_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan1_file} ]; then
+		  					    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan1_file}
+		  					  fi
+		  					elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+		  						WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan1_file} ]; then
+		  					    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan1_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan1_file} ]; then
+		  					    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan1_file}
+		  					  fi
+		  					fi
+		  			fi
+					#restore wifi psw 5g start
+					if [ $SECMODE != 'n' -a ${ap_wlan0_5g_file} ]; then
+		  					if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  					  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan0_5g_file}
+		  					fi
+		  					if [ $SECMODE == '1' ]; then
+		  						WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  					    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan0_5g_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  					    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan0_5g_file}
+		  					  fi
+		  					elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+		  						WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  					    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan0_5g_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  					    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan0_5g_file}
+		  					  fi
+		  					fi
+		  			fi
+		  			if [ $SECMODE != 'n' -a ${ap_wlan1_5g_file} ]; then
+		  					if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  					  sed -i "s/^security_mode=.*/security_mode=$SECMODE/" ${bak_ap_wlan1_5g_file}
+		  					fi
+		  					if [ $SECMODE == '1' ]; then
+		  						WEPSEC=$(grep 'auth_algs' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wep_key0' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  					    sed -i "s/^auth_algs=.*/auth_algs=$WEPSEC/" ${bak_ap_wlan1_5g_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  					    sed -i "s/^wep_key0=.*/wep_key0=$PSWORD/" ${bak_ap_wlan1_5g_file}
+		  					  fi
+		  					elif [ $SECMODE == '2' -o $SECMODE == '3' -o $SECMODE == '4' ]; then
+		  						WPASEC=$(grep 'wpa_pairwise' ${custom_info_file} | cut -d '=' -f 2)
+		  						PSWORD=$(grep 'wpa_passphrase' ${custom_info_file} | cut -d '=' -f 2)
+		  					  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  					    sed -i "s/^wpa_pairwise=.*/wpa_pairwise=$WPASEC/" ${bak_ap_wlan1_5g_file}
+		  					  fi
+		  					  if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  					    sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$PSWORD/" ${bak_ap_wlan1_5g_file}
+		  					  fi
+		  					fi
+		  			fi
+					#restore wifi psw 5g end
+		  		#restore wifi psw start
+      
+		  		#restore dial mode start
+		  			AUTOCONNECT=$(grep 'AutoConnect' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+		  			ROAMING=$(grep 'Roaming' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+		  			if [ -f ${mobileap_cfg_file} ]; then
+		  					if [ $AUTOCONNECT != 'n' ]; then
+		  						if [ -f ${bak_mobileap_cfg_file} ]; then
+		  						  sed -i "s/AutoConnect>[0-9]/AutoConnect>$AUTOCONNECT/g" ${bak_mobileap_cfg_file}
+		  						fi
+		  					fi
+		  					if [ $ROAMING != 'n' ]; then
+		  						if [ -f ${bak_mobileap_cfg_file} ]; then
+		  						  sed -i "s/Roaming>[0-9]/Roaming>$ROAMING/g" ${bak_mobileap_cfg_file}
+		  						fi
+		  					fi
+		  			fi
+		  		#restore dial mode end
+      
+		  		#restore language start
+		  			LANG_SET=$(grep 'language' ${custom_info_file} | cut -d '=' -f 2 | cut -c1-2)
+		  			LANGUAG_FLAG=$(echo $LANG_SET | cut -c1)
+		  			if [ $LANGUAG_FLAG != 'n' ]; then
+		  				if [ -f ${bak_webs_lan_file} ]; then
+		  					sed -i "s/^language=.*/language=$LANG_SET/" ${bak_webs_lan_file}
+		  				fi
+		  			fi
+		  		#restore language end
+		  				
+		  		#restore username start
+		  			USERNAME_SET=$(grep 'username' ${custom_info_file} | cut -d '=' -f 2)
+		  			USERNAME_FLAG=$(echo $USERNAME_SET | cut -c1)
+		  			if [ $USERNAME_FLAG != 'n' ]; then
+		  				if [ -f ${bak_webs_file} ]; then
+		  					sed -i "s/^login_username=.*/login_username=$USERNAME_SET/" ${bak_webs_file}
+		  				fi
+		  			fi
+		  		#restore username end
+		  
+		  		#restore uipasswd start
+		  			UIPSD_SET=$(grep 'uipasswd' ${custom_info_file} | cut -d '=' -f 2)
+		  			UIPSD_FLAG=$(echo $UIPSD_SET | cut -c1)
+		  			if [ $UIPSD_FLAG != 'n' ]; then
+		  				if [ -f ${bak_webs_file} ]; then
+		  						sed -i "s/^login_password=.*/login_password=$UIPSD_SET/" ${bak_webs_file}
+		  				fi
+		  			fi
+		  		#restore uipasswd end
+		  				
+		  		#restore ssid start
+		  			SSID_SET=$(grep 'ssid' ${custom_info_file} | cut -d '=' -f 2)
+		  			SSID_FLAG=$(echo $SSID_SET | cut -c1)
+		  			if [ $SSID_FLAG != 'n' ]; then
+		  					if [ -f ${wlan1_hostapd_file} ]; then
+		  						if [ -f ${bak_wlan1_hostapd_file} ]; then
+		  						  sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_wlan1_hostapd_file}
+		  						fi
+		  					fi
+		  					if [ -f ${hostapd_file} ]; then
+		  						if [ -f ${bak_hostapd_file} ]; then
+		  						  sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_hostapd_file}
+		  						fi
+		  					fi
+		  					if [ -f ${bak_ap_wlan0_file} ]; then
+		  						sed -i "s/^ssid=.*/ssid=$SSID_SET/" ${bak_ap_wlan0_file}
+		  					fi
+		  					WLAN1_SSID=$SSID_SET"_guest"
+		  					if [ -f ${bak_ap_wlan1_file} ]; then
+		  						sed -i "s/^ssid=.*/ssid=$WLAN1_SSID/" ${bak_ap_wlan1_file}
+		  					fi
+							WLAN0_5G_SSID_SSID=$SSID_SET"_5G"
+							if [ -f ${bak_ap_wlan0_5g_file} ]; then
+		  						sed -i "s/^ssid=.*/ssid=$WLAN0_5G_SSID_SSID/" ${bak_ap_wlan0_5g_file}
+		  					fi
+		  					WLAN1_5G_SSID=$SSID_SET"_5G_guest"
+		  					if [ -f ${bak_ap_wlan1_5g_file} ]; then
+		  						sed -i "s/^ssid=.*/ssid=$WLAN1_5G_SSID/" ${bak_ap_wlan1_5g_file}
+		  					fi
+		  			fi
+		  		#restore ssid end
+      fi
+    
+      if [ -f ${custom_info_file} ]; then
+       #restore mac addr start
+         MAC_ADDR=$(grep 'mac_addr' ${custom_info_file} | cut -d '=' -f 2)
+         MACADDR_FLAG=$(echo $MAC_ADDR | cut -c1)
+         if [ $MACADDR_FLAG != 'n' ]; then
+           echo $MAC_ADDR > /etc/softmac
+         fi
+		 MAC_ADDR_WLAN1=$(grep 'mac_addr_wlan1' ${custom_info_file} | cut -d '=' -f 2)
+		 MACADDR_WLAN1_FLAG=$(echo $MAC_ADDR_WLAN1 | cut -c1)
+		 if [ $MACADDR_WLAN1_FLAG != 'n' ]; then
+		   echo $MAC_ADDR_WLAN1 > /etc/softmac_wlan1
+		 fi
+       #restore mac addr end
+       
+			#restore usb func5 start
+					USB_SETTING=$(grep 'func5' ${custom_info_file} | cut -d '=' -f 2 | cut -c1)
+					if [ $USB_SETTING != 'n' ]; then
+						if [ $USB_SETTING == '0' -o $USB_SETTING == '1' ]; then
+							. /jrd-resource/bin/usb_set $USB_SETTING
+						fi
+					fi
+			#restore usb func5 end
+			
+      fi
+
+      . /jrd-resource/bin/backup_restore temp_restore
+      #. /jrd-resource/bin/recovery_hosts
+    fi
+	fi
+	
+	if [ -f /etc/update_flag ]; then
+	  rm -f /etc/update_flag
+	fi
+	if [ -f /usr/oem/update_flag ]; then
+	  rm -f /usr/oem/update_flag
+	fi
+	if [ -f /jrd-resource/bin/update_flag ]; then
+	  rm -f /jrd-resource/bin/update_flag
+	fi

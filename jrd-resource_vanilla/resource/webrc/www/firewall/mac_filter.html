@@ -1,0 +1,71 @@
+<form id="macFilterForm">
+    <div class="form-body">
+        <div class="form-title" trans="mac_filter"></div>
+        <div class="content" style="padding-left: 20px;">
+            <div class="row-fluid" style="line-height: 25px;">
+                <label class="" trans="macFilter_setting" style="color: #8F8F8F; line-height: 25px;"></label>
+                <div class="">
+                 <select name="macfilter_policy" id="macfilter_policy" transid="macfilter_item" data-bind="options: policys, value: selectedPolicy, optionsText: transOption('macfilter_item'), optionsValue: 'value', event:{ change: policyChangeHandler}" required="true"></select>                
+                </div>              
+            </div>
+            <div class="row-fluid" style="line-height: 25px;">
+            	<label class="" trans="mac_address" style="color: #8F8F8F; line-height: 25px;"></label>
+            </div>
+            <div id = "allowList"  style="display:none">
+                 <div class="">
+                      <label class="">1.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac0"  maxlength="17" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">2.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac1"  maxlength="17" />
+                 </div>
+                 <div class="">
+                      <label class="">3.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac2"  maxlength="17" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">4.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac3"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">5.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac4"  maxlength="17"/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">6.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac5"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">7.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac6"  maxlength="17">
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">8.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac7"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">9.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac8"  maxlength="17"/>
+                     &nbsp;&nbsp;<label class="">10.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: allow_mac9"  maxlength="17" />
+                 </div>
+             </div>
+             <div id = "denyList">
+                 <div class="">
+                      <label class="">1.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac0"  maxlength="17" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">2.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac1"  maxlength="17" />
+                 </div>
+                 <div class="">
+                      <label class="">3.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac2"  maxlength="17" />
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">4.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac3"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">5.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac4"  maxlength="17"/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">6.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac5"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">7.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac6"  maxlength="17">
+                      &nbsp;&nbsp;&nbsp;&nbsp;<label class="">8.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac7"  maxlength="17"/>
+                 </div>
+                 <div class="">
+                      <label class="">9.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac8"  maxlength="17"/>
+                     &nbsp;&nbsp;<label class="">10.</label>&nbsp;&nbsp;<input type="text" name="txtMacAddress" id="txtMacAddress" data-bind="value: deny_mac9"  maxlength="17" />
+                 </div>
+             </div>
+             <span style="display: block;font-size: 12px;" trans="macExam" id="macExamLabel"></span>
+        </div>
+        <div class="form-buttons">
+            <input type="submit" class="btn-1 " trans="apply"/>
+        </div>
+    </div>
+    <div class="form-note">
+        <div class="notes-title">&nbsp;</div>
+        <ul class="notes-content" style="padding-left: 20px;">
+        	<li trans="mac_filter_help_first"></li>
+        	<li trans="mac_filter_help_detail"></li>
+        </ul>
+    </div>
+</form>

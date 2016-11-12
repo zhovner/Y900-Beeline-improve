@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!--File Name:config.xml -->
+<CONTENT version="5.0" date="2014-09-27">
+	  <!-- 0: auto generate config.xml, 1: manual generate config.xml -->
+	  <Generate_Type>0</Generate_Type>
+	  <Base_Info>
+	  	<Project_Code>Y900</Project_Code>
+	  	<Project_Name>XXXXXX</Project_Name>
+	  	<Customer_Code>FU</Customer_Code>
+	  	<Customer_Name>vimpelcom</Customer_Name>
+	  	<!--Baseline M9635AAATWNLZD2033.1 -->
+	  	<Major_Version>05</Major_Version>
+	  	<!--Baseline M9635AAATWNLZD2033.1 patch SBA numbers -->
+	  	<Minor_Version>00</Minor_Version>
+	  	<Release_Index>1001</Release_Index>
+	  	<Fota_Sub_Version>00</Fota_Sub_Version>
+	  </Base_Info>
+	  <Requirement_Rev>01</Requirement_Rev>
+    <Variant_Code>NB</Variant_Code>
+    <CURef>Y900NB-2XFU000</CURef>
+    <Hardware>
+ 		   <PCB_Ver>V3.0</PCB_Ver>
+ 		   <RF_Device_Code>00</RF_Device_Code>
+ 		   <!-- RAM type 1: 0 - SDRAM, 1 DDR; RAM size 2-3: 0 32Mb 1 64Mb ...;  -->
+ 		   <RAM_Code>000</RAM_Code>
+ 		   <!-- Flash type 1: 0 - NOR, 1 NAND, 2 One-NAND, 3 eMMC_NAND; Vendor Code 2-3: 00 Tishiba, 01 Samsung, 02 Micron, 03 Hynix, 04 Nomonyx; Flash Size 4-5: 00 16Mb, 01 32Mb ...; Page Size 6-7: 00 512B, 01 1K ...-->
+ 		   <Flash_Code>1020803</Flash_Code>
+    </Hardware>
+    <Software>
+    	  <External_Ver>Y900_BLN_01001</External_Ver>
+    	  <Baseline_Independency>
+          <PARTITION>Y900_PARTT_FU_01_963</PARTITION>
+          <JRDRESOURCE>Y900_JRDRESOURCE_FU_06_1594</JRDRESOURCE>
+          <WKIT>Y900_WKIT_FU_01</WKIT>
+          <MKIT>Y900_MKIT_FU_00</MKIT>
+          <LKIT>00</LKIT>
+        </Baseline_Independency>
+        <Baseline_Dependency>
+          <SBL>Y900_SBL_FU_05.00_01_1071</SBL>
+          <SDI>Y900_SDI_FU_05.00_01_952</SDI>
+          <TZ>Y900_TZ_FU_05.00_01_1071</TZ>
+          <MBA>Y900_MBA_FU_05.00_06_1583</MBA>
+          <RPM>Y900_RPM_FU_05.00_01_1071</RPM>
+          <EFS2>Y900_EFS2_00_05.00_04_1322</EFS2>
+          <QDSP>Y900_QDSP_FU_05.00_06_1583</QDSP>
+          <APPSBL>Y900_APPSBL_FU_05.00_06_1595</APPSBL>
+          <APPS>Y900_KERNEL_FU_05.00_06_1586</APPS>
+          <RECOVERY>Y900_RECOVERY_FU_05.00_06_1595</RECOVERY>
+          <RECOVERYFS>Y900_RECOVERYFS_FU_05.00_06_1595</RECOVERYFS>
+          <SYSTEM>Y900_SYSTEM_FU_05.00_06_1595</SYSTEM>
+          <USERDATA>Y900_USERDATA_FU_05.00_06_1595</USERDATA>
+        </Baseline_Dependency>    
+    </Software>
+</CONTENT>

@@ -1,0 +1,63 @@
+<script> currentMenu=5; </script>
+<script src="/js/childCommon.js"></script>
+<script>
+pageName="update";
+var versionNum = SDK.System.GetSystemInfo().SwVersion;
+	/* -------------------------------------------------------------------------
+	 class - airbox update
+     ----------------------------------------------------------------------------- */
+    AIRBOX.update = (function() 
+    {
+        var s = {
+        	$content : $("article#more"),
+		},
+		cs={};
+		
+		function init(options)
+		{   
+			$.extend(s, options);
+			cs = AIRBOX.core.settings;			
+			_initStatus();
+		};		
+	
+		function _initStatus() {
+			showSmsCardState(simCardState, pinState,simlockState);
+			defaultPage.refreshImgStatus();
+			AIRBOX.fota.initUpdateClickEvents();
+		}
+
+		return {
+			init : init
+        };
+	}())
+	AIRBOX.update.init();	
+</script>
+
+<div id="onlineUpdatePage" class="jsTemplate">
+    <div class="item-update">
+        <div class="item-hd clearfix">
+            <h2>${ids_menu_more}</h2>
+        </div>
+        <div class="item-content">
+            <h3><a href="#more/more.html" class="changeLink">${ids_more_onlineUpdate}</a></h3>
+            <div class="statusContent" id="simCardStatus"></div>
+            <div class="connectShow fota-box">
+                <div id="noNewVersion">
+                    <div class="des">${ids_sys_swVersion}:<span id="CurrVersionNum"></span></div>
+                    <div class="des">${ids_fota_latestVersion}</div>
+                    <div class="btn-wrap"><button class="btnNormal btn-disable">${ids_fota_checkUpdate}</button></div>
+                </div>
+                <div id="haveVersion" style="display:none;">
+                    <div class="des">${ids_fota_findNewVersion}:</br><span class="NewVersionNum"></span>, ${ids_fota_updateDescription}</div>
+                    <div class="btn-wrap"><button class="btnNormal" id="btnStartUpdate">${ids_fota_checkUpdate}</button></div>
+                </div>
+                <div id="fotaDownloading" style="display:none;">
+                    <div class="des">${ids_fota_findNewVersion}:</br><span class="NewVersionNum"></span></div>
+                    <div class="bar"><div class="progress" data-percent="71"></div></div>
+                    <div class="des">${ids_fota_downloading}<span id="spnDownloadProcess"></span></div>                  
+                    <div class="btn-wrap"><button class="btnNormal" id="btnStopUpdate">${ids_btn_cancel}</button></div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</div>

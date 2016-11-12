@@ -1,0 +1,154 @@
+<script>
+currentMenu = 5;
+</script>
+<script src="/js/childCommon.js"></script>
+<script src="/js/sharing.js"></script>
+<script type="text/javascript">
+    var pageName = "sharingSetting";
+    var DLNA_NAME = "";
+    var currentMode = SD_SHARING_MODE_USB;
+    $(function(){
+        uiShowSdInfo();
+    });
+
+    function uiShowSdInfo(){
+        var $sdWrap = $(".sd-content-wrap");
+        $sdWrap.hide();
+        var sdCardStatus = SDK.Sharing.GetSDcardStatus().SDcardStatus;
+        if(sdCardStatus == SD_CARD_STATUS_DISABLE){
+            $("#sd-wrap-disable").fadeIn(200);
+        }else{
+            $("#sd-wrap-enable").fadeIn(200);
+            uiInitSdSharingMode();
+            $("input[name='shareMode']").off().on("change",function(){
+                uiSettingSdSharingMode(parseInt($(this).val()));
+            })
+        }
+    }
+
+    function uiInitSdSharingMode(){
+        var $sdSharingInfo = $("#sd-sharing-info");
+        var usbSharingState = SDK.Sharing.GetUsbcardStatus().UsbcardStatus;
+        if(usbSharingState == USB_STATUS_ENABLE){
+            showMode(SD_SHARING_MODE_USB);
+            $sdSharingInfo.fadeOut(200);
+            return;
+        }
+
+        var sambaSharingState = SDK.Sharing.GetSambaStatus().SambaStatus;
+        if(sambaSharingState == SD_SAMBA_STATUS_ENABLE){
+            showMode(SD_SHARING_MODE_SAMBA);
+            uiShowSdCardSpace();
+            $sdSharingInfo.fadeIn(200);
+            return;
+        }
+        var dlnaSharingState = SDK.Sharing.GetDLNASettings().DlnaStatus;
+        if(dlnaSharingState == DLNA_STATUS_ENABLE){
+            showMode(SD_SHARING_MODE_DLNA);
+            uiShowSdCardSpace();
+            $sdSharingInfo.fadeIn(200);
+            return;
+        }
+
+        function showMode(val){
+            currentMode = val;
+            $("input[name='shareMode'][value='"+val+"']").attr("checked","checked");
+        }
+    }
+
+    function uiSettingSdSharingMode(newMode){
+        var disalbeCurrentModeResult = false;
+        var enableNewModeResult = false;
+        var DLNASettings = SDK.Sharing.GetDLNASettings();
+
+        switch (currentMode) {
+            case SD_SHARING_MODE_SAMBA:
+                disalbeCurrentModeResult = SDK.Sharing.SetSambaStatus(SD_SAMBA_STATUS_DISABLE)==API_RESULT_SUCCESS;
+                break;
+            case SD_SHARING_MODE_DLNA:
+                disalbeCurrentModeResult = SDK.Sharing.SetDLNASettings(DLNA_STATUS_DISABLE,DLNASettings.DlnaName) == API_RESULT_SUCCESS;
+                break;
+            default:
+                disalbeCurrentModeResult = SDK.Sharing.SetUsbcardStatus(USB_STATUS_DISABLE) == API_RESULT_SUCCESS;
+
+        }
+
+        switch (newMode) {
+            case SD_SHARING_MODE_SAMBA:
+                enableNewModeResult = SDK.Sharing.SetSambaStatus(SD_SAMBA_STATUS_ENABLE)==API_RESULT_SUCCESS;
+                break;
+            case SD_SHARING_MODE_DLNA:
+                enableNewModeResult = SDK.Sharing.SetDLNASettings(USB_STATUS_ENABLE,DLNASettings.DlnaName)==API_RESULT_SUCCESS;
+                break;
+            default:
+                enableNewModeResult = SDK.Sharing.SetUsbcardStatus(USB_STATUS_ENABLE)==API_RESULT_SUCCESS; 
+        }
+
+        sys.alert(disalbeCurrentModeResult&&enableNewModeResult?"ids_success":"ids_fail",function(){
+            uiInitSdSharingMode();
+        });
+    }
+
+
+    function uiShowSdCardSpace(){
+        var sdSpaceInfo = SDK.Sharing.GetSDCardSpace();
+        var usedSpace = parseFloat(sdSpaceInfo.UsedSpace);
+        var totalSpace = parseFloat(sdSpaceInfo.TotalSpace);
+        var progressFloatVal = usedSpace/totalSpace;
+        var sdProgressBar = Math.floor(progressFloatVal*100)+"%";
+        $("#sd-progress-bar").animate({
+            width: sdProgressBar
+        }, 600);
+        $("#sd-space-info").html(usedSpace+"GB/"+totalSpace+"GB");
+    }
+
+</script>
+<style type="text/css">
+    #sd-wrap-enable.item-content.sd-content-wrap{
+        padding:0;
+        font-size:14px;
+    }
+    .sharingMode li{
+        line-height: 40px;
+        height:40px;
+        border-bottom:1px solid #feed7f;
+        padding:0 25px;
+    }
+    .sharingMode li input{margin-right: 5px;}
+
+    #sd-sharing-info{
+        padding:0px 20px;
+    }
+</style>
+<div id="sharingSetting" class="jsTemplate">
+    <div class="item-hd clearfix">
+        <h2>${ids_menu_sharing}</h2>
+    </div>
+    <div id="sd-wrap-enable" class="item-content sd-content-wrap">
+        <div class="dlna">
+            <ul class="sharingMode">
+                <li>${ids_sd_sdShareMode:}</li>
+                <li><label><input type="radio" name="shareMode" value="0" checked="checked"/>USB</label></li>
+                <li><label><input type="radio" name="shareMode" value="1"/>Http+SAMBA</label></li>
+                <li><label><input type="radio" name="shareMode" value="2"/>Http+DLNA</label></li>
+            </ul>
+        </div>
+        <div class="sd-wrap" id="sd-sharing-info" style="display:none">
+            <div>
+                <h4>${ids_sd_sdCard}</h4>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" id="sd-progress-bar"></div>
+            </div> 
+            <div class="des">
+                <p><span id="sd-space-info"></span>${ids_sd_usedTotal}</p>
+            </div>
+            <a href="#sharing/sharingSD.html" class="btn-viewlist">${ids_sd_viewFile}</a>
+        </div>
+        
+    </div>
+    <div id="sd-wrap-disable" class="sd-content-wrap">
+            ${ids_sd_noSdCard}
+    </div>
+    
+</div>

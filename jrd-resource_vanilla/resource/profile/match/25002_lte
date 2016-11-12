@@ -1,0 +1,4 @@
+protocol:1
+name:MegaFon
+apn:internet
+dial:*99#

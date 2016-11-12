@@ -1,0 +1,63 @@
+#! /bin/sh
+
+if [ -f /jrd-resource/resource/webs-cfg/webs.conf ]; then
+	cp -f /jrd-resource/resource/webs-cfg/webs.conf /usr/temp_etc/webs.conf
+fi
+if [ -f /jrd-resource/resource/webs-cfg/webs_lan.conf ]; then
+	cp -f /jrd-resource/resource/webs-cfg/webs_lan.conf /usr/temp_etc/webs_lan.conf
+fi
+if [ -f /etc/mobileap_cfg.xml ]; then
+	cp -f /etc/mobileap_cfg.xml /usr/temp_etc/mobileap_cfg.xml
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan0.conf ]; then
+	cp -f /jrd-resource/resource/wlan/ap_wlan0.conf /usr/temp_etc/ap_wlan0.conf
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan1.conf ]; then
+	cp -f /jrd-resource/resource/wlan/ap_wlan1.conf /usr/temp_etc/ap_wlan1.conf
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan0_5g.conf ]; then
+	cp -f /jrd-resource/resource/wlan/ap_wlan0_5g.conf /usr/temp_etc/ap_wlan0_5g.conf
+fi
+if [ -f /jrd-resource/resource/wlan/ap_wlan1_5g.conf ]; then
+	cp -f /jrd-resource/resource/wlan/ap_wlan1_5g.conf /usr/temp_etc/ap_wlan1_5g.conf
+fi
+if [ -f /etc/hosts ]; then
+	cp -f /etc/hosts /usr/temp_etc/hosts
+fi
+
+#BEGIN customer restore fail huangwei 2014-12-24 deleted
+#if [ -f /etc/hostapd-wlan1.conf ]; then
+#	cp -f /etc/hostapd-wlan1.conf /usr/temp_etc/hostapd-wlan1.conf
+#fi
+#END customer restore fail huangwei 2014-12-24 deleted
+
+if [ -f /etc/hostapd.conf ]; then
+	cp -f /etc/hostapd.conf /usr/temp_etc/hostapd.conf
+fi
+
+#begin added by zxb 2015-1-13 for sd share
+if [ -f /etc/hostapd.conf ]; then
+	cp -f /usr/local/samba/lib/sd_back.conf /usr/temp_etc/sd_back.conf
+fi
+#end added by zxb 2015-1-13 for sd share
+
+if [ -d /jrd-resource/resource/profile/create ]; then
+	cp -rf /jrd-resource/resource/profile/create /usr/temp_etc/create
+fi
+
+if [ -f /jrd-resource/bin/custom_ip_type ]; then
+	cp -f /jrd-resource/bin/custom_ip_type /usr/temp_etc/custom_ip_type
+fi
+
+if [ -f /jrd-resource/bin/sms_report_flag ]; then
+	cp -f /jrd-resource/bin/sms_report_flag /usr/temp_etc/sms_report_flag
+fi
+
+if [ -f /jrd-resource/resource/statistics/UsageHistory.data ]; then
+	cp -f //jrd-resource/resource/statistics/UsageHistory.data /usr/temp_etc/UsageHistory.data
+fi
+
+cd /usr/
+if [ -d /usr/temp_etc ]; then
+	tar czf /usr/tmp_etc ./temp_etc
+fi

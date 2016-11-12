@@ -1,0 +1,128 @@
+#!/bin/sh
+
+#watch webs apps
+if [ -f /jrd-resource/bin/restore-configure ]; then
+  if [ -f /cache/backup_conf/force_mode ]; then
+    start-stop-daemon -S -b -a /usr/oem/backup
+    #start-stop-daemon -S -b -a /jrd-resource/bin/Jrdsetcookie w poweron 7
+    #start-stop-daemon -S -b -a /jrd-resource/bin/Jrdsetcookie w usermode 8
+    echo "run"
+    while [ ! -f /cache/backup_conf/backup_add ]
+    do
+      echo "sleep"
+      sleep 1
+    done
+    echo "end"
+    rm -rf /cache/backup_conf/backup_add
+  fi
+  /jrd-resource/bin/restore-configure
+fi
+if [ -f /sdcard/core_app.log ]; then
+  rm -rf /sdcard/core_app.log
+fi
+if [ -f /sdcard/webs_log.log ]; then
+  rm -rf /sdcard/webs_log.log
+fi
+
+if [ -f /cache/startCatchLog_flag ];then
+  line=`cat /cache/startCatchLog_flag`
+  echo "$line"
+  main_location=`echo $line|cut -d '/' -f 2`
+  echo "$main_location"
+  #if [ -f /jrd-resource/resource/panic_dmesg ];then
+    `mv $line"kernel_log.txt" "/"$main_location"/crash_logs/"`
+    `mv $line"diag_log_qxdm.qmdl" "/"$main_location"/crash_logs/"`
+  #fi
+  start-stop-daemon -S -b -a /usr/bin/diag_klog
+  start-stop-daemon -S -b -a /usr/bin/diag_mdlog
+fi
+
+#start-stop-daemon -S -b -a QCMAP_ConnectionManager /etc/mobileap_cfg.xml d
+#start-stop-daemon -S -b -a qti
+rm -f /jrd-resource/bin/intend
+start-stop-daemon -S -b -o -a /usr/oem/core_app
+start-stop-daemon -S -b -o -a /usr/oem/webs
+start-stop-daemon -S -b -o -a /usr/oem/ui_app
+
+app_sec_bak=0
+sleep 3
+app_result=`ps -e|grep '/usr/oem/core_app'|sed -e "/grep/d"|cut -c 16-21`
+echo "$app_result"
+app_min=`echo $app_result|cut -d ':' -f 1`
+echo min$app_min
+app_sec=`echo $app_result|cut -d ':' -f 2`
+echo sec$app_sec
+app_sec=$(expr $(expr $app_min \* 60) + $(expr $app_sec))
+echo total_sec$app_sec
+app_time_cost=$(expr $app_sec \- $app_sec_bak)
+echo time_cost$app_time_cost
+if [ $app_time_cost -ge 2 ]; then
+  echo core_app_error
+#  killall -9 core_app
+  sleep 1
+# start-stop-daemon -S -b -o -a /usr/oem/core_app
+  app_sec_bak=0
+else
+  app_sec_bak=$app_sec
+fi
+  sleep 15
+
+
+while true;
+do
+  app_result=`ps -e|grep '/usr/oem/core_app'|sed -e "/grep/d"|cut -c 16-21`
+  webs_result=`ps -e|grep '/usr/oem/webs'|sed -e "/grep/d"`
+  smbd_result=`ps -e|grep '/usr/local/samba/bin/smbd'|sed -e "/grep/d"`
+  if [ -z "$app_result" -o -z "$webs_result" ]; then
+    if [ -n "$app_result" ]; then
+       date >> /usr/oem/jrd_softdog.txt
+       echo core_app_error >> /usr/oem/jrd_softdog.txt
+       killall -9 core_app
+    fi
+    if [ -n "$webs_result" ]; then
+       date >> /usr/oem/jrd_softdog.txt
+       echo webs_error >> /usr/oem/jrd_softdog.txt
+       killall -9 webs
+    fi
+	if [ -n "$smbd_result" ]; then
+       date >> /usr/oem/jrd_softdog.txt
+       echo smbd_error >> /usr/oem/jrd_softdog.txt
+       killall -9 smbd
+	   killall -9 nmbd
+	   smbd_on=1
+	else
+	   smbd_on=0
+    fi
+    sleep 1
+    start-stop-daemon -S -b -o -a /usr/oem/core_app
+    start-stop-daemon -S -b -o -a /usr/oem/webs
+    app_sec_bak=0
+	#if [ $smbd_on = 1 ];then
+	#	start-stop-daemon -S -b -o -a /usr/local/samba/bin/smbd
+	#	start-stop-daemon -S -b -o -a /usr/local/samba/bin/nmbd
+	#fi
+  else
+
+    app_min=`echo $app_result|cut -d ':' -f 1`
+    echo min$app_min
+    app_sec=`echo $app_result|cut -d ':' -f 2`
+    echo sec$app_sec
+    app_sec=$(expr $(expr $app_min \* 60) + $(expr $app_sec))
+    echo total_sec$app_sec    
+    app_time_cost=$(expr $app_sec \- $app_sec_bak)    
+    echo time_cost$app_time_cost    
+    if [ $app_time_cost -ge 10 ]; then
+      echo core_app_error
+#      killall -9 core_app
+      sleep 1
+#      start-stop-daemon -S -b -o -a /usr/oem/core_app
+      app_sec_bak=0
+    else
+      app_sec_bak=$app_sec
+    fi
+    
+    sleep 15
+  fi
+done
+echo "exit"
+exit 0
