@@ -187,6 +187,30 @@
             </div>
         </div>
     </div>
+    <div style="margin: 8px">
+        <div class="x-switch" style="display: none" data-status="/cgi-bin/CA77Status" data-enable="/cgi-bin/CA77Enable" data-disable="/cgi-bin/CA77Disable">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch1">
+                <label class="onoffswitch-label" for="myonoffswitch1">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div class="x-switch-label" style="display: none">CA 77</div> 
+        <br>
+        <div class="x-switch" style="display: none" data-status="/cgi-bin/TTLFIXStatus" data-enable="/cgi-bin/TTLFIXEnable" data-disable="/cgi-bin/TTLFIXDisable">
+            <div class="onoffswitch">
+                <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox" id="myonoffswitch2">
+                <label class="onoffswitch-label" for="myonoffswitch2">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+            <div class="x-switch-label" style="display: none"></div> 
+        </div>
+        <div class="x-switch-label">TTL FIX</div> 
+    </div>
     <div id='footer' class="side-center">
         <span trans='copyright'></span>
     </div>
@@ -262,5 +286,35 @@
     </div>
 </script>
 <script type="text/javascript" data-main="js/main" src="js/lib/require/require-jquery-min.js"></script>
+<script>
+    require.config( { waitSeconds : 30 })
+    
+    $('.x-switch').each(function () {
+        var self = this;
+        var $cb = $(self).find('input[type=checkbox]');
+        var statusUrl = $(self).data('status');
+        var enableUrl = $(self).data('enable');
+        var disableUrl = $(self).data('disable');
+
+        fetch(statusUrl).then(function (r) { return r.text() })
+            .then(function (t) {
+               console.log(t);
+               if (t.indexOf('enabled') > -1) {
+                   $cb.prop('checked', true);
+               }
+               (function (en, dis) {
+                   $cb.change(function () {
+                    setTimeout(function () {
+                        var url = $cb.is(':checked') ? en : dis;
+                        fetch(url).then(function (r) { return r.text() }).then(function (t) { console.log(t) });
+                    }, 1);
+               })
+               })(enableUrl, disableUrl);
+               
+               $(self).show();
+               $('.x-switch-label').show();
+            });
+    });
+</script>
 </body>
 </html>
